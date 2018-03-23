@@ -1,3 +1,11 @@
-node_modules
-dist
-.DB_store
+dist/
+node_modules/
+web/style
+sftp-config.json
+log
+npm-debug.log
+.vscode
+coverage
+lerna-debug.log
+.DS_Store
+.wepycache

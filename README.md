@@ -5,3 +5,7 @@
 npm install wepy-cli -g
 npm  i && wepy build --watch
 ```
+
+# weui
+
+weui UI框架

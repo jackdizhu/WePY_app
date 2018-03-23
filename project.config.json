@@ -1,13 +1,15 @@
 {
-  "description": "debug_app",
-  "setting": {
-    "urlCheck": true,
-    "es6": false,
-    "postcss": false,
-    "minified": false
-  },
-  "compileType": "miniprogram",
-  "appid": "touristappid",
-  "projectname": "app",
-  "miniprogramRoot": "./dist"
+	"description": "debug_app",
+	"setting": {
+		"urlCheck": true,
+		"es6": false,
+		"postcss": false,
+		"minified": false,
+		"newFeature": true
+	},
+	"compileType": "miniprogram",
+	"appid": "wx2c01645e8528a68c",
+	"projectname": "app",
+	"miniprogramRoot": "./dist",
+	"condition": {}
 }

@@ -57,13 +57,13 @@
 
       <text class="testcounter">计数组件1: </text>
       <view class="counterview">
-        <counter1 @index-emit.user="counterEmit" />
+        <!-- <counter1 @index-emit.user="counterEmit" /> -->
       </view>
 
       <text class="testcounter">计数组件2: </text>
 
       <view class="counterview">
-        <counter2 :num.sync="mynum"></counter2>
+        <!-- <counter2 :num.sync="mynum"></counter2> -->
       </view>
     </panel>
 
