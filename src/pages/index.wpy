@@ -1,0 +1,114 @@
+<style lang="less">
+  .userinfo {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .userinfo-avatar {
+    width: 80rpx;
+    height: 80rpx;
+    border-radius: 50%;
+  }
+
+  .userinfo-nickname {
+    color: #aaa;
+  }
+</style>
+<template>
+  <view class="container">
+    <view class="userinfo" @tap="handleViewTap">
+      <image class="userinfo-avatar" src="{{ userInfo.avatarUrl }}" background-size="cover"/>
+      <view class="userinfo-nickname">{{ userInfo.nickName }}</view>
+    </view>
+
+    <view>
+      <button @tap="demo_def" size="mini">demo_def</button>
+    </view>
+    <view>
+      <button @tap="demo_form" size="mini">demo_form</button>
+    </view>
+
+  </view>
+</template>
+
+<script>
+  import wepy from 'wepy'
+  import testMixin from '../mixins/test'
+  // import Panel from '@/components/panel' // alias example
+  // import Toast from 'wepy-com-toast'
+
+  export default class Index extends wepy.page {
+    config = {
+      navigationBarTitleText: 'test'
+    }
+    components = {
+    }
+
+    mixins = [testMixin]
+
+    data = {
+      userInfo: {
+        nickName: '加载中...'
+      }
+    }
+
+    computed = {
+    }
+
+    methods = {
+      handleViewTap () {
+        // console.log(arguments, '--------------')
+      },
+      // wepy.navigateTo 打开新页面 一个应用同时只能打开5个页面
+      // wepy.redirectTo 重定向
+      demo_def () {
+        wepy.navigateTo({
+          url: 'demo'
+        })
+      },
+      demo_form () {
+        wepy.navigateTo({
+          url: 'demo_form'
+        })
+      }
+    }
+
+    events = {
+      'index-emit': (...args) => {
+        let $event = args[args.length - 1]
+        console.log(`${this.$name} receive ${$event.name} from ${$event.source.$name}`)
+      }
+    }
+
+    // 设置页面分享信息
+    // onShareAppMessage () {}
+    // 监听页面加载
+    // onload () {
+    //   console.log('监听页面加载')
+    //   this.onLoad_next()
+    // },
+    // 页面初次渲染
+    onready () {
+      console.log('index 页面初次渲染')
+    }
+    // 页面显示
+    onshow () {
+      console.log('index 页面显示')
+    }
+    // 页面隐藏
+    onhide () {
+      console.log('index 页面隐藏')
+    }
+    onLoad() {
+      console.log('index 监听页面加载')
+      let self = this
+      this.$parent.getUserInfo(function (userInfo) {
+        if (userInfo) {
+          self.userInfo = userInfo
+        }
+        self.$apply()
+      })
+    }
+  }
+</script>
