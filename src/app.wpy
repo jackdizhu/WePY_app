@@ -50,6 +50,8 @@ import 'wepy-async-function'
 import { setStore } from 'wepy-redux'
 import configStore from './store'
 
+// import { request } from '../com/request'
+
 const store = configStore()
 setStore(store)
 
@@ -71,9 +73,13 @@ export default class extends wepy.app {
     userInfo: null
   }
 
+  methods = {
+  }
+
   constructor () {
     super()
     this.use('requestfix')
+    this.use('promisify')
   }
 
   onLaunch() {

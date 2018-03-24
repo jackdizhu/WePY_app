@@ -28,28 +28,30 @@
         <view class="userinfo-nickname">{{ userInfo.nickName }}</view>
       </view>
 
-      <view class="weui-cells weui-cells_after-title">
-        <view class="weui-cell weui-cell_input">
-          <view class="weui-cell__hd">
-            <view class="weui-label">用户名</view>
+      <form bindsubmit="formSubmit" bindreset="formReset">
+        <view class="weui-cells weui-cells_after-title">
+          <view class="weui-cell weui-cell_input">
+            <view class="weui-cell__hd">
+              <view class="weui-label">用户名</view>
+            </view>
+            <view class="weui-cell__bd">
+              <input type="text" name="name" class="weui-input" placeholder="请输入用户名" />
+            </view>
           </view>
-          <view class="weui-cell__bd">
-            <input type="text" name="name" class="weui-input" placeholder="请输入用户名" />
+          <view class="weui-cell weui-cell_input">
+            <view class="weui-cell__hd">
+              <view class="weui-label">密码</view>
+            </view>
+            <view class="weui-cell__bd">
+              <input type="password" name="passwd" class="weui-input" placeholder="请输入密码" />
+            </view>
           </view>
-        </view>
-        <view class="weui-cell weui-cell_input">
-          <view class="weui-cell__hd">
-            <view class="weui-label">密码</view>
-          </view>
-          <view class="weui-cell__bd">
-            <input type="password" name="passwd" class="weui-input" placeholder="请输入密码" />
-          </view>
-        </view>
 
-      </view>
-      <view class="weui-btn-area">
-        <button class="weui-btn" type="primary" @tap="login">登录</button>
-      </view>
+        </view>
+        <view class="weui-btn-area">
+          <button class="weui-btn" formType="submit" type="primary">登录</button>
+        </view>
+      </form>
 
     </view>
   </view>
@@ -59,6 +61,8 @@
 <script>
   import wepy from 'wepy'
   import testMixin from '../mixins/test'
+  import http from '../com/request'
+  import { request } from '../com/request'
   // import Panel from '@/components/panel' // alias example
   // import Toast from 'wepy-com-toast'
 
@@ -74,10 +78,6 @@
     data = {
       userInfo: {
         nickName: '加载中...'
-      },
-      form: {
-        name: '',
-        passwd: ''
       }
     }
 
@@ -85,8 +85,17 @@
     }
 
     methods = {
-      login () {
-        console.log(this.form)
+      formSubmit: function(e) {
+        let _obj = e.detail.value || {}
+
+        http.request({
+          method: 'POST',
+          url: 'login',
+          params: _obj,
+          isShowLoading: true
+        }).then(res => {
+          console.log(res)
+        })
       },
       handleViewTap () {
         // console.log(arguments, '--------------')
