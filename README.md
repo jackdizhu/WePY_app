@@ -8,8 +8,10 @@ npm  i && wepy build --watch
 
 # 小程序开发问题
 
+export default { request } // 定义模块 export default
 import { request } from '../com/request' // 引入 request === undefined
 import http from '../com/request' // 改为 http.request
+module.exports = { request } // 改为 module.exports
 
 if (resJson[url]) {
   isShowLoading && wepy.hideLoading && wepy.hideLoading()
