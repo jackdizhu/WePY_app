@@ -86,7 +86,7 @@
 
     methods = {
       login () {
-        console.log()
+        console.log(this.form)
       },
       handleViewTap () {
         // console.log(arguments, '--------------')
