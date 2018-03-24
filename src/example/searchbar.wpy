@@ -60,28 +60,27 @@
 </template>
 
 <script>
-  import wepy from 'wepy';
+  import wepy from 'wepy'
 
   export default class Searchbar extends wepy.page {
-
     data = {
       inputShowed: false,
       inputVal: ''
-    };
+    }
 
     methods = {
       showInput () {
-        this.inputShowed = true;
+        this.inputShowed = true
       },
       hideInput () {
-        this.inputVal = '';
-        this.inputShowed = false;
+        this.inputVal = ''
+        this.inputShowed = false
       },
       clearInput () {
-        this.inputVal = '';
+        this.inputVal = ''
       },
       inputTyping (e) {
-        this.inputVal = e.detail.value;
+        this.inputVal = e.detail.value
       }
     }
   }

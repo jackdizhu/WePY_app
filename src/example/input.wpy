@@ -196,10 +196,9 @@
 </template>
 
 <script>
-  import wepy from 'wepy';
+  import wepy from 'wepy'
 
   export default class Input extends wepy.page {
-
     data = {
       tipsFlag: false,
 
@@ -225,66 +224,66 @@
       accountIndex: 0,
 
       isAgree: false
-    };
+    }
 
     methods = {
       radioChange (e) {
-        console.log('radio发生change事件，携带value值为：', e.detail.value);
+        console.log('radio发生change事件，携带value值为：', e.detail.value)
 
         this.radioItems.forEach(v => {
-          v.checked = v.value === e.detail.value;
-        });
+          v.checked = v.value === e.detail.value
+        })
       },
       checkboxChange (e) {
-        console.log('checkbox发生change事件，携带value值为：', e.detail.value);
+        console.log('checkbox发生change事件，携带value值为：', e.detail.value)
 
-        var checkboxItems = this.checkboxItems, values = e.detail.value;
+        var checkboxItems = this.checkboxItems, values = e.detail.value
         for (var i = 0, lenI = checkboxItems.length; i < lenI; ++i) {
-          checkboxItems[i].checked = false;
+          checkboxItems[i].checked = false
 
           for (var j = 0, lenJ = values.length; j < lenJ; ++j) {
             if (checkboxItems[i].value === values[j]) {
-              checkboxItems[i].checked = true;
-              break;
+              checkboxItems[i].checked = true
+              break
             }
           }
         }
 
-        this.checkboxItems = checkboxItems;
+        this.checkboxItems = checkboxItems
       },
       bindDateChange (e) {
-        this.data = e.detail.value;
+        this.data = e.detail.value
       },
       bindTimeChange (e) {
-        this.time = e.detail.value;
+        this.time = e.detail.value
       },
       bindCountryCodeChange (e) {
-        console.log('picker country code 发生选择改变，携带值为', e.detail.value);
+        console.log('picker country code 发生选择改变，携带值为', e.detail.value)
 
-        this.countryCodeIndex = e.detail.value;
+        this.countryCodeIndex = e.detail.value
       },
       bindAccountChange (e) {
-        console.log('picker country 发生选择改变，携带值为', e.detail.value);
-        this.accountIndex = e.detail.value;
+        console.log('picker country 发生选择改变，携带值为', e.detail.value)
+        this.accountIndex = e.detail.value
       },
       bindCountryChange (e) {
-        this.countryIndex = e.detail.value;
+        this.countryIndex = e.detail.value
       },
       bindAgreeChange (e) {
-        this.isAgree = !!e.detail.value.length;
+        this.isAgree = !!e.detail.value.length
       },
       showTopTips () {
-        this.tipsFlag = true;
+        this.tipsFlag = true
         setTimeout(() => {
-          this.tipsFlag = false;
-          this.$apply();
-        }, 3000);
+          this.tipsFlag = false
+          this.$apply()
+        }, 3000)
       }
 
-    };
+    }
 
     onLoad () {
-      this.icon = require('../images/base64.js').icon20;
+      this.icon = require('../images/base64.js').icon20
     }
   }
 </script>

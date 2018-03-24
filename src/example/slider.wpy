@@ -19,13 +19,12 @@ slider{
 </template>
 
 <script>
-  import wepy from 'wepy';
+  import wepy from 'wepy'
 
   export default class Slider extends wepy.page {
-
     methods = {
       mychange (e) {
-        console.log(`value is ${e.detail.value}`);
+        console.log(`value is ${e.detail.value}`)
       }
     }
   }

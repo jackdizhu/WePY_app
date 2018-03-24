@@ -25,12 +25,11 @@ module.exports = {
     'arrow-parens': 0,
     // allow async-await
     'generator-star-spacing': 0,
-    "semi": [
-        "error",
-        "always"
-    ],
+    // "semi": [
+    //     "error",
+    //     "always"
+    // ],
     'comma-dangle': ["error", "only-multiline"],
-    'padded-blocks': 0,
     'one-var': 0,
     'no-return-assign': 0,
     'indent': ['error', 2],

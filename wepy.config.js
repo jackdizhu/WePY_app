@@ -1,6 +1,11 @@
 const path = require('path');
 var prod = process.env.NODE_ENV === 'production';
 
+// let log = console.log
+// console.log = () => {
+//   log(arguments)
+// }
+
 module.exports = {
   wpyExt: '.wpy',
   eslint: true,

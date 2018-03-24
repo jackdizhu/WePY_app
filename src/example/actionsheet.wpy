@@ -1,6 +1,6 @@
 <style>
 page {
-  background-color: #ffffff;
+  background-color: #ffffff
 }
 </style>
 <template>
@@ -18,19 +18,19 @@ page {
 </template>
 
 <script>
-import wepy from 'wepy';
+import wepy from 'wepy'
 
 export default class Actionsheet extends wepy.page {
   methods = {
-  async open() {
-    let res = await wepy.showActionSheet({
-    itemList: ['A', 'B', 'C']
-    });
+    async open() {
+      let res = await wepy.showActionSheet({
+        itemList: ['A', 'B', 'C']
+      })
 
-    if (!res.cancel) {
-    console.log(res.tapIndex);
+      if (!res.cancel) {
+        console.log(res.tapIndex)
+      }
     }
   }
-  };
 }
 </script>

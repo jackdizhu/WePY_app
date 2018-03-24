@@ -100,20 +100,19 @@ page{
 </template>
 
 <script>
-  import wepy from 'wepy';
+  import wepy from 'wepy'
 
   export default class Panel extends wepy.page {
-
     data = {
       icon20: '',
       icon60: ''
-    };
+    }
 
     onLoad () {
-      let base64 = require('../images/base64');
+      let base64 = require('../images/base64')
 
-      this.icon20 = base64.icon20;
-      this.icon60 = base64.icon60;
+      this.icon20 = base64.icon20
+      this.icon60 = base64.icon60
     }
   }
 </script>

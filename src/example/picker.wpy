@@ -26,27 +26,26 @@ page{
 </template>
 
 <script>
-  import wepy from 'wepy';
+  import wepy from 'wepy'
 
   export default class Picker extends wepy.page {
-
     data = {
       array: ['美国', '中国', '巴西', '日本'],
       index: 0,
       date: '2016-09-01',
       time: '12:01'
-    };
+    }
 
     methods = {
       bindPickerChange (e) {
-        console.log('picker发送选择改变，携带值为', e.detail.value);
-        this.index = e.detail.value;
+        console.log('picker发送选择改变，携带值为', e.detail.value)
+        this.index = e.detail.value
       },
       bindDateChange (e) {
-        this.date = e.detail.value;
+        this.date = e.detail.value
       },
       bindTimeChange (e) {
-        this.time = e.detail.value;
+        this.time = e.detail.value
       }
     }
   }

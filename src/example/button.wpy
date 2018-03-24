@@ -40,7 +40,7 @@
 </template>
 
 <script>
-  import wepy from 'wepy';
+  import wepy from 'wepy'
 
   export default class Button extends wepy.page {
 

@@ -86,10 +86,9 @@
 </template>
 
 <script>
-  import wepy from 'wepy';
+  import wepy from 'wepy'
 
   export default class Index extends wepy.page {
-
     data = {
       list: [
         {
@@ -123,12 +122,12 @@
           pages: ['searchbar']
         }
       ]
-    };
+    }
 
     methods = {
       toggle (id) {
-        this.list.forEach(v => v.open = (v.id === id) ? !v.open : false);
+        this.list.forEach(v => v.open = (v.id === id) ? !v.open : false)
       }
-    };
+    }
   }
 </script>

@@ -19,15 +19,15 @@ page{
 </template>
 
 <script>
-  import wepy from 'wepy';
+  import wepy from 'wepy'
 
   export default class Msg extends wepy.page {
     methods = {
       openSuccess () {
-        this.$navigate('./msg_success');
+        this.$navigate('./msg_success')
       },
       openFail () {
-        this.$navigate('./msg_fail');
+        this.$navigate('./msg_fail')
       }
     }
   }

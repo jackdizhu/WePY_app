@@ -19,7 +19,7 @@ page{
 </template>
 
 <script>
-  import wepy from 'wepy';
+  import wepy from 'wepy'
 
   export default class Toast extends wepy.page {
     methods = {
@@ -28,14 +28,14 @@ page{
           title: '已完成',
           icon: 'success',
           duration: 3000
-        });
+        })
       },
       openLoading () {
         wx.showToast({
           title: '数据加载中',
           icon: 'loading',
           duration: 3000
-        });
+        })
       }
     }
   }

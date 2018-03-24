@@ -87,7 +87,7 @@
 </template>
 
 <script>
-  import wepy from 'wepy';
+  import wepy from 'wepy'
 
   export default class Icons extends wepy.page {
 

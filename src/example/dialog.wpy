@@ -19,10 +19,9 @@ page{
 </template>
 
 <script>
-  import wepy from 'wepy';
+  import wepy from 'wepy'
 
   export default class Dialog extends wepy.page {
-
     methods = {
       async openConfirm () {
         let res = await wepy.showModal({
@@ -30,24 +29,23 @@ page{
           content: '弹窗内容，告知当前状态、信息和解决方法，描述文字尽量控制在三行内',
           confirmText: '主操作',
           cancelText: '辅助操作'
-        });
+        })
 
-        console.log(res);
+        console.log(res)
         if (res.confirm) {
-          console.log('用户点击主操作');
+          console.log('用户点击主操作')
         } else {
-          console.log('用户点击辅助操作');
+          console.log('用户点击辅助操作')
         }
       },
       async openAlert () {
-
         let res = await wepy.showModal({
           content: '弹窗内容，告知当前状态、信息和解决方法，描述文字尽量控制在三行内',
           showCancel: false
-        });
+        })
 
         if (res.confirm) {
-          console.log('用户点击确定');
+          console.log('用户点击确定')
         }
       }
     }
