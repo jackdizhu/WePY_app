@@ -87,7 +87,7 @@
     }
 
     methods = {
-      formSubmit: function(e) {
+      formSubmit: async function (e) {
         let _obj = e.detail.value || {}
 
         // // test_get
@@ -110,14 +110,13 @@
         // })
 
         // login
-        http.request({
+        const res = await http.request({
           method: 'POST',
           url: 'login',
           params: _obj,
           isShowLoading: true
-        }).then(res => {
-          console.log(res)
         })
+        console.log(res, '登录成功 . .')
       },
       handleViewTap () {
         // console.log(arguments, '--------------')
