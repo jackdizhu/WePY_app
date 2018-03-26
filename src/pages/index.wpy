@@ -65,6 +65,7 @@
   import wepy from 'wepy'
   import testMixin from '../mixins/test'
   import http from '../com/request'
+  import { msg } from '../com/com'
   // import Panel from '@/components/panel' // alias example
   // import Toast from 'wepy-com-toast'
 
@@ -89,26 +90,13 @@
     methods = {
       formSubmit: async function (e) {
         let _obj = e.detail.value || {}
-
-        // // test_get
-        // http.request({
-        //   method: 'GET',
-        //   url: 'test_get',
-        //   params: _obj,
-        //   isShowLoading: true
-        // }).then(res => {
-        //   console.log(res)
-        // })
-        // // test_post
-        // http.request({
-        //   method: 'POST',
-        //   url: 'test_post',
-        //   params: _obj,
-        //   isShowLoading: true
-        // }).then(res => {
-        //   console.log(res)
-        // })
-
+        if (!_obj.name) {
+          msg('请输入用户名')
+          return 0
+        } else if (!_obj.passwd) {
+          msg('请输入密码')
+          return 0
+        }
         // login
         const res = await http.request({
           method: 'POST',

@@ -1,5 +1,6 @@
 import wepy from 'wepy'
 import api from './api'
+import { msg } from './com'
 // import resJson from './resJson'
 
 const request = async ({method, url, params, isShowLoading}) => {
@@ -26,13 +27,25 @@ const request = async ({method, url, params, isShowLoading}) => {
   if (res) {
     return res.data
   } else {
-    wepy.showToast({
-      title: '网络请求失败',
-      icon: 'success',
-      image: '../style/images/toast_info.png',
-      duration: 1500
-    })
+    msg('网络请求失败')
     return 0
   }
 }
+
+// // test_get
+// http.request({
+//   method: 'GET',
+//   url: 'test_get',
+//   params: _obj,
+//   isShowLoading: true
+// })
+
+// // test_post
+// http.request({
+//   method: 'POST',
+//   url: 'test_post',
+//   params: _obj,
+//   isShowLoading: true
+// })
+
 export default { request }
