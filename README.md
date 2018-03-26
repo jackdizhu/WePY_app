@@ -18,3 +18,6 @@ if (resJson[url]) {
   resolve(resJson[url])
   return 0 // Promise resolve 执行后 后面代码会继续执行
 }
+
+// 异步函数中更新数据的时，必须手动调用$apply方法 手动触发 脏数据检查
+this.$apply()

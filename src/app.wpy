@@ -100,19 +100,12 @@ export default class extends wepy.app {
     console.log(data)
   }
 
-  getUserInfo(cb) {
-    const that = this
-    console.log(this.globalData, 'globalData')
-
+  async getUserInfo(cb) {
     if (this.globalData.userInfo) {
       return this.globalData.userInfo
     }
-    wepy.getUserInfo({
-      success (res) {
-        that.globalData.userInfo = res.userInfo
-        cb && cb(res.userInfo)
-      }
-    })
+    this.globalData.userInfo = await wepy.getUserInfo()
+    return this.globalData.userInfo
   }
 }
 </script>

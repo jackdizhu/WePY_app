@@ -23,9 +23,12 @@
   </view>
   <view class="page__bd">
     <view class="container">
-      <view class="userinfo" @tap="handleViewTap">
+      <view class="userinfo" @tap="handleViewTap" wx:if="userInfo.nickName">
         <image class="userinfo-avatar" src="{{ userInfo.avatarUrl }}" background-size="cover"/>
         <view class="userinfo-nickname">{{ userInfo.nickName }}</view>
+      </view>
+      <view class="userinfo" @tap="handleViewTap" wx:else>
+        <view class="userinfo-nickname">加载中 . . .</view>
       </view>
 
       <form bindsubmit="formSubmit" bindreset="formReset">
@@ -62,7 +65,6 @@
   import wepy from 'wepy'
   import testMixin from '../mixins/test'
   import http from '../com/request'
-  import { request } from '../com/request'
   // import Panel from '@/components/panel' // alias example
   // import Toast from 'wepy-com-toast'
 
@@ -77,7 +79,7 @@
 
     data = {
       userInfo: {
-        nickName: '加载中...'
+        nickName: ''
       }
     }
 
@@ -140,15 +142,12 @@
     onhide () {
       console.log('index 页面隐藏')
     }
-    onLoad() {
-      console.log('index 监听页面加载')
-      let self = this
-      this.$parent.getUserInfo(function (userInfo) {
-        if (userInfo) {
-          self.userInfo = userInfo
-        }
-        self.$apply()
-      })
+    async onLoad() {
+      let _userInfo = await this.$parent.getUserInfo()
+      this.userInfo = _userInfo.userInfo
+      console.log(_userInfo, 'index 监听页面加载')
+      // 手动触发 脏数据检查
+      this.$apply()
     }
   }
 </script>
