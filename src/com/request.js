@@ -22,17 +22,19 @@ const request = ({method, url, params, isShowLoading}) => {
         'Content-Type': method === 'POST' ? 'application/x-www-form-urlencoded' : 'application/json'
       },
       success: function (res) {
-        isShowLoading && wepy.hideLoading && wepy.hideLoading()
-        // 解密
+        // isShowLoading && wepy.hideLoading && wepy.hideLoading()
+        console.log(res, 'res')
+
         if (res.data.success) {
           resolve(res.data.data)
         } else {
           reject(res.data.data)
         }
       },
-      fail: function () {
+      fail: function (err) {
         // 因为hide会让showToast隐藏
         isShowLoading && wepy.hideLoading && wepy.hideLoading()
+        console.log(err, 'err')
         wepy.showToast({
           title: '网络请求失败',
           icon: 'success',
