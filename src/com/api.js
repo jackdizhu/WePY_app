@@ -1,4 +1,4 @@
-const baseUrl = 'http://127.0.0.1:3000'
+const baseUrl = 'https://www.easy-mock.com/mock/5ab8beedca39d01d844c0be5/debug_app'
 const api = {
   version: `1.0`,
   upload: `/file_v1/upload`,
@@ -10,6 +10,8 @@ const api = {
   addProject: `/project_v1/addProject`,
   register: `/users_v1/register`,
   login: `/users_v1/login`,
+  test_get: `/test_get`,
+  test_post: `/test_post`,
   json: `/users_v1/json`
 }
 for (const key in api) {

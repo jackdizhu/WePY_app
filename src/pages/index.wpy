@@ -90,6 +90,26 @@
       formSubmit: function(e) {
         let _obj = e.detail.value || {}
 
+        // test_get
+        http.request({
+          method: 'GET',
+          url: 'test_get',
+          params: _obj,
+          isShowLoading: true
+        }).then(res => {
+          console.log(res)
+        })
+        // test_post
+        http.request({
+          method: 'POST',
+          url: 'test_post',
+          params: _obj,
+          isShowLoading: true
+        }).then(res => {
+          console.log(res)
+        })
+
+        // login
         http.request({
           method: 'POST',
           url: 'login',

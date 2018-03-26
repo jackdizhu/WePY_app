@@ -30,3 +30,19 @@ this.$apply()
   <view wx:els>{{item.name}}</view>
 </view>
 ```
+
+``` js
+// issues 找不到crypto模块是因为你在代码中require了某些不能在小程序中使用的模块。
+[Error] Error: 找不到模块: crypto
+被依赖于: E:\jackdizhu\web\WePY_app\src\com\WXBizDataCrypt.js。
+请尝试手动执行 npm install crypto 进行安装。
+    at E:\jackdizhu\node\nvm\v8.9.0\node_modules\wepy-cli\lib\compile-script.js:98:31
+    at String.replace (<anonymous>)
+    at Object.resolveDeps (E:\jackdizhu\node\nvm\v8.9.0\node_modules\wepy-cli\lib\compile-script.js:46:21)
+    at E:\jackdizhu\node\nvm\v8.9.0\node_modules\wepy-cli\lib\compile-script.js:270:27
+    at <anonymous>
+    at process._tickCallback (internal/process/next_tick.js:188:7)
+    at Function.Module.runMain (module.js:678:11)
+    at startup (bootstrap_node.js:187:16)
+    at bootstrap_node.js:608:3
+```

@@ -1,6 +1,6 @@
 import wepy from 'wepy'
 import api from './api'
-import resJson from './resJson'
+// import resJson from './resJson'
 
 const request = ({method, url, params, isShowLoading}) => {
   const _url = api[url] || ''
@@ -8,11 +8,11 @@ const request = ({method, url, params, isShowLoading}) => {
   isShowLoading && wepy.showLoading && wepy.showLoading({title: '加载中...'})
   return new Promise((resolve, reject) => {
     // 拦截请求返回数据
-    if (resJson[url]) {
-      isShowLoading && wepy.hideLoading && wepy.hideLoading()
-      resolve(resJson[url])
-      return 0
-    }
+    // if (resJson[url]) {
+    //   isShowLoading && wepy.hideLoading && wepy.hideLoading()
+    //   resolve(resJson[url])
+    //   return 0
+    // }
 
     wepy.request({
       url: _url,

@@ -100,7 +100,8 @@ export default class extends wepy.app {
     console.log(data)
   }
 
-  async getUserInfo(cb) {
+  async getUserInfo() {
+    // gender 性别 0：未知、1：男、2：女
     if (this.globalData.userInfo) {
       return this.globalData.userInfo
     }
