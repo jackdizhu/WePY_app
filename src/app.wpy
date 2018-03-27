@@ -59,7 +59,8 @@ export default class extends wepy.app {
   config = {
     pages: [
       'pages/index',
-      'pages/projectList'
+      'pages/projectList',
+      'pages/projectErrorInfoList'
     ],
     window: {
       backgroundTextStyle: 'light',
@@ -111,6 +112,8 @@ export default class extends wepy.app {
       return this.globalData.userInfo
     }
     this.globalData.userInfo = await wepy.getUserInfo()
+
+    wepy.setStorageSync('userInfo', this.globalData.userInfo)
     return this.globalData.userInfo
   }
 

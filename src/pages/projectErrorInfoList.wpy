@@ -2,25 +2,40 @@
   .weui-panel{
     width: 100%;
   }
+  .weui-media-box__text{
+    color:#999999;
+    font-size: 13px;
+    line-height: 1.2;
+    padding: 24rpx 14rpx;
+    background-color: #272822;
+    color: #fff;
+  }
+  .weui-media-box__detailed{
+    color: #cec469;
+  }
 </style>
 <template>
 <view class="page">
   <view class="page__bd">
-    <view class="weui-article__h1">项目列表</view>
+    <view class="weui-article__h1">项目报错详情</view>
     <view class="container">
       <view class="weui-panel weui-panel_access">
         <!-- <view class="weui-panel__hd">文字组合列表</view> -->
           <view class="weui-panel__bd">
-            <!-- <block wx:for="{{projectList}}" wx:key="*this">
-              <navigator url="" class="weui-grid" hover-class="weui-grid_active">
-                <image class="weui-grid__icon" src="../images/icon_tabbar.png" />
-                <view class="weui-grid__label">Grid</view>
-              </navigator>
-            </block> -->
-            <view class="weui-media-box weui-media-box_text" wx:for="{{projectList}}" wx:key="value">
-              <view @tap="projectErrorInfoList({{item}})">
+            <view class="weui-media-box weui-media-box_text" wx:for="{{projectErrorInfoList}}" wx:key="value">
+              <view @tap="">
                 <view class="weui-media-box__title weui-media-box__title_in-text">{{item.name}}</view>
-                <view class="weui-media-box__desc">{{item.msg}}</view>
+                <view class="weui-media-box__text">
+                  <view>filename: {{item.filename}}</view>
+                  <view>line: {{item.line}}</view>
+                  <view>column: {{item.column}}</view>
+                  <view wx:if="{{item.ext.source}}">
+                    <view class="weui-media-box__detailed">详细信息</view>
+                    <view>filename: {{item.ext.source}}</view>
+                    <view>line: {{item.ext.line}}</view>
+                    <view>column: {{item.ext.column}}</view>
+                  </view>
+                </view>
               </view>
             </view>
           </view>
@@ -41,7 +56,7 @@
 
   export default class Index extends wepy.page {
     config = {
-      navigationBarTitleText: '项目列表'
+      navigationBarTitleText: '项目报错信息'
     }
     components = {
     }
@@ -50,7 +65,7 @@
 
     data = {
       // 项目列表
-      projectList: []
+      projectErrorInfoList: []
     }
 
     computed = {
@@ -58,10 +73,7 @@
 
     methods = {
       projectErrorInfoList (item) {
-        wepy.setStorageSync('checkProjectList', item)
-        wepy.navigateTo({
-          url: 'projectErrorInfoList'
-        })
+        console.log(item)
       },
       // wepy.redirectTo 重定向
       demo_def () {
@@ -98,19 +110,21 @@
       console.log('index 页面隐藏')
     }
     async onLoad() {
+      let _checkProjectList = wepy.getStorageSync('checkProjectList')
       // let _appUser = await this.$parent.appUser()
       let _appUser = wepy.getStorageSync('appUser')
       let _obj = {
-        token: _appUser.token
+        token: _appUser.token,
+        _id: _checkProjectList._id
       }
       const res = await http.request({
         method: 'GET',
-        url: 'projectList',
+        url: 'projectErrorInfoList',
         params: _obj,
         isShowLoading: true
       })
       if (res) {
-        this.projectList = res.project
+        this.projectErrorInfoList = res.projectErrorInfoList
         // 手动触发 脏数据检查
         this.$apply()
       } else {

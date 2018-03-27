@@ -22,6 +22,10 @@ if (resJson[url]) {
 
 // 异步函数中更新数据的时，必须手动调用$apply方法 手动触发 脏数据检查
 this.$apply()
+
+// Gloabal 对象或 Storage 数据共享
+wepy.setStorageSync(USER_INFO, obj)
+wepy.getStorageSync(USER_INFO)
 ```
 
 ``` html
@@ -29,6 +33,17 @@ this.$apply()
   <view wx:if="{{item.checked}}">{{item.name}}</view>
   <view wx:els>{{item.name}}</view>
 </view>
+```
+## rpx可以根据屏幕宽度进行自适应
+
+设备	rpx换算px (屏幕宽度/750)	px换算rpx (750/屏幕宽度)
+iPhone5	1rpx = 0.42px	1px = 2.34rpx
+iPhone6	1rpx = 0.5px	1px = 2rpx
+iPhone6s	1rpx = 0.552px	1px = 1.81rpx
+``` css
+form {
+  width: 100%;
+}
 ```
 ``` js
 // wx.showToast icon 只支持  success loading
