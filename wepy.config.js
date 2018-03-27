@@ -7,6 +7,7 @@ console.log = (msg) => {
   let _arrR = [
     /\[编译\]/g,
     /\[写入\]/g,
+    /\[变更\]/g,
     /\[拷贝\]/g
   ]
   for (let i = 0; i < _arrR.length; i++) {

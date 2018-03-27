@@ -4,7 +4,15 @@ const msg = (str) => {
   wepy.showToast({
     title: str || '数据异常请重试',
     icon: 'success',
-    image: '../style/images/toast_info.png',
+    image: '../images/success.png',
+    duration: 1500
+  })
+}
+msg.err = (str) => {
+  wepy.showToast({
+    title: str || '数据异常请重试',
+    icon: 'error',
+    image: '../images/error.png',
     duration: 1500
   })
 }

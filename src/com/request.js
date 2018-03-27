@@ -1,6 +1,6 @@
 import wepy from 'wepy'
 import api from './api'
-import { msg } from './com'
+import msg from './com'
 // import resJson from './resJson'
 
 const request = async ({method, url, params, isShowLoading}) => {
@@ -27,7 +27,7 @@ const request = async ({method, url, params, isShowLoading}) => {
   if (res && res.res_code === '0') {
     return res.data
   } else {
-    msg('网络或数据异常')
+    msg.err('网络或数据异常')
     return 0
   }
 }

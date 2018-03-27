@@ -30,6 +30,15 @@ this.$apply()
   <view wx:els>{{item.name}}</view>
 </view>
 ```
+``` js
+// wx.showToast icon 只支持  success loading wepy.showToast image 定义 icon
+wepy.showToast({
+  title: str || '数据异常请重试',
+  icon: 'error',
+  image: '../images/error.png',
+  duration: 1500
+})
+```
 
 ``` js
 // issues 找不到crypto模块是因为你在代码中require了某些不能在小程序中使用的模块。

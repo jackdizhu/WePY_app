@@ -47,7 +47,7 @@
   import wepy from 'wepy'
   import testMixin from '../mixins/test'
   import http from '../com/request'
-  import { msg } from '../com/com'
+  import msg from '../com/com'
   // import Panel from '@/components/panel' // alias example
   // import Toast from 'wepy-com-toast'
 
@@ -115,12 +115,11 @@
         isShowLoading: true
       })
       if (res) {
-        msg('项目列表获取成功')
         this.projectList = res
         // 手动触发 脏数据检查
         this.$apply()
       } else {
-        msg('项目列表获取失败')
+        msg.err('项目列表获取失败')
       }
     }
   }

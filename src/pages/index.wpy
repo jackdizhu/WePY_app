@@ -64,7 +64,7 @@
   import wepy from 'wepy'
   import testMixin from '../mixins/test'
   import http from '../com/request'
-  import { msg } from '../com/com'
+  import msg from '../com/com'
   // import Panel from '@/components/panel' // alias example
   // import Toast from 'wepy-com-toast'
 
@@ -92,10 +92,10 @@
         _obj.name = 'jack'
         _obj.passwd = '111'
         if (!_obj.name) {
-          msg('请输入用户名')
+          msg.err('请输入用户名')
           return 0
         } else if (!_obj.passwd) {
-          msg('请输入密码')
+          msg.err('请输入密码')
           return 0
         }
         // login
@@ -108,10 +108,9 @@
         console.log(res, '登录成功 . .')
         if (res) {
           this.$parent.appUser(res)
-          msg('登录成功')
           this.urlToProjectList()
         } else {
-          msg('登录失败')
+          msg.err('登录失败')
         }
       },
       handleViewTap () {
