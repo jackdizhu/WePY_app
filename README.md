@@ -46,3 +46,23 @@ this.$apply()
     at startup (bootstrap_node.js:187:16)
     at bootstrap_node.js:608:3
 ```
+
+``` js
+// wepy.config.js
+// 处理框架 大量 log 排错难问题
+let log = console.log
+console.log = (msg) => {
+  let _arrR = [
+    /\[编译\]/g,
+    /\[写入\]/g,
+    /\[拷贝\]/g
+  ]
+  for (let i = 0; i < _arrR.length; i++) {
+    let r = _arrR[i].test(msg)
+    if (r) {
+      return 0
+    }
+  }
+  log(msg)
+}
+```

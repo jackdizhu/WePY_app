@@ -19,7 +19,6 @@
 <view class="page">
   <view class="page__hd">
     <view class="page__title">登录 debug_app</view>
-    <!-- <view class="page__desc">表单输入</view> -->
   </view>
   <view class="page__bd">
     <view class="container">
@@ -90,6 +89,8 @@
     methods = {
       formSubmit: async function (e) {
         let _obj = e.detail.value || {}
+        _obj.name = 'jack'
+        _obj.passwd = '111'
         if (!_obj.name) {
           msg('请输入用户名')
           return 0
@@ -105,20 +106,22 @@
           isShowLoading: true
         })
         console.log(res, '登录成功 . .')
+        if (res) {
+          this.$parent.appUser(res)
+          msg('登录成功')
+          this.urlToProjectList()
+        } else {
+          msg('登录失败')
+        }
       },
       handleViewTap () {
         // console.log(arguments, '--------------')
       },
       // wepy.navigateTo 打开新页面 一个应用同时只能打开5个页面
       // wepy.redirectTo 重定向
-      demo_def () {
+      urlToProjectList () {
         wepy.navigateTo({
-          url: 'demo'
-        })
-      },
-      demo_form () {
-        wepy.navigateTo({
-          url: 'demo_form'
+          url: 'projectList'
         })
       }
     }

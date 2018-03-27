@@ -1,0 +1,127 @@
+<style lang="less">
+  .userinfo {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .userinfo-avatar {
+    width: 80rpx;
+    height: 80rpx;
+    border-radius: 50%;
+  }
+
+  .userinfo-nickname {
+    color: #aaa;
+  }
+</style>
+<template>
+<view class="page">
+  <view class="page__hd">
+    <view class="page__title">项目列表</view>
+  </view>
+  <view class="page__bd">
+    <view class="container">
+      <view class="weui-panel weui-panel_access">
+        <!-- <view class="weui-panel__hd">文字组合列表</view> -->
+          <view class="weui-panel__bd">
+            <block wx:for="{{projectList}}" wx:key="*this">
+              <navigator url="" class="weui-grid" hover-class="weui-grid_active">
+                <image class="weui-grid__icon" src="../images/icon_tabbar.png" />
+                <view class="weui-grid__label">Grid</view>
+              </navigator>
+            </block>
+            <!-- <view class="weui-media-box weui-media-box_text" wx:for="{{projectList}}" wx:key="value">
+              <view class="weui-media-box__title weui-media-box__title_in-text">{{item.name}}</view>
+              <view class="weui-media-box__desc">{{item.msg}}</view>
+            </view> -->
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>
+</template>
+
+<script>
+  import wepy from 'wepy'
+  import testMixin from '../mixins/test'
+  import http from '../com/request'
+  import { msg } from '../com/com'
+  // import Panel from '@/components/panel' // alias example
+  // import Toast from 'wepy-com-toast'
+
+  export default class Index extends wepy.page {
+    config = {
+      navigationBarTitleText: 'test'
+    }
+    components = {
+    }
+
+    mixins = [testMixin]
+
+    data = {
+      // 项目列表
+      projectList: []
+    }
+
+    computed = {
+    }
+
+    methods = {
+      // wepy.redirectTo 重定向
+      demo_def () {
+        wepy.navigateTo({
+          url: 'demo'
+        })
+      }
+    }
+
+    events = {
+      'index-emit': (...args) => {
+        let $event = args[args.length - 1]
+        console.log(`${this.$name} receive ${$event.name} from ${$event.source.$name}`)
+      }
+    }
+
+    // 设置页面分享信息
+    // onShareAppMessage () {}
+    // 监听页面加载
+    // onload () {
+    //   console.log('监听页面加载')
+    //   this.onLoad_next()
+    // },
+    // 页面初次渲染
+    onready () {
+      console.log('index 页面初次渲染')
+    }
+    // 页面显示
+    onshow () {
+      console.log('index 页面显示')
+    }
+    // 页面隐藏
+    onhide () {
+      console.log('index 页面隐藏')
+    }
+    async onLoad() {
+      let _appUser = await this.$parent.appUser()
+      let _obj = {
+        token: _appUser.token
+      }
+      const res = await http.request({
+        method: 'GET',
+        url: 'projectList',
+        params: _obj,
+        isShowLoading: true
+      })
+      if (res) {
+        msg('项目列表获取成功')
+        this.projectList = res
+        // 手动触发 脏数据检查
+        this.$apply()
+      } else {
+        msg('项目列表获取失败')
+      }
+    }
+  }
+</script>

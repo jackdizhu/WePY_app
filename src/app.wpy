@@ -58,7 +58,8 @@ setStore(store)
 export default class extends wepy.app {
   config = {
     pages: [
-      'pages/index'
+      'pages/index',
+      'pages/projectList'
     ],
     window: {
       backgroundTextStyle: 'light',
@@ -70,7 +71,10 @@ export default class extends wepy.app {
 
   // 全局对象 通过 this.$parent.getUserInfo() 取值
   globalData = {
-    userInfo: null
+    // 微信 用户信息
+    userInfo: null,
+    // 项目用户信息
+    appUser: null
   }
 
   methods = {
@@ -84,22 +88,23 @@ export default class extends wepy.app {
 
   onLaunch() {
     console.log('小程序启动后')
-    this.testAsync()
+    // this.testAsync()
   }
 
-  sleep (s) {
-    return new Promise((resolve, reject) => {
-      setTimeout(() => {
-        resolve('promise resolved')
-      }, s * 1000)
-    })
-  }
+  // sleep (s) {
+  //   return new Promise((resolve, reject) => {
+  //     setTimeout(() => {
+  //       resolve('promise resolved')
+  //     }, s * 1000)
+  //   })
+  // }
 
-  async testAsync () {
-    const data = await this.sleep(3)
-    console.log(data)
-  }
+  // async testAsync () {
+  //   const data = await this.sleep(3)
+  //   console.log(data)
+  // }
 
+  // 微信 用户信息
   async getUserInfo() {
     // gender 性别 0：未知、1：男、2：女
     if (this.globalData.userInfo) {
@@ -107,6 +112,14 @@ export default class extends wepy.app {
     }
     this.globalData.userInfo = await wepy.getUserInfo()
     return this.globalData.userInfo
+  }
+
+  // 项目用户信息
+  async appUser(obj) {
+    if (obj) {
+      this.globalData.appUser = obj
+    }
+    return this.globalData.appUser
   }
 }
 </script>
