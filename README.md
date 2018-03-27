@@ -8,6 +8,8 @@ npm  i && wepy build --watch
 
 # 小程序开发问题
 
+## 模块引入问题 及 数据更新问题
+
 ``` js
 export default { request } // 定义模块 export default [ es6 语法 ]
 import { request } from '../com/request' // 引入 request === undefined
@@ -22,16 +24,22 @@ if (resJson[url]) {
 
 // 异步函数中更新数据的时，必须手动调用$apply方法 手动触发 脏数据检查
 this.$apply()
+```
 
+## 页面数据共享问题
+
+``` js
 // Gloabal 对象或 Storage 数据共享
 wepy.setStorageSync(USER_INFO, obj)
 wepy.getStorageSync(USER_INFO)
 ```
 
+## 数据遍历 if else 判断
+
 ``` html
 <view wx:for="{{checkboxItems}}" wx:key="value">
   <view wx:if="{{item.checked}}">{{item.name}}</view>
-  <view wx:els>{{item.name}}</view>
+  <view wx:else>{{item.name}}</view>
 </view>
 ```
 ## rpx可以根据屏幕宽度进行自适应
@@ -45,6 +53,8 @@ form {
   width: 100%;
 }
 ```
+## wx.showToast icon 只支持  success loading
+
 ``` js
 // wx.showToast icon 只支持  success loading
 // wepy.showToast image 定义 icon
@@ -55,6 +65,8 @@ wepy.showToast({
   duration: 1500
 })
 ```
+
+## 报错找不到模块问题
 
 ``` js
 // issues 找不到crypto模块是因为你在代码中require了某些不能在小程序中使用的模块。
@@ -71,6 +83,8 @@ wepy.showToast({
     at startup (bootstrap_node.js:187:16)
     at bootstrap_node.js:608:3
 ```
+
+## 开发环境错误调试处理
 
 ``` js
 // wepy.config.js
