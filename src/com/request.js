@@ -24,7 +24,7 @@ const request = async ({method, url, params, isShowLoading}) => {
   })
   isShowLoading && wepy.hideLoading && wepy.hideLoading()
   // console.log(res, 'res')
-  if (res && res.res_code === '0') {
+  if (res && res.data.res_code === '0') {
     return res.data
   } else {
     msg.err('网络或数据异常')
