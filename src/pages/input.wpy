@@ -1,38 +1,31 @@
 <style lang="less">
-  .flex-style{
-    display: -webkit-box;
-    display: -webkit-flex;
-    display: flex;
+  .section{
+    height: 30px;
+    width: 100%;
   }
-  .flex-item{
-    height: 35px;
-    line-height: 35px;
-    text-align: center;
-    -webkit-box-flex: 1;
-    -webkit-flex: 1;
-    flex: 1
-  }
-  .flex-item.active{
-    color:#0091ff;
+  .section input{
+    width:90%;
+    margin:5px auto;
+    border:1px solid #c3c3c3;
+    height:30px;
+    border-radius: 3px;
+    padding: 0 5px;
   }
   .text_box{
-    margin: 0 15px;
-    padding: 15px 0;
-    border-bottom: 1px solid #c3c3c3;
-    font-size: 13px;
-  }
-  .text_box .text_item{
-    display:inline-block;
-    line-height: 8px;
+    margin: 10px 25px;
+    border-bottom:1px solid #c3c3c3;
+    padding-bottom:10px
   }
 </style>
 <template>
-<view class="page">
-  <!-- <view class="naviButton">出行路线规划</view> -->
+<view class="page index">
   <view class="map_container">
     <view class="container">
-      <view class="text_box" wx:for="{{steps}}" wx:key="value">
-        {{item.instruction}}
+      <view class="section">
+        <input bindinput="bindInput" placeholder="搜索" focus="true" />
+      </view>
+      <view bindtouchstart="bindSearch" data-keywords="{{i.name}}" class="text_box" wx:for="{{tips}}" wx:for-item="i">
+        {{i.name}}
       </view>
     </view>
     <!--定义页面结构，可以使用地图组件也能使用其他组件 -->
@@ -55,24 +48,39 @@
     }
 
     mixins = [testMixin]
-
     data = {
-      steps: {}
+      userInfo: {},
+      tips: {},
+      lonlat: null,
+      city: null
     }
 
     computed = {
     }
 
     methods = {
-      goDetail: function (e) {
+      bindInput: async function (e) {
+        var _this = this
+        var keywords = e.detail.value
+
+        let _R = await _this.$parent.app(null, 'index_amap')
+        _R.amap.getInputtips({
+          keywords: keywords,
+          location: _this.lonlat,
+          city: _this.city,
+          success: function (data) {
+            if (data && data.tips) {
+              _this.tips = data.tips
+            }
+          }
+        })
       },
-      goToCar: function (e) {
-      },
-      goToBus: function (e) {
-      },
-      goToRide: function (e) {
-      },
-      goToWalk: function (e) {
+      bindSearch: function (e) {
+        var keywords = e.target.dataset.keywords
+        var url = 'poi?keywords=' + keywords
+        wx.redirectTo({
+          url: url
+        })
       }
     }
 
@@ -102,20 +110,10 @@
     onhide () {
       console.log('index 页面隐藏')
     }
-    async onLoad() {
-      let _this = this
-      let _R = await _this.$parent.app(null, 'index_amap')
-      _R.amap.getWalkingRoute({
-        origin: '116.481028,39.989643',
-        destination: '116.434446,39.90816',
-        success: function (data) {
-          if (data.paths && data.paths[0] && data.paths[0].steps) {
-            _this.steps = data.paths[0].steps
-          }
-        },
-        fail: function (info) {
-        }
-      })
+    async onLoad(e) {
+      this.lonlat = e.lonlat
+      this.city = e.city
+
       // const res = await http.request({
       //   method: 'POST',
       //   url: 'login',

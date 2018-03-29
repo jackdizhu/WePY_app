@@ -50,7 +50,7 @@
 </style>
 <template>
 <view class="page">
-  <view class="naviButton">出行路线规划</view>
+  <!-- <view class="naviButton">出行路线规划</view> -->
   <view class="map_container">
     <view class="container">
       <view class="flex-style">

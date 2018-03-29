@@ -62,6 +62,7 @@ export default class extends wepy.app {
       'pages/navigation',
       'pages/navigation_detail',
       'pages/poi',
+      'pages/input',
       'pages/regeo',
       'pages/staticmap',
       'pages/weather'

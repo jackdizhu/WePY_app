@@ -1,17 +1,64 @@
 <style lang="less">
+  .section{
+    height: 30px;
+    width: 100%;
+  }
+  .section input{
+    width:90%;
+    margin:5px auto;
+    border:1px solid #c3c3c3;
+    height:30px;
+    border-radius: 3px;
+    padding: 0 5px;
+  }
   .map_container{
     position: absolute;
-    top: 0;
-    bottom: 0;
+    top: 42px;
+    bottom: 80px;
     left: 0;
     right: 0;
+  }
+  .map{
+    width: 100%;
+    height: 100%;
+  }
+  .map_text{
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0px;
+    height: 80px;
+    background: #fff;
+    padding: 0 15px;
+  }
+  text{
+    margin: 5px 0;
+    display: block;
+    font-size:12px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+  }
+  .h1{
+    margin: 15px 0;
+    font-size:15px;
   }
 </style>
 <template>
 <view class="page">
+  <!-- <view class="naviButton">周边兴趣点查询</view> -->
   <view class="map_container">
     <view class="container">
-      <view class="naviButton" id="poi" @tap="naviToPoi">周边兴趣点查询</view>
+      <view class="section">
+        <input data-city="{{city}}" data-longitude="{{longitude}}" data-latitude="{{latitude}}" bindtouchstart="bindInput" placeholder="搜索"/>
+      </view>
+      <view class="map_container">
+        <map class="map" id="map" longitude="{{longitude}}" latitude="{{latitude}}" scale="14" show-location="true" markers="{{markers}}" bindmarkertap="makertap"></map>
+      </view>
+      <view class="map_text">
+        <text class="h1">{{textData.name}}</text>
+        <text>{{textData.desc}}</text>
+      </view>
     </view>
     <!--定义页面结构，可以使用地图组件也能使用其他组件 -->
   </view>
@@ -24,6 +71,7 @@
   // import http from '../com/request'
   // import msg from '../com/com'
   // var amapFile = require('../com/amap-wx.js')
+  var markersData = []
 
   export default class Index extends wepy.page {
     config = {
@@ -35,7 +83,6 @@
     mixins = [testMixin]
 
     data = {
-      userInfo: {},
       markers: [],
       latitude: '',
       longitude: '',
@@ -47,6 +94,37 @@
     }
 
     methods = {
+      bindInput: function (e) {
+        // var _this = this
+        var url = 'input'
+        if (e.target.dataset.latitude && e.target.dataset.longitude && e.target.dataset.city) {
+          var dataset = e.target.dataset
+          url = url + '?lonlat=' + dataset.longitude + ',' + dataset.latitude + '&city=' + dataset.city
+        }
+        wx.redirectTo({
+          url: url
+        })
+      },
+      changeMarkerColor: function(data, i) {
+        var _this = this
+        var markers = []
+        for (var j = 0; j < data.length; j++) {
+          if (j === i) {
+            data[j].iconPath = '../images/marker_checked.png'
+          } else {
+            data[j].iconPath = '../images/marker.png'
+          }
+          markers.push({
+            id: data[j].id,
+            latitude: data[j].latitude,
+            longitude: data[j].longitude,
+            iconPath: data[j].iconPath,
+            width: data[j].width,
+            height: data[j].height
+          })
+        }
+        _this.markers = markers
+      }
     }
 
     events = {
@@ -75,7 +153,68 @@
     onhide () {
       console.log('index 页面隐藏')
     }
-    async onLoad() {
+    async onLoad (e) {
+      let _this = this
+      let _R = await _this.$parent.app(null, 'index_amap')
+      var params = {
+        iconPathSelected: '../images/marker_checked.png',
+        iconPath: '../images/marker.png',
+        success: function (data) {
+          markersData = data.markers
+          var poisData = data.poisData
+          var markersNew = []
+          markersData.forEach(function (item, index) {
+            markersNew.push({
+              id: item.id,
+              latitude: item.latitude,
+              longitude: item.longitude,
+              iconPath: item.iconPath,
+              width: item.width,
+              height: item.height
+            })
+          })
+          if (markersData.length > 0) {
+            _this.markers = markersNew
+            _this.city = poisData[0].cityname || ''
+            _this.latitude = markersData[0].latitude
+            _this.longitude = markersData[0].longitude
+            _this.longitude = markersData[0].longitude
+
+            _this.textData = {
+              name: markersData[0].name,
+              desc: markersData[0].address
+            }
+          } else {
+            wx.getLocation({
+              type: 'gcj02',
+              success: function (res) {
+                _this.latitude = res.latitude
+                _this.longitude = res.longitude
+                _this.city = '北京市'
+              },
+              fail: function () {
+                _this.latitude = 39.909729
+                _this.longitude = 116.398419
+                _this.city = '北京市'
+              }
+            })
+
+            _this.textData = {
+              name: '抱歉，未找到结果',
+              desc: ''
+            }
+          }
+          // 手动触发 脏数据检查
+          _this.$apply()
+        },
+        fail: function (info) {
+          // wx.showModal({title:info.errMsg})
+        }
+      }
+      if (e && e.keywords) {
+        params.querykeywords = e.keywords
+      }
+      _R.amap.getPoiAround(params)
       // const res = await http.request({
       //   method: 'POST',
       //   url: 'login',
