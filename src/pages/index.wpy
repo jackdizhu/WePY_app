@@ -1,74 +1,20 @@
 <style lang="less">
-  .userinfo {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-
-  .userinfo-avatar {
-    width: 80rpx;
-    height: 80rpx;
-    border-radius: 50%;
-  }
-
-  .userinfo-nickname {
-    color: #aaa;
-  }
 </style>
 <template>
 <view class="page">
-  <view class="page__bd">
-    <view class="weui-article__h1">登录 debug_app</view>
-    <view class="container">
-      <view class="userinfo" @tap="handleViewTap" wx:if="userInfo.nickName">
-        <image class="userinfo-avatar" src="{{ userInfo.avatarUrl }}" background-size="cover"/>
-        <view class="userinfo-nickname">{{ userInfo.nickName }}</view>
-      </view>
-      <view class="userinfo" @tap="handleViewTap" wx:else>
-        <view class="userinfo-nickname">加载中 . . .</view>
-      </view>
-
-      <form bindsubmit="formSubmit" bindreset="formReset">
-        <view class="weui-cells weui-cells_after-title">
-          <view class="weui-cell weui-cell_input">
-            <view class="weui-cell__hd">
-              <view class="weui-label">用户名</view>
-            </view>
-            <view class="weui-cell__bd">
-              <input type="text" name="name" class="weui-input" placeholder="请输入用户名" />
-            </view>
-          </view>
-          <view class="weui-cell weui-cell_input">
-            <view class="weui-cell__hd">
-              <view class="weui-label">密码</view>
-            </view>
-            <view class="weui-cell__bd">
-              <input type="password" name="passwd" class="weui-input" placeholder="请输入密码" />
-            </view>
-          </view>
-
-        </view>
-        <view class="weui-btn-area">
-          <button class="weui-btn" formType="submit" type="primary">登录</button>
-        </view>
-      </form>
-
-    </view>
-  </view>
+  index
 </view>
 </template>
 
 <script>
   import wepy from 'wepy'
   import testMixin from '../mixins/test'
-  import http from '../com/request'
-  import msg from '../com/com'
-  // import Panel from '@/components/panel' // alias example
-  // import Toast from 'wepy-com-toast'
+  // import http from '../com/request'
+  // import msg from '../com/com'
 
   export default class Index extends wepy.page {
     config = {
-      navigationBarTitleText: '登录'
+      navigationBarTitleText: '附近生活导航'
     }
     components = {
     }
@@ -76,54 +22,13 @@
     mixins = [testMixin]
 
     data = {
-      userInfo: {
-        nickName: ''
-      }
+      userInfo: {}
     }
 
     computed = {
     }
 
     methods = {
-      formSubmit: async function (e) {
-        let _obj = e.detail.value || {}
-        if (!_obj.name) {
-          msg.err('请输入用户名')
-          return 0
-        } else if (!_obj.passwd) {
-          msg.err('请输入密码')
-          return 0
-        }
-        _obj.name = 'jack'
-        _obj.passwd = '111'
-        // login
-        const res = await http.request({
-          method: 'POST',
-          url: 'login',
-          params: _obj,
-          isShowLoading: true
-        })
-        console.log(res, '登录成功 . .')
-        if (res) {
-          // this.$parent.appUser(res)
-          wepy.setStorageSync('appUser', res)
-          wepy.navigateTo({
-            url: 'projectList'
-          })
-        } else {
-          msg.err('登录失败')
-        }
-      },
-      handleViewTap () {
-        // console.log(arguments, '--------------')
-      },
-      // wepy.navigateTo 打开新页面 一个应用同时只能打开5个页面
-      // wepy.redirectTo 重定向
-      urlToProjectList () {
-        wepy.navigateTo({
-          url: 'projectList'
-        })
-      }
     }
 
     events = {
@@ -153,6 +58,18 @@
       console.log('index 页面隐藏')
     }
     async onLoad() {
+      // const res = await http.request({
+      //   method: 'POST',
+      //   url: 'login',
+      //   params: _obj,
+      //   isShowLoading: true
+      // })
+      // wepy.setStorageSync('appUser', res)
+      // wepy.navigateTo({
+      //   url: 'projectList'
+      // })
+      // msg.err('登录失败')
+
       // let _userInfo = await this.$parent.getUserInfo()
       let _userInfo = wepy.getStorageSync('userInfo')
       this.userInfo = _userInfo.userInfo
