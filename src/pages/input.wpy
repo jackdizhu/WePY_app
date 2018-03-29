@@ -22,10 +22,10 @@
   <view class="map_container">
     <view class="container">
       <view class="section">
-        <input bindinput="bindInput" placeholder="搜索" focus="true" />
+        <input @input="bindInput" placeholder="搜索" focus="true" />
       </view>
-      <view bindtouchstart="bindSearch" data-keywords="{{i.name}}" class="text_box" wx:for="{{tips}}" wx:for-item="i">
-        {{i.name}}
+      <view @tap="bindSearch" data-keywords="{{item.name}}" class="text_box" wx:for="{{tips}}" wx:key="value">
+        {{item.name}}
       </view>
     </view>
     <!--定义页面结构，可以使用地图组件也能使用其他组件 -->

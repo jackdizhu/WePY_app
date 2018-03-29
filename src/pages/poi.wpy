@@ -50,10 +50,10 @@
   <view class="map_container">
     <view class="container">
       <view class="section">
-        <input data-city="{{city}}" data-longitude="{{longitude}}" data-latitude="{{latitude}}" bindtouchstart="bindInput" placeholder="搜索"/>
+        <input data-city="{{city}}" data-longitude="{{longitude}}" data-latitude="{{latitude}}" @tap="bindInput" placeholder="搜索"/>
       </view>
       <view class="map_container">
-        <map class="map" id="map" longitude="{{longitude}}" latitude="{{latitude}}" scale="14" show-location="true" markers="{{markers}}" bindmarkertap="makertap"></map>
+        <map class="map" id="map" longitude="{{longitude}}" latitude="{{latitude}}" scale="14" show-location="true" markers="{{markers}}" @markertap="makertap"></map>
       </view>
       <view class="map_text">
         <text class="h1">{{textData.name}}</text>
@@ -94,7 +94,7 @@
     }
 
     methods = {
-      bindInput: function (e) {
+      bindInput (e) {
         // var _this = this
         var url = 'input'
         if (e.target.dataset.latitude && e.target.dataset.longitude && e.target.dataset.city) {
@@ -104,26 +104,6 @@
         wx.redirectTo({
           url: url
         })
-      },
-      changeMarkerColor: function(data, i) {
-        var _this = this
-        var markers = []
-        for (var j = 0; j < data.length; j++) {
-          if (j === i) {
-            data[j].iconPath = '../images/marker_checked.png'
-          } else {
-            data[j].iconPath = '../images/marker.png'
-          }
-          markers.push({
-            id: data[j].id,
-            latitude: data[j].latitude,
-            longitude: data[j].longitude,
-            iconPath: data[j].iconPath,
-            width: data[j].width,
-            height: data[j].height
-          })
-        }
-        _this.markers = markers
       }
     }
 
@@ -132,6 +112,38 @@
         let $event = args[args.length - 1]
         console.log(`${this.$name} receive ${$event.name} from ${$event.source.$name}`)
       }
+    }
+
+    showMarkerInfo (data, i) {
+      this.textData = {
+        name: data[i].name,
+        desc: data[i].address
+      }
+    }
+    changeMarkerColor (data, i) {
+      var _this = this
+      var markers = []
+      for (var j = 0; j < data.length; j++) {
+        if (j === i) {
+          data[j].iconPath = '../images/marker_checked.png'
+        } else {
+          data[j].iconPath = '../images/marker.png'
+        }
+        markers.push({
+          id: data[j].id,
+          latitude: data[j].latitude,
+          longitude: data[j].longitude,
+          iconPath: data[j].iconPath,
+          width: data[j].width,
+          height: data[j].height
+        })
+      }
+      _this.markers = markers
+    }
+    makertap (e) {
+      var id = e.markerId
+      this.showMarkerInfo(markersData, id)
+      this.changeMarkerColor(markersData, id)
     }
 
     // 设置页面分享信息
