@@ -1,0 +1,221 @@
+<style lang="less">
+  .flex-style{
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: flex;
+  }
+  .flex-item{
+    height: 35px;
+    line-height: 35px;
+    text-align: center;
+    -webkit-box-flex: 1;
+    -webkit-flex: 1;
+    flex: 1
+  }
+  .flex-item.active{
+    color:#0091ff;
+  }
+  .map_box{
+    position:absolute;
+    top: 35px;
+    bottom: 90px;
+    left: 0px;
+    right: 0px;
+  }
+  #navi_map{
+    width: 100%;
+    height: 100%;
+  }
+  .text_box{
+    position:absolute;
+    height: 90px;
+    bottom: 0px;
+    left: 0px;
+    right: 0px;
+  }
+  .text_box .text{
+    margin: 15px;
+  }
+  .detail_button{
+    position:absolute;
+    bottom: 30px;
+    right: 10px;
+    padding: 3px 5px;
+    color: #fff;
+    background: #0091ff;
+    width:50px;
+    text-align:center;
+    border-radius:5px;
+  }
+</style>
+<template>
+<view class="page">
+  <view class="naviButton">出行路线规划</view>
+  <view class="map_container">
+    <view class="container">
+      <view class="flex-style">
+        <view class="flex-item" @tap="goToCar">驾车</view>
+        <view class="flex-item active" @tap="goToWalk">步行</view>
+        <view class="flex-item" @tap="goToBus">公交</view>
+        <view class="flex-item" @tap="goToRide">骑行</view>
+      </view>
+      <view class="map_box">
+        <map id="navi_map" longitude="116.451028" latitude="39.949643" scale="12" markers="{{markers}}" polyline="{{polyline}}"></map>
+      </view>
+
+      <view class="text_box">
+        <view class="text">{{distance}}</view>
+        <view class="text">{{cost}}</view>
+        <view class="detail_button" @tap="goDetail">详情</view>
+      </view>
+    </view>
+    <!--定义页面结构，可以使用地图组件也能使用其他组件 -->
+  </view>
+</view>
+</template>
+
+<script>
+  import wepy from 'wepy'
+  import testMixin from '../mixins/test'
+  // import http from '../com/request'
+  // import msg from '../com/com'
+  // var amapFile = require('../com/amap-wx.js')
+
+  export default class Index extends wepy.page {
+    config = {
+      navigationBarTitleText: '附近生活导航'
+    }
+    components = {
+    }
+
+    mixins = [testMixin]
+
+    data = {
+      markers: [
+        {
+          iconPath: '../images/mapicon_navi_s.png',
+          id: 0,
+          latitude: 39.989643,
+          longitude: 116.481028,
+          width: 23,
+          height: 33
+        },
+        {
+          iconPath: '../images/mapicon_navi_e.png',
+          id: 0,
+          latitude: 39.90816,
+          longitude: 116.434446,
+          width: 24,
+          height: 34
+        }
+      ],
+      userInfo: {},
+      polyline: [],
+      // 距离
+      distance: '',
+      // 时间
+      cost: ''
+    }
+
+    computed = {
+    }
+
+    methods = {
+      goDetail: function (e) {
+        wepy.navigateTo({
+          url: 'navigation_detail'
+        })
+      },
+      goToCar: function (e) {
+      },
+      goToBus: function (e) {
+      },
+      goToRide: function (e) {
+      },
+      goToWalk: function (e) {
+      }
+    }
+
+    events = {
+      'index-emit': (...args) => {
+        let $event = args[args.length - 1]
+        console.log(`${this.$name} receive ${$event.name} from ${$event.source.$name}`)
+      }
+    }
+
+    // 设置页面分享信息
+    // onShareAppMessage () {}
+    // 监听页面加载
+    // onload () {
+    //   console.log('监听页面加载')
+    //   this.onLoad_next()
+    // },
+    // 页面初次渲染
+    onready () {
+      console.log('index 页面初次渲染')
+    }
+    // 页面显示
+    onshow () {
+      console.log('index 页面显示')
+    }
+    // 页面隐藏
+    onhide () {
+      console.log('index 页面隐藏')
+    }
+    async onLoad() {
+      let _this = this
+      let _R = await _this.$parent.app(null, 'index_amap')
+      _R.amap.getWalkingRoute({
+        origin: '116.481028,39.989643',
+        destination: '116.434446,39.90816',
+        success: function (data) {
+          var points = []
+          if (data.paths && data.paths[0] && data.paths[0].steps) {
+            var steps = data.paths[0].steps
+            for (var i = 0; i < steps.length; i++) {
+              var poLen = steps[i].polyline.split(';')
+              for (var j = 0; j < poLen.length; j++) {
+                points.push({
+                  longitude: parseFloat(poLen[j].split(',')[0]),
+                  latitude: parseFloat(poLen[j].split(',')[1])
+                })
+              }
+            }
+          }
+          _this.polyline = [{
+            points: points,
+            color: '#0091ff',
+            width: 6
+          }]
+
+          if (data.paths[0] && data.paths[0].distance) {
+            _this.distance = data.paths[0].distance + '米'
+          }
+          if (data.paths[0] && data.paths[0].duration) {
+            _this.distance = parseInt(data.paths[0].duration / 60) + '分钟'
+          }
+        },
+        fail: function (info) {
+        }
+      })
+      // const res = await http.request({
+      //   method: 'POST',
+      //   url: 'login',
+      //   params: _obj,
+      //   isShowLoading: true
+      // })
+      // wepy.setStorageSync('appUser', res)
+      // wepy.navigateTo({
+      //   url: 'projectList'
+      // })
+      // msg.err('登录失败')
+
+      // let _userInfo = await this.$parent.getUserInfo()
+      let _userInfo = wepy.getStorageSync('userInfo')
+      this.userInfo = _userInfo.userInfo
+      console.log(_userInfo, 'index 监听页面加载')
+      // 手动触发 脏数据检查
+      this.$apply()
+    }
+  }
+</script>

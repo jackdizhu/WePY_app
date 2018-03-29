@@ -58,7 +58,13 @@ setStore(store)
 export default class extends wepy.app {
   config = {
     pages: [
-      'pages/index'
+      'pages/index',
+      'pages/navigation',
+      'pages/navigation_detail',
+      'pages/poi',
+      'pages/regeo',
+      'pages/staticmap',
+      'pages/weather'
     ],
     window: {
       backgroundTextStyle: 'light',
@@ -73,7 +79,11 @@ export default class extends wepy.app {
     // 微信 用户信息
     userInfo: null,
     // 项目用户信息
-    appUser: null
+    appUser: null,
+    // 全局共享数据
+    app: {
+      index: null
+    }
   }
 
   methods = {
@@ -121,6 +131,13 @@ export default class extends wepy.app {
       this.globalData.appUser = obj
     }
     return this.globalData.appUser
+  }
+  // 项目用户信息
+  async app(obj, str) {
+    if (obj) {
+      this.globalData.app[str] = obj
+    }
+    return this.globalData.app[str]
   }
 }
 </script>

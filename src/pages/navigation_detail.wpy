@@ -1,14 +1,39 @@
 <style lang="less">
+  .flex-style{
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: flex;
+  }
+  .flex-item{
+    height: 35px;
+    line-height: 35px;
+    text-align: center;
+    -webkit-box-flex: 1;
+    -webkit-flex: 1;
+    flex: 1
+  }
+  .flex-item.active{
+    color:#0091ff;
+  }
+  .text_box{
+    margin: 0 15px;
+    padding: 15px 0;
+    border-bottom: 1px solid #c3c3c3;
+    font-size: 13px;
+  }
+  .text_box .text_item{
+    display:inline-block;
+    line-height: 8px;
+  }
 </style>
 <template>
-<view class="page index">
+<view class="page">
+  <view class="naviButton">出行路线规划</view>
   <view class="map_container">
     <view class="container">
-      <view class="naviButton" id="Regeo" @tap="naviToRegeo">地址解析</view>
-      <view class="naviButton" id="weahter" @tap="naviToWeather">天气查询</view>
-      <view class="naviButton" id="poi" @tap="naviToPoi">周边兴趣点查询</view>
-      <view class="naviButton" id="staticmap" @tap="naviToStatic">静态图</view>
-      <view class="naviButton" id="navi" @tap="naviToNavi">出行路线规划</view>
+      <view class="text_box" wx:for="{{steps}}" wx:key="value">
+        {{item.instruction}}
+      </view>
     </view>
     <!--定义页面结构，可以使用地图组件也能使用其他组件 -->
   </view>
@@ -20,7 +45,7 @@
   import testMixin from '../mixins/test'
   // import http from '../com/request'
   // import msg from '../com/com'
-  var amapFile = require('../com/amap-wx.js')
+  // var amapFile = require('../com/amap-wx.js')
 
   export default class Index extends wepy.page {
     config = {
@@ -32,37 +57,22 @@
     mixins = [testMixin]
 
     data = {
-      userInfo: {}
+      steps: {}
     }
 
     computed = {
     }
 
     methods = {
-      naviToRegeo: function (e) {
-        wepy.navigateTo({
-          url: 'regeo'
-        })
+      goDetail: function (e) {
       },
-      naviToWeather: function (e) {
-        wepy.navigateTo({
-          url: 'weather'
-        })
+      goToCar: function (e) {
       },
-      naviToPoi: function (e) {
-        wepy.navigateTo({
-          url: 'poi'
-        })
+      goToBus: function (e) {
       },
-      naviToStatic: function (e) {
-        wepy.navigateTo({
-          url: 'staticmap'
-        })
+      goToRide: function (e) {
       },
-      naviToNavi: function (e) {
-        wepy.navigateTo({
-          url: 'navigation'
-        })
+      goToWalk: function (e) {
       }
     }
 
@@ -94,22 +104,18 @@
     }
     async onLoad() {
       let _this = this
-      var _amap = new amapFile.AMapWX({
-        // WeChatKey: 'ef4c718984319a3d2720b721ab8d10c8'
-        key: 'ef4c718984319a3d2720b721ab8d10c8'
-      })
-      _amap.getPoiAround({
-        success: async function (data) {
-          // 成功回调
-          let _R = await _this.$parent.app({ amap: _amap, data: data }, 'index_amap')
-          console.log(_R)
+      let _R = await _this.$parent.app(null, 'index_amap')
+      _R.amap.getWalkingRoute({
+        origin: '116.481028,39.989643',
+        destination: '116.434446,39.90816',
+        success: function (data) {
+          if (data.paths && data.paths[0] && data.paths[0].steps) {
+            _this.steps = data.paths[0].steps
+          }
         },
         fail: function (info) {
-          // 失败回调
-          console.log(info)
         }
       })
-
       // const res = await http.request({
       //   method: 'POST',
       //   url: 'login',
