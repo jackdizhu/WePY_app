@@ -54,13 +54,13 @@
   <view class="box_container">
     <view class="container">
       <view class="flex-style">
-        <view class="flex-item" @tap="goToCar">驾车</view>
-        <view class="flex-item active" @tap="goToWalk">步行</view>
-        <view class="flex-item" @tap="goToBus">公交</view>
-        <view class="flex-item" @tap="goToRide">骑行</view>
+        <view class="flex-item {{active === '1' ? 'active' : ''}}" @tap="showMapRoute('getDrivingRoute', '1')" >驾车</view>
+        <view class="flex-item {{active === '2' ? 'active' : ''}}" @tap="showMapRoute('getWalkingRoute', '2')">步行</view>
+        <view class="flex-item {{active === '3' ? 'active' : ''}}" @tap="showMapRoute('getTransitRoute', '3')">公交</view>
+        <view class="flex-item {{active === '4' ? 'active' : ''}}" @tap="showMapRoute('getRidingRoute', '4')">骑行</view>
       </view>
       <view class="map_box">
-        <map id="navi_map" longitude="116.451028" latitude="39.949643" scale="12" markers="{{markers}}" polyline="{{polyline}}"></map>
+        <map id="navi_map" longitude="{{markers[0].longitude}}" latitude="{{markers[0].latitude}}" scale="{{scale}}" markers="{{markers}}" polyline="{{polyline}}"></map>
       </view>
 
       <view class="text_box">
@@ -91,7 +91,11 @@
     mixins = [testMixin]
 
     data = {
+      active: '2',
+      // 地图尺寸
+      scale: 60,
       markers: [
+        // 起点
         {
           iconPath: '../images/mapicon_navi_s.png',
           id: 0,
@@ -100,6 +104,7 @@
           width: 23,
           height: 33
         },
+        // 终点
         {
           iconPath: '../images/mapicon_navi_e.png',
           id: 0,
@@ -126,13 +131,67 @@
           url: 'navigation_detail'
         })
       },
-      goToCar: function (e) {
-      },
-      goToBus: function (e) {
-      },
-      goToRide: function (e) {
-      },
-      goToWalk: function (e) {
+      async showMapRoute (str, index) {
+        let _this = this
+        _this.active = index || '2'
+        let _markersData2 = await wepy.getLocation()
+        let _location = ((_markersData2.longitude || '116.434446') + ',' + (_markersData2.latitude || '116.434446'))
+        // console.log(_location, '起点')
+        _this.markers[0].longitude = _markersData2.longitude
+        _this.markers[0].latitude = _markersData2.latitude
+        _this.markers[0].id = _markersData2.id
+
+        // 终点
+        let _markersData = await this.$parent.app(null, 'poi_markersData') || {}
+        let _destination = ((_markersData.longitude || '116.434446') + ',' + (_markersData.latitude || '116.434446'))
+        // console.log(_destination, '终点')
+        _this.markers[1].longitude = _markersData.longitude
+        _this.markers[1].latitude = _markersData.latitude
+        _this.markers[1].id = _markersData.id
+
+        // 手动触发 脏数据检查
+        _this.$apply()
+        console.log(_this.markers, '-----------------')
+        let _R = await _this.$parent.app(null, 'index_amap')
+        let _param = {
+          // 起点
+          origin: _location,
+          // 终点
+          destination: _destination,
+          success: function (data) {
+            var points = []
+            if (data.paths && data.paths[0] && data.paths[0].steps) {
+              var steps = data.paths[0].steps
+              for (var i = 0; i < steps.length; i++) {
+                var poLen = steps[i].polyline.split(';')
+                for (var j = 0; j < poLen.length; j++) {
+                  points.push({
+                    longitude: parseFloat(poLen[j].split(',')[0]),
+                    latitude: parseFloat(poLen[j].split(',')[1])
+                  })
+                }
+              }
+            }
+            _this.polyline = [{
+              points: points,
+              color: '#0091ff',
+              width: 6
+            }]
+
+            if (data.paths[0] && data.paths[0].distance) {
+              _this.distance = data.paths[0].distance + '米'
+            }
+            if (data.paths[0] && data.paths[0].duration) {
+              _this.distance = parseInt(data.paths[0].duration / 60) + '分钟'
+            }
+            // 手动触发 脏数据检查
+            _this.$apply()
+          },
+          fail: function (info) {
+          }
+        }
+        _R.amap[str] && _R.amap[str](_param)
+        // _R.amap.getWalkingRoute(_param)
       }
     }
 
@@ -143,31 +202,33 @@
       }
     }
 
-    // 设置页面分享信息
-    // onShareAppMessage () {}
-    // 监听页面加载
-    // onload () {
-    //   console.log('监听页面加载')
-    //   this.onLoad_next()
-    // },
-    // 页面初次渲染
-    onready () {
-      console.log('index 页面初次渲染')
-    }
-    // 页面显示
-    onshow () {
-      console.log('index 页面显示')
-    }
-    // 页面隐藏
-    onhide () {
-      console.log('index 页面隐藏')
-    }
-    async onLoad() {
+    async showMapRoute (str, index) {
       let _this = this
+      _this.active = index || '2'
+      let _markersData2 = await wepy.getLocation()
+      let _location = ((_markersData2.longitude || '116.434446') + ',' + (_markersData2.latitude || '116.434446'))
+      // console.log(_location, '起点')
+      _this.markers[0].longitude = _markersData2.longitude
+      _this.markers[0].latitude = _markersData2.latitude
+      _this.markers[0].id = _markersData2.id
+
+      // 终点
+      let _markersData = await this.$parent.app(null, 'poi_markersData') || {}
+      let _destination = ((_markersData.longitude || '116.434446') + ',' + (_markersData.latitude || '116.434446'))
+      // console.log(_destination, '终点')
+      _this.markers[1].longitude = _markersData.longitude
+      _this.markers[1].latitude = _markersData.latitude
+      _this.markers[1].id = _markersData.id
+
+      // 手动触发 脏数据检查
+      _this.$apply()
+      console.log(_this.markers, '-----------------')
       let _R = await _this.$parent.app(null, 'index_amap')
-      _R.amap.getWalkingRoute({
-        origin: '116.481028,39.989643',
-        destination: '116.434446,39.90816',
+      let _param = {
+        // 起点
+        origin: _location,
+        // 终点
+        destination: _destination,
         success: function (data) {
           var points = []
           if (data.paths && data.paths[0] && data.paths[0].steps) {
@@ -194,10 +255,36 @@
           if (data.paths[0] && data.paths[0].duration) {
             _this.distance = parseInt(data.paths[0].duration / 60) + '分钟'
           }
+          // 手动触发 脏数据检查
+          _this.$apply()
         },
         fail: function (info) {
         }
-      })
+      }
+      _R.amap[str] && _R.amap[str](_param)
+      // _R.amap.getWalkingRoute(_param)
+    }
+    // 设置页面分享信息
+    // onShareAppMessage () {}
+    // 监听页面加载
+    // onload () {
+    //   console.log('监听页面加载')
+    //   this.onLoad_next()
+    // },
+    // 页面初次渲染
+    onready () {
+      console.log('index 页面初次渲染')
+    }
+    // 页面显示
+    onshow () {
+      console.log('index 页面显示')
+    }
+    // 页面隐藏
+    onhide () {
+      console.log('index 页面隐藏')
+    }
+    async onLoad() {
+      this.showMapRoute('getWalkingRoute')
       // const res = await http.request({
       //   method: 'POST',
       //   url: 'login',

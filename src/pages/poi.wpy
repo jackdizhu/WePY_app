@@ -140,10 +140,19 @@
       }
       _this.markers = markers
     }
-    makertap (e) {
+    async makertap (e) {
       var id = e.markerId
-      this.showMarkerInfo(markersData, id)
+      let _markersData = markersData[id]
       this.changeMarkerColor(markersData, id)
+      // 选中的 地图上的点
+      this.showMarkerInfo(markersData, id)
+      // console.log(_markersData, '选中点')
+
+      await this.$parent.app(_markersData, 'poi_markersData')
+
+      wepy.navigateTo({
+        url: 'navigation'
+      })
     }
 
     // 设置页面分享信息
@@ -171,7 +180,7 @@
       var params = {
         iconPathSelected: '../images/marker_checked.png',
         iconPath: '../images/marker.png',
-        success: function (data) {
+        success: async function (data) {
           markersData = data.markers
           var poisData = data.poisData
           var markersNew = []
@@ -196,18 +205,20 @@
               name: markersData[0].name,
               desc: markersData[0].address
             }
+            await _this.$parent.app(markersData[0], 'poi_location')
           } else {
             wx.getLocation({
               type: 'gcj02',
-              success: function (res) {
+              success: async function (res) {
+                await _this.$parent.app(res, 'poi_location')
                 _this.latitude = res.latitude
                 _this.longitude = res.longitude
-                _this.city = '北京市'
+                _this.city = '深圳市'
               },
               fail: function () {
                 _this.latitude = 39.909729
                 _this.longitude = 116.398419
-                _this.city = '北京市'
+                _this.city = '深圳市'
               }
             })
 
@@ -224,7 +235,7 @@
         }
       }
       if (e && e.keywords) {
-        params.querykeywords = e.keywords
+        params.querykeywords = e.keywords || '地铁'
       }
       _R.amap.getPoiAround(params)
       // const res = await http.request({
