@@ -22,6 +22,14 @@ if (resJson[url]) {
   return 0 // Promise resolve 执行后 后面代码会继续执行
 }
 
+// 打开新页面
+wepy.navigateTo({
+  url: 'poi'
+})
+// 重定向
+wepy.redirectTo({
+  url: 'poi'
+})
 // 异步函数中更新数据的时，必须手动调用$apply方法 手动触发 脏数据检查
 this.$apply()
 ```

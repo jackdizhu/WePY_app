@@ -94,7 +94,7 @@
       fn_name: 'getWalkingRoute',
       active: '2',
       // 地图尺寸
-      scale: 60,
+      scale: 20,
       markers: [
         // 起点
         {
