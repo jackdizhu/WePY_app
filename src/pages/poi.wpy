@@ -1,19 +1,38 @@
 <style lang="less" scoped>
-  .section{
-    height: 40rpx*2.5;
-    padding: 5rpx*2.5 10rpx*2.5;
+  .flex-style{
     width: 100%;
+    padding: 0 15rpx*2.5;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: flex;
   }
-  .section input{
-    width: 100%;
-    border: 1rpx solid #c3c3c3;
-    height: 30rpx*2.5;
-    border-radius: 5rpx*2.5;
-    padding: 0 5rpx*2.5;
+  .flex-item{
+    width: 25%;
+    height: 35rpx*2.5;
+    line-height: 35rpx*2.5;
+    text-align: center;
+    -webkit-box-flex: 1;
+    -webkit-flex: 1;
+    flex: 1
   }
+  .flex-item.active{
+    color:#0091ff;
+  }
+  // .section{
+  //   height: 40rpx*2.5;
+  //   padding: 5rpx*2.5 10rpx*2.5;
+  //   width: 100%;
+  // }
+  // .section input{
+  //   width: 100%;
+  //   border: 1rpx solid #c3c3c3;
+  //   height: 30rpx*2.5;
+  //   border-radius: 5rpx*2.5;
+  //   padding: 0 5rpx*2.5;
+  // }
   .map_container{
     position: absolute;
-    top: 40rpx*2.5;
+    top: 35rpx*2.5;
     bottom: 80px;
     left: 0;
     right: 0;
@@ -49,9 +68,15 @@
   <!-- <view class="naviButton">周边兴趣点查询</view> -->
   <view class="box_container">
     <view class="container">
-      <view class="section">
-        <input data-city="{{city}}" data-longitude="{{longitude}}" data-latitude="{{latitude}}" @tap="bindInput" placeholder="搜索"/>
+      <view class="flex-style">
+        <view class="flex-item {{active === '1' ? 'active' : ''}}" @tap="tapshowMapPoi('地铁', '1')" >地铁</view>
+        <view class="flex-item {{active === '2' ? 'active' : ''}}" @tap="tapshowMapPoi('公交', '2')">公交</view>
+        <view class="flex-item {{active === '3' ? 'active' : ''}}" @tap="tapshowMapPoi('商场', '3')">商场</view>
+        <view class="flex-item {{active === '4' ? 'active' : ''}}" @tap="tapshowMapPoi('搜索', '4')">搜索</view>
       </view>
+      <!-- <view class="section">
+        <input data-city="{{city}}" data-longitude="{{longitude}}" data-latitude="{{latitude}}" @tap="bindInput" placeholder="搜索"/>
+      </view> -->
       <view class="map_container">
         <map class="map" id="map" longitude="{{longitude}}" latitude="{{latitude}}" scale="14" show-location="true" markers="{{markers}}" @markertap="makertap"></map>
       </view>
@@ -83,6 +108,7 @@
     mixins = [testMixin]
 
     data = {
+      active: '1',
       markers: [],
       latitude: '',
       longitude: '',
@@ -104,6 +130,82 @@
         wx.redirectTo({
           url: url
         })
+      },
+      async tapshowMapPoi (str, index) {
+        let _this = this
+        _this.active = index || '1'
+        _this.fn_name = str
+
+        if (index === '4') {
+          var url = 'input'
+          url = url + '?lonlat=' + _this.longitude + ',' + _this.latitude + '&city=' + _this.city
+          wx.redirectTo({
+            url: url
+          })
+          return 0
+        }
+
+        let _R = await _this.$parent.app(null, 'index_amap')
+        var params = {
+          iconPathSelected: '../images/marker_checked.png',
+          iconPath: '../images/marker.png',
+          success: async function (data) {
+            markersData = data.markers
+            var poisData = data.poisData
+            var markersNew = []
+            markersData.forEach(function (item, index) {
+              markersNew.push({
+                id: item.id,
+                latitude: item.latitude,
+                longitude: item.longitude,
+                iconPath: item.iconPath,
+                width: item.width,
+                height: item.height
+              })
+            })
+            if (markersData.length > 0) {
+              _this.markers = markersNew
+              _this.city = poisData[0].cityname || ''
+              _this.latitude = markersData[0].latitude
+              _this.longitude = markersData[0].longitude
+              _this.longitude = markersData[0].longitude
+
+              _this.textData = {
+                name: markersData[0].name,
+                desc: markersData[0].address
+              }
+              await _this.$parent.app(markersData[0], 'poi_location')
+            } else {
+              wx.getLocation({
+                type: 'gcj02',
+                success: async function (res) {
+                  await _this.$parent.app(res, 'poi_location')
+                  _this.latitude = res.latitude
+                  _this.longitude = res.longitude
+                  _this.city = '深圳市'
+                },
+                fail: function () {
+                  _this.latitude = 39.909729
+                  _this.longitude = 116.398419
+                  _this.city = '深圳市'
+                }
+              })
+
+              _this.textData = {
+                name: '抱歉，未找到结果',
+                desc: ''
+              }
+            }
+            // 手动触发 脏数据检查
+            _this.$apply()
+          },
+          fail: function (info) {
+            // wx.showModal({title:info.errMsg})
+          }
+        }
+
+        params.querykeywords = _this.fn_name
+        _R.amap.getPoiAround(params)
       }
     }
 
@@ -235,9 +337,10 @@
         }
       }
       if (e && e.keywords) {
+        _this.active = '4'
         params.querykeywords = e.keywords || '地铁'
       } else {
-        params.querykeywords = '地铁站,公交站'
+        params.querykeywords = '地铁站'
       }
       _R.amap.getPoiAround(params)
       // const res = await http.request({

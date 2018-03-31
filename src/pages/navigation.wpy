@@ -1,12 +1,15 @@
 <style lang="less" scoped>
   .flex-style{
+    width: 100%;
+    padding: 0 15rpx*2.5;
     display: -webkit-box;
     display: -webkit-flex;
     display: flex;
   }
   .flex-item{
-    height: 35px;
-    line-height: 35px;
+    width: 25%;
+    height: 35rpx*2.5;
+    line-height: 35rpx*2.5;
     text-align: center;
     -webkit-box-flex: 1;
     -webkit-flex: 1;
@@ -17,7 +20,7 @@
   }
   .map_box{
     position:absolute;
-    top: 35px;
+    top: 35rpx*2.5;
     bottom: 90px;
     left: 0px;
     right: 0px;
