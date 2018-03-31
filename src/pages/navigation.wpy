@@ -66,7 +66,7 @@
       <view class="text_box">
         <view class="text">{{distance}}</view>
         <view class="text">{{cost}}</view>
-        <view class="detail_button" @tap="goDetail">详情</view>
+        <!-- <view class="detail_button" @tap="goDetail">详情</view> -->
       </view>
     </view>
     <!--定义页面结构，可以使用地图组件也能使用其他组件 -->
