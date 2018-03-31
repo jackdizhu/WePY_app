@@ -1,4 +1,4 @@
-<style lang="less">
+<style lang="less" scoped>
   .flex-style{
     display: -webkit-box;
     display: -webkit-flex;
@@ -51,7 +51,7 @@
 <template>
 <view class="page">
   <!-- <view class="naviButton">出行路线规划</view> -->
-  <view class="map_container">
+  <view class="box_container">
     <view class="container">
       <view class="flex-style">
         <view class="flex-item" @tap="goToCar">驾车</view>

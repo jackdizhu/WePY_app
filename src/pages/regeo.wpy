@@ -1,15 +1,8 @@
-<style lang="less">
-  .map_container{
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-  }
+<style lang="less" scoped>
 </style>
 <template>
 <view class="page">
-  <view class="map_container">
+  <view class="box_container">
     <view class="container">
       <view class="naviButton" id="Regeo" @tap="naviToRegeo">地址解析</view>
     </view>

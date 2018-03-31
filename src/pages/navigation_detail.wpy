@@ -1,4 +1,4 @@
-<style lang="less">
+<style lang="less" scoped>
   .flex-style{
     display: -webkit-box;
     display: -webkit-flex;
@@ -29,7 +29,7 @@
 <template>
 <view class="page">
   <!-- <view class="naviButton">出行路线规划</view> -->
-  <view class="map_container">
+  <view class="box_container">
     <view class="container">
       <view class="text_box" wx:for="{{steps}}" wx:key="value">
         {{item.instruction}}

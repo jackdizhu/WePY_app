@@ -1,4 +1,4 @@
-<style lang="less">
+<style lang="less" scoped>
   .img_box{
     position: absolute;
     top: 0;
@@ -14,7 +14,7 @@
 <template>
 <view class="page">
   <view class="naviButton" id="staticmap">静态图</view>
-  <view class="map_container">
+  <view class="box_container">
     <view class="container">
       <view class="img_box">
         <image src="{{src}}"></image>

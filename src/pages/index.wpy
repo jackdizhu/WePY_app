@@ -1,8 +1,8 @@
-<style lang="less">
+<style lang="less" scoped>
 </style>
 <template>
 <view class="page index">
-  <view class="map_container">
+  <view class="box_container">
     <view class="container">
       <view class="naviButton" id="Regeo" @tap="naviToRegeo">地址解析</view>
       <view class="naviButton" id="weahter" @tap="naviToWeather">天气查询</view>

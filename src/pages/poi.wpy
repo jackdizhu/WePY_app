@@ -1,19 +1,19 @@
-<style lang="less">
+<style lang="less" scoped>
   .section{
-    height: 30px;
+    height: 40rpx*2.5;
+    padding: 5rpx*2.5 10rpx*2.5;
     width: 100%;
   }
   .section input{
-    width:90%;
-    margin:5px auto;
-    border:1px solid #c3c3c3;
-    height:30px;
-    border-radius: 3px;
-    padding: 0 5px;
+    width: 100%;
+    border: 1rpx solid #c3c3c3;
+    height: 30rpx*2.5;
+    border-radius: 5rpx*2.5;
+    padding: 0 5rpx*2.5;
   }
   .map_container{
     position: absolute;
-    top: 42px;
+    top: 40rpx*2.5;
     bottom: 80px;
     left: 0;
     right: 0;
@@ -47,7 +47,7 @@
 <template>
 <view class="page">
   <!-- <view class="naviButton">周边兴趣点查询</view> -->
-  <view class="map_container">
+  <view class="box_container">
     <view class="container">
       <view class="section">
         <input data-city="{{city}}" data-longitude="{{longitude}}" data-latitude="{{latitude}}" @tap="bindInput" placeholder="搜索"/>

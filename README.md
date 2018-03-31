@@ -26,6 +26,16 @@ if (resJson[url]) {
 this.$apply()
 ```
 
+## 组件使用问题
+
+``` html
+<!-- bindInput 定义为 async 异步方法 会导致 input 内容为 undefined -->
+<input @input="bindInput" type="text" placeholder="搜索" focus="true" />
+<!-- 定义css 仅在当前组件生效 -->
+<style lang="less" scoped>
+</style>
+```
+
 ## 页面数据共享问题
 
 ``` js

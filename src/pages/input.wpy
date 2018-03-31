@@ -1,31 +1,42 @@
-<style lang="less">
+<style lang="less" scoped>
   .section{
-    height: 30px;
+    height: 40rpx*2.5;
+    padding: 5rpx*2.5 10rpx*2.5;
     width: 100%;
   }
   .section input{
-    width:90%;
-    margin:5px auto;
-    border:1px solid #c3c3c3;
-    height:30px;
-    border-radius: 3px;
-    padding: 0 5px;
+    width: 100%;
+    border: 1rpx solid #c3c3c3;
+    height: 30rpx*2.5;
+    border-radius: 5rpx*2.5;
+    padding: 0 5rpx*2.5;
+  }
+  .text_box_flex{
+    width: 100%;
+    overflow: auto;
   }
   .text_box{
-    margin: 10px 25px;
-    border-bottom:1px solid #c3c3c3;
-    padding-bottom:10px
+    // display: inline-block;
+    // margin: 10px 25px;
+    padding: 5rpx*2.5 10rpx*2.5;
+    line-height: 24rpx*2.5;
+    width: 100%;
+    border-bottom: 1rpx solid #c3c3c3;
+    text-align: left;
+    // padding-bottom:10px;
   }
 </style>
 <template>
 <view class="page index">
-  <view class="map_container">
-    <view class="container">
-      <view class="section">
-        <input @input="bindInput" placeholder="搜索" focus="true" />
+  <view class="box_container">
+    <view class="container flex items-center content-around justify-center">
+      <view class="section" >
+        <input @input="bindInput" @blur="bindBlur" type="text" placeholder="搜索" focus="true" />
       </view>
-      <view @tap="bindSearch" data-keywords="{{item.name}}" class="text_box" wx:for="{{tips}}" wx:key="value">
-        {{item.name}}
+      <view style="flex: 1;" class="text_box_flex">
+        <view @tap="bindSearch" data-keywords="{{item.name}}" class="text_box" wx:for="{{tips}}" wx:key="value">
+          {{item.name}}
+        </view>
       </view>
     </view>
     <!--定义页面结构，可以使用地图组件也能使用其他组件 -->
@@ -52,28 +63,56 @@
       userInfo: {},
       tips: {},
       lonlat: null,
-      city: null
+      city: null,
+      time: null
     }
 
     computed = {
     }
 
     methods = {
-      bindInput: async function (e) {
+      bindBlur: function (e) {
         var _this = this
-        var keywords = e.detail.value
+        var keywords = (e && e.detail && e.detail.value) || ''
 
-        let _R = await _this.$parent.app(null, 'index_amap')
-        _R.amap.getInputtips({
-          keywords: keywords,
-          location: _this.lonlat,
-          city: _this.city,
-          success: function (data) {
-            if (data && data.tips) {
-              _this.tips = data.tips
+        setTimeout(async () => {
+          let _R = await _this.$parent.app(null, 'index_amap')
+          _R.amap.getInputtips({
+            keywords: keywords,
+            location: _this.lonlat,
+            city: _this.city,
+            success: function (data) {
+              if (data && data.tips) {
+                _this.tips = data.tips
+                // 手动触发 脏数据检查
+                _this.$apply()
+              }
             }
-          }
-        })
+          })
+        }, 0)
+        return keywords
+      },
+      bindInput: function (e) {
+        var _this = this
+        var keywords = (e && e.detail && e.detail.value) || ''
+
+        clearTimeout(this.time)
+        this.time = setTimeout(async () => {
+          let _R = await _this.$parent.app(null, 'index_amap')
+          _R.amap.getInputtips({
+            keywords: keywords,
+            location: _this.lonlat,
+            city: _this.city,
+            success: function (data) {
+              if (data && data.tips) {
+                _this.tips = data.tips
+                // 手动触发 脏数据检查
+                _this.$apply()
+              }
+            }
+          })
+        }, 300)
+        return keywords
       },
       bindSearch: function (e) {
         var keywords = e.target.dataset.keywords
