@@ -54,10 +54,10 @@
   <view class="box_container">
     <view class="container">
       <view class="flex-style">
-        <view class="flex-item {{active === '1' ? 'active' : ''}}" @tap="showMapRoute('getDrivingRoute', '1')" >驾车</view>
-        <view class="flex-item {{active === '2' ? 'active' : ''}}" @tap="showMapRoute('getWalkingRoute', '2')">步行</view>
-        <view class="flex-item {{active === '3' ? 'active' : ''}}" @tap="showMapRoute('getTransitRoute', '3')">公交</view>
-        <view class="flex-item {{active === '4' ? 'active' : ''}}" @tap="showMapRoute('getRidingRoute', '4')">骑行</view>
+        <view class="flex-item {{active === '1' ? 'active' : ''}}" @tap="tapshowMapRoute('getDrivingRoute', '1')" >驾车</view>
+        <view class="flex-item {{active === '2' ? 'active' : ''}}" @tap="tapshowMapRoute('getWalkingRoute', '2')">步行</view>
+        <view class="flex-item {{active === '3' ? 'active' : ''}}" @tap="tapshowMapRoute('getTransitRoute', '3')">公交</view>
+        <view class="flex-item {{active === '4' ? 'active' : ''}}" @tap="tapshowMapRoute('getRidingRoute', '4')">骑行</view>
       </view>
       <view class="map_box">
         <map id="navi_map" longitude="{{markers[0].longitude}}" latitude="{{markers[0].latitude}}" scale="{{scale}}" markers="{{markers}}" polyline="{{polyline}}"></map>
@@ -91,6 +91,7 @@
     mixins = [testMixin]
 
     data = {
+      fn_name: 'getWalkingRoute',
       active: '2',
       // 地图尺寸
       scale: 60,
@@ -131,9 +132,11 @@
           url: 'navigation_detail'
         })
       },
-      async showMapRoute (str, index) {
+      async tapshowMapRoute (str, index) {
         let _this = this
         _this.active = index || '2'
+        _this.fn_name = str
+
         let _markersData2 = await wepy.getLocation()
         let _location = ((_markersData2.longitude || '116.434446') + ',' + (_markersData2.latitude || '116.434446'))
         // console.log(_location, '起点')

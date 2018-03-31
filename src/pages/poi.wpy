@@ -236,6 +236,8 @@
       }
       if (e && e.keywords) {
         params.querykeywords = e.keywords || '地铁'
+      } else {
+        params.querykeywords = '地铁站,公交站'
       }
       _R.amap.getPoiAround(params)
       // const res = await http.request({

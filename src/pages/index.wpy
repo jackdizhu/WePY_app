@@ -4,11 +4,11 @@
 <view class="page index">
   <view class="box_container">
     <view class="container">
-      <view class="naviButton" id="Regeo" @tap="naviToRegeo">地址解析</view>
+      <!-- <view class="naviButton" id="Regeo" @tap="naviToRegeo">地址解析</view>
       <view class="naviButton" id="weahter" @tap="naviToWeather">天气查询</view>
       <view class="naviButton" id="poi" @tap="naviToPoi">周边兴趣点查询</view>
       <view class="naviButton" id="staticmap" @tap="naviToStatic">静态图</view>
-      <view class="naviButton" id="navi" @tap="naviToNavi">出行路线规划</view>
+      <view class="naviButton" id="navi" @tap="naviToNavi">出行路线规划</view> -->
     </view>
     <!--定义页面结构，可以使用地图组件也能使用其他组件 -->
   </view>
@@ -102,6 +102,11 @@
         success: async function (data) {
           // 成功回调
           let _R = await _this.$parent.app({ amap: _amap, data: data }, 'index_amap')
+
+          // 重定向
+          wepy.redirectTo({
+            url: 'poi'
+          })
           console.log(_R)
         },
         fail: function (info) {
