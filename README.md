@@ -1,11 +1,3 @@
-# WePY_app
+# mpvue_weui
 
-初步完成多页面跳转, 数据共享,
-```
-npm install wepy-cli -g
-npm  i && wepy build --watch
-```
-
-# weui
-
-weui UI框架
+* 使用[https://github.com/KuangPF/mpvue-weui](mpvue-weui)框架开发的项目 初步熟悉 mpvue 框架 及 weui 框架

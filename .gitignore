@@ -1,11 +1,14 @@
-dist/
-node_modules/
-web/style
-sftp-config.json
-log
-npm-debug.log
-.vscode
-coverage
-lerna-debug.log
 .DS_Store
-.wepycache
+node_modules/
+dist/
+package-lock.json
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Editor directories and files
+.idea
+*.suo
+*.ntvs*
+*.njsproj
+*.sln

@@ -1,8 +1,14 @@
-import { createStore, applyMiddleware } from 'redux'
-import promiseMiddleware from 'redux-promise'
-import rootReducer from './reducers'
+import Vue from 'vue';
+import Vuex from 'vuex';
+import state from './state';
+import mutations from './mutations';
+import * as getters from './getters';
+import * as actions from './actions';
 
-export default function configStore () {
-  const store = createStore(rootReducer, applyMiddleware(promiseMiddleware))
-  return store
-}
+Vue.use(Vuex);
+export default new Vuex.Store({ // eslint-disable-line
+  state,
+  mutations,
+  actions,
+  getters
+});
