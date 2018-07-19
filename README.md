@@ -8,6 +8,8 @@ npm  i && wepy build --watch
 
 # 小程序项目
 
+![扫一扫 使用微信小程序](./statics/gh_f498d6f2e269_344.jpg)
+
 * nearby 基于高德地图api WePY 框架 周边生活导航 小程序
 * dev 基于weui 框架 debug_app 的小程序版本
 
