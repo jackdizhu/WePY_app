@@ -2,6 +2,7 @@
 
 * 使用[mpvue-weui](https://github.com/KuangPF/mpvue-weui)框架开发的项目 初步熟悉 mpvue 框架 及 weui 框架
 
+```
 表单
 button: 按钮
 list: 列表
@@ -32,3 +33,4 @@ navbar: 导航栏
 tabbar: 底部导航
 搜索相关
 search: 搜索
+```
