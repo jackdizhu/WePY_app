@@ -33,4 +33,28 @@ navbar: 导航栏
 tabbar: 底部导航
 搜索相关
 search: 搜索
+
+/*
+  默认
+  按下
+  禁用
+*/
+.green-theme {
+  color: #1AAD19;
+  color: #179B16;
+  color: #9ED99D;
+}
+.red-theme {
+  color: #E64340;
+  color: #CE3C39;
+  color: #EC8B89;
+}
+```
+
+```
+问题记录
+增加 less 支持
+npm i less-loader less --save-dev
+css
+  不支持 rgba
 ```

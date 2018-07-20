@@ -6,6 +6,7 @@ Vue.config.productionTip = false;
 App.mpType = 'app';
 Vue.prototype.$store = store;
 import '../static/weui/weui.css'
+import '../static/weui/weui_theme.less'
 const app = new Vue({
   App
 })
@@ -52,6 +53,8 @@ export default {
       'pages/vuex/vuex',
       'pages/vuexPage/vuexPage',
       'pages/rate/rate',
+
+      'pages/scanCode/scanCode',
 
       'pages/test/test',
       'pages/componentsTest/componentsTest'

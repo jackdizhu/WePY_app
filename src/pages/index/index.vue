@@ -82,6 +82,12 @@ export default {
           name: 'issues 需求',
           open: false,
           pages: ['request', 'vuex', 'rate']
+        },
+        {
+          id: 'api',
+          name: 'api 测试',
+          open: false,
+          pages: ['scanCode']
         }
       ]
     };
