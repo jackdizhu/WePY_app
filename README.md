@@ -397,4 +397,24 @@ new Vue({
 	    console.log(err)
 	  }
 	}
+
+五、issues
+
+https://github.com/Meituan-Dianping/mpvue/issues/140
+同一路由切换时，上一次的页面数据会保留
+	通过 mixin 混入 onUnload 方法, 然后在里面写 Object.assign(this.$data, this.$options.data())
+	// 定义插件
+	const somePlugin = {
+	  install: function () {
+	    Vue.mixin({
+	      onUnload() {
+	        if (this.$options.data) {
+	            Object.assign(this.$data, this.$options.data())
+	        }
+	      }
+	    })
+	  }
+	}
+	// 使用插件
+	Vue.use(somePlugin)
 ```
