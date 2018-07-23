@@ -248,3 +248,153 @@ http://www.henkuai.com/forum.php?mod=viewthread&tid=36854
 	所以逻辑层的字段无法传到视图层，如果需要，不要使用template，直接在当前页面中进行循环
 
 ```
+
+## mpvue 框架开发问题
+
+```
+一、实例生命周期
+
+除了Vue本身的生命周期处，mpvue还兼容了小程序的生命周期,除特殊情况外，不建议使用小程序的生命周期钩子。
+
+app 部分：
+•onLaunch，初始化
+•onShow，当小程序启动，或从后台进入前台显示
+•onHide，当小程序从前台进入后台
+
+page 部分：
+•onLoad，监听页面加载
+•onShow，监听页面显示
+•onReady，监听页面初次渲染完成
+•onHide，监听页面隐藏
+•onUnload，监听页面卸载
+•onPullDownRefresh，监听用户下拉动作
+•onReachBottom，页面上拉触底事件的处理函数
+•onShareAppMessage，用户点击右上角分享
+•onPageScroll，页面滚动
+•onTabItemTap, 当前是 tab 页时，点击 tab 时触发 （mpvue 0.0.16 支持）
+
+new Vue({
+ data: {
+  a: 1
+ },
+ created () {
+  // `this` 指向 vm 实例
+  console.log('a is: ' + this.a)
+ },
+ onShow () {
+  // `this` 指向 vm 实例
+  console.log('a is: ' + this.a, '小程序触发的 onshow')
+ }
+})
+
+注意点：
+•不要在选项属性或回调上使用箭头函数，比如 created: () => console.log(this.a) 
+	或vm.$watch('a', newValue => this.myMethod())。因为箭头函数是和父级上下文绑定在一起的，
+	this不会是如你做预期的 Vue 实例，且 this.a 或 this.myMethod 也会是未定义的。
+•微信小程序的页面的 query 参数是通过 onLoad 获取的，mpvue 对此进行了优化，
+	直接通过this.$root.$mp.query 获取相应的参数数据，其调用需要在 onLoad 生命周期触发之后使用，比如 onShow 等
+
+
+二、模板语法
+
+不支持 纯-HTML
+	小程序里所有的 BOM／DOM 都不能用，也就是说 v-html 指令不能用。
+
+不支持部分复杂的 JavaScript 渲染表达式
+	我们会把 template 中的 {{}} 双花括号的部分，直接编码到 wxml 文件中，由于微信小程序的能力限制(数据绑定)，
+	所以无法支持复杂的 JavaScript 表达式。
+	目前可以使用的有 + - * % ?: ! == === > < [] .，剩下的还待完善。
+
+不支持过滤器
+	渲染部分会转成 wxml ，wxml 不支持过滤器，所以这部分功能不支持。
+
+不支持函数
+
+不支持在 template 内使用 methods 中的函数。
+
+列表渲染
+
+	全支持 官方文档：列表渲染
+	只是需要注意一点，嵌套列表渲染，必须指定不同的索引！
+	<!-- 在这种嵌套循环的时候， index 和 itemIndex 这种索引是必须指定，且别名不能相同，正确的写法如下 -->
+	<template>
+	  <ul v-for="(card, index) in list">
+	    <li v-for="(item, itemIndex) in card">
+	      {{item.value}}
+	    </li>
+	  </ul>
+	</template>
+ 
+事件处理器
+	在 input 和 textarea 中 change 事件会被转为 blur 事件。
+
+踩坑注意：
+	列表中没有的原生事件也可以使用例如 bindregionchange 事件直接在 dom 上将bind改为@
+	 @regionchange,同时这个事件也非常特殊，它的 event type 有 begin 和 end
+	两个，导致我们无法在handleProxy 中区分到底是什么事件，所以你在监听此类事件的时候同时监听事件名和事件类型既
+	<map @regionchange="functionName" @end="functionName" @begin="functionName"><map>
+	小程序能力所致，bind 和 catch 事件同时绑定时候，只会触发 bind ,catch 不会被触发，要避免踩坑。
+
+事件修饰符
+	.stop 的使用会阻止冒泡，但是同时绑定了一个非冒泡事件，会导致该元素上的 catchEventName 失效！
+	.prevent 可以直接干掉，因为小程序里没有什么默认事件，比如submit并不会跳转页面
+	.capture 支持 1.0.9
+	.self 没有可以判断的标识
+	.once 也不能做，因为小程序没有 removeEventListener, 虽然可以直接在 handleProxy 中处理，
+	但非常的不优雅，违背了原意，暂不考虑
+	其他 键值修饰符 等在小程序中压根没键盘，所以。。。
+
+
+三、组件
+
+有且只能使用单文件组件（.vue 组件）的形式进行支持。其他的诸如：
+动态组件，自定义 render，和<script type="text/x-template"> 字符串模版等都不支持。
+原因很简单，因为我们要预编译出 wxml。
+
+详细的不支持列表：
+	•暂不支持在组件引用时，在组件上定义 click 等原生事件、v-show（可用 v-if 代替）和 class style 等样式属性
+	(例：<card class="class-name"> </card> 样式是不会生效的)，因为编译到wxml，
+	小程序不会生成节点，建议写在内部顶级元素上。
+	•Slot（scoped 暂时还没做支持）
+	•动态组件
+	•异步组件
+	•inline-template
+	•X-Templates
+	•keep-alive
+	•transition
+	•class
+	•style
+
+小程序组件
+	mpvue 可以支持小程序的原生组件，比如： picker,map 等，需要注意的是原生组件上的事件绑定，
+	需要以 vue 的事件绑定语法来绑定，如 bindchange="eventName" 事件，需要写成 @change="eventName"
+	<picker mode="date" :value="date" start="2015-09-01" end="2017-09-01" @change="bindDateChange">
+	  <view class="picker">
+	   当前选择: {{date}}
+	  </view>
+	</picker>
+
+
+四、常见问题
+
+1. 如何获取小程序在 page onLoad 时候传递的 options
+	在所有 页面 的组件内可以通过 this.$root.$mp.query 进行获取。
+
+2. 如何获取小程序在 app onLaunch/onShow 时候传递的 options
+	在所有的组件内可以通过 this.$root.$mp.appOptions 进行获取。
+
+3. 如何捕获 app 的 onError
+	由于 onError 并不是完整意义的生命周期，所以只提供一个捕获错误的方法，
+	在 app 的根组件上添加名为 onError 的回调函数即可。如下：
+	export default {
+	  // 只有 app 才会有 onLaunch 的生命周期
+	  onLaunch () {
+	    // ...
+	  },
+	 
+	  // 捕获 app error
+	  onError (err) {
+	    console.log(err)
+	  }
+	}
+```
