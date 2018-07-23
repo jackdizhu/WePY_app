@@ -195,7 +195,7 @@ http://www.henkuai.com/forum.php?mod=viewthread&tid=36854
 
 6、小程序上线，域名必须采用https和SSL证书，部分小程序的服务类目，域名必须在ICP备案，否则审核不通过
 
-7、小程序相互之间可以跳转的前提是必须关联在同一个公众号下，设置跳转时，需要设置envVersion: 'release'，release为线上版本
+7、小程序相互之间可以跳转的前提是必须关联在同一个公众号下，需要设置envVersion: 'release'，release为线上版本
 
 8、跳转到带有tabBar的页面，必须使用switchTab，否则无法实现跳转
 
