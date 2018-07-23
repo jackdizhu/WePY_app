@@ -143,59 +143,107 @@ css
 ```
 https://blog.csdn.net/cx091/article/details/78952648
 1.强制要求请求全部为https！ 
+
 2. 小程序生命周期的函数内部对象要就改成var that=this;防止被替换。 
+
 3. view不识别\n但是text可以。 
+
 4. 没有dom!没有dom!没有dom!,绑定数据,控制显示和隐藏全部用data来修改，就是this.setData({})
+
 5. 跳转现在（2018）小程序支持十层 
-6. 微信小程序中原生组件层级最高，比如map,canvas,swiper,只能使用cover-view,cover-image,其中cover-view很垃圾很多样式都不支持，而且支持点击事件bindtap,还有各种bug，建议cover-view简单使用就可以了，千万别想着在原生组件上使用炫酷的效果说多了都是泪。（问题引用：当使用display:none;做隐藏的时候，其内容文字会出现在屏幕右上角，建议使用 wx:if=”false”或position:absolute;left:-1000rpx;这种方式做隐藏。2、border不支持单边。3、不支持padding的使用，在安卓端会出现padding消失的问题。） 
-7. 在小程序中当有两个元素同时发生变化时，会出现冲突，导致其中一个变化，而另一个不做变化，所以要使用setTimeout方法避免元素同时出现变化。 
+
+6. 微信小程序中原生组件层级最高，比如map,canvas,swiper,只能使用cover-view,cover-image,
+	其中cover-view很垃圾很多样式都不支持，而且支持点击事件bindtap,还有各种bug，
+	建议cover-view简单使用就可以了，千万别想着在原生组件上使用炫酷的效果说多了都是泪。
+	（问题引用：当使用display:none;做隐藏的时候，其内容文字会出现在屏幕右上角，
+	建议使用 wx:if=”false”或position:absolute;left:-1000rpx;这种方式做隐藏。
+
+2、border不支持单边。3、不支持padding的使用，在安卓端会出现padding消失的问题。） 
+
+7. 在小程序中当有两个元素同时发生变化时，会出现冲突，导致其中一个变化，而另一个不做变化，
+	所以要使用setTimeout方法避免元素同时出现变化。 
+
 8. 在开发者工具中执行先执行aap.js然后执行其他js文件，但在手机上app.js和其他js是同时执行的； 
+
 9. 很多原生组件都有定高，只能使用微信提供的rpx来修改！ 
+
 10. 小程序是单向绑定和vue不同，修改数据只能从setData来修改 
+
 11. 本地资源无法通过 css 获取，只能通过网络或者使用image标签 
+
 12. cover-view放弃padding, 用min-width + text-align + height + line-height 
+
 13. bindtap和catchtap的区别: bind 不会阻止冒泡，catch 可以阻止冒泡
 
 http://www.henkuai.com/forum.php?mod=viewthread&tid=36854
 1、height:auto; 失效，必须指定 image 的高度为具体数值,不然高度为0。
+
 2、真机和模拟器的问题总结
-input 标签中设置为 value 属性，缩进样式text-indent在模拟器中失效，在真机中正常运行。placeholder无此现象
-测试过程中，域名为http格式的请求，在模拟器下可以正常运行，在真机中必须打开调试才能看到效果
-设置视频暂停，分享后继续播放时，会出现模拟器视频需再次分享才能继续播放，而真机可以继续播放
-由于video组件调用的是客户端创建的原生组件，它的层级是最高的，模拟器中不会出现这个问题，而真机中会覆盖其他的内容
-video组件的播放控件，当设置为false时，模拟器中还会显示，而真机中会隐藏
-3、input组件设置text-indent，在没有获取焦点的时候是有效果的，但是在获取焦点时会失去缩进的效果，所以喜欢用text-indent的同学们就换换口味吧，用padding实现缩进吧
+	input 标签中设置为 value 属性，缩进样式text-indent在模拟器中失效，在真机中正常运行。placeholder无此现象
+	测试过程中，域名为http格式的请求，在模拟器下可以正常运行，在真机中必须打开调试才能看到效果
+	设置视频暂停，分享后继续播放时，会出现模拟器视频需再次分享才能继续播放，而真机可以继续播放
+	由于video组件调用的是客户端创建的原生组件，它的层级是最高的，模拟器中不会出现这个问题，而真机中会覆盖其他的内容
+	video组件的播放控件，当设置为false时，模拟器中还会显示，而真机中会隐藏
+
+3、input组件设置text-indent，在没有获取焦点的时候是有效果的，但是在获取焦点时会失去缩进的效果，
+	所以喜欢用text-indent的同学们就换换口味吧，用padding实现缩进吧
+
 4、input组件用rgba设置背景色透明透明度0.7，加padding会出现色差，改用opacity解决
-5、下拉刷新不能和scroll-view组件共同使用，想要实现既可以下拉刷新又可以下滑加载，需要换成view组件，并且将onScrollLower函数改为onReachBottom
+
+5、下拉刷新不能和scroll-view组件共同使用，想要实现既可以下拉刷新又可以下滑加载，需要换成view组件，
+	并且将onScrollLower函数改为onReachBottom
+
 6、小程序上线，域名必须采用https和SSL证书，部分小程序的服务类目，域名必须在ICP备案，否则审核不通过
+
 7、小程序相互之间可以跳转的前提是必须关联在同一个公众号下，设置跳转时，需要设置envVersion: 'release'，release为线上版本
+
 8、跳转到带有tabBar的页面，必须使用switchTab，否则无法实现跳转
+
 9、小程序中的图片要用绝对路径，否则无法显示
+
 10、快速创建项目文件夹的方式：在app.json文件中直接配置路径即可
+
 11、wxss编译错误：在控制台输入openVendor()，清除里面的wcsc/wcsc.exe 然后重启工具
+
 12、如何获取 openId, sessionKey, unionId?
 在 [app.js] 中 wx.login中 发送 res.code 到后台换取openId, sessionKey,unionId
+
 13、小程序中target和currentTarget有什么区别
-target指的是当前点击的组件 和currentTarget指的是事件捕获的组件
+	target指的是当前点击的组件 和currentTarget指的是事件捕获的组件
+
 14、模板的定义和使用
-使用 name 属性，作为模板的名字
-使用 is属性，声明需要的使用的模板，然后将模板所需要的 data传入
+	使用 name 属性，作为模板的名字
+	使用 is属性，声明需要的使用的模板，然后将模板所需要的 data传入
+
 15、小程序的长度单位
-小程序的长度单位为rpx，按照iphone6的来计算，1rpx=0.5px=1物理像素
+	小程序的长度单位为rpx，按照iphone6的来计算，1rpx=0.5px=1物理像素
+
 16、在页面中引入模板的wxss文件，采用@import引入，且需要以;结尾，否则会出错
+
 17、bindTap是不会阻止冒泡到父级，而catchTap可以阻止进行事件冒泡  
+
 18、data-aaa 这样设置的值可以用event.target.dataset.aaa进行获取
+
 19、所有组件的所有属性均可以采用 插值表达式 + 三目运算符进行赋值
+
 20、除了采用三目运算符进行判断，也可用使用wx:if和wx:else配合实现
+
 21、获取app.js中的字段或数据，采用getApp()可以实现
+
 22、可以将一些公共的函数封装在一个js中，通过require的方式引入当前的js文件中
+
 23、编写复用的模板时，从最小的模板开始编写，由小到大，使用时，wxml和wxss必须引入到当前的页面
+
 24、wx.previewImage({urls: [src], //需要预览的http链接列表 current: src //当前显示图片的http链接})全屏预览图片
+
 25、小程序不需要写保存图片的方法，默认长按可以保存图片
+
 26、遇到 this.data 给变量赋值没有效果，改用this.setData({})
-一般setData方法多用于点击后改变页面信息或者刷新后与后台交互获取最新的信息
-直接修改 this.data 而不调用 this.setData 是无法改变页面的状态的，还会造成数据不一致
-单次设置的数据不能超过1024kB，请尽量避免一次设置过多的数据
-27、当需要使用template模板 + wx-for动态添加数据时，因为template模板中已经传入一个data属性，所以逻辑层的字段无法传到视图层，如果需要，不要使用template，直接在当前页面中进行循环
+	一般setData方法多用于点击后改变页面信息或者刷新后与后台交互获取最新的信息
+	直接修改 this.data 而不调用 this.setData 是无法改变页面的状态的，还会造成数据不一致
+	单次设置的数据不能超过1024kB，请尽量避免一次设置过多的数据
+
+27、当需要使用template模板 + wx-for动态添加数据时，因为template模板中已经传入一个data属性，
+	所以逻辑层的字段无法传到视图层，如果需要，不要使用template，直接在当前页面中进行循环
 
 ```
