@@ -142,6 +142,7 @@ css
 ## 小程序开发 问题整理收集
 ```
 https://blog.csdn.net/cx091/article/details/78952648
+
 1.强制要求请求全部为https！ 
 
 2. 小程序生命周期的函数内部对象要就改成var that=this;防止被替换。 
@@ -153,12 +154,10 @@ https://blog.csdn.net/cx091/article/details/78952648
 5. 跳转现在（2018）小程序支持十层 
 
 6. 微信小程序中原生组件层级最高，比如map,canvas,swiper,只能使用cover-view,cover-image,
-	其中cover-view很垃圾很多样式都不支持，而且支持点击事件bindtap,还有各种bug，
-	建议cover-view简单使用就可以了，千万别想着在原生组件上使用炫酷的效果说多了都是泪。
+	其中cover-view很多样式都不支持，而且支持点击事件bindtap,还有各种bug。
 	（问题引用：当使用display:none;做隐藏的时候，其内容文字会出现在屏幕右上角，
 	建议使用 wx:if=”false”或position:absolute;left:-1000rpx;这种方式做隐藏。
-
-2、border不支持单边。3、不支持padding的使用，在安卓端会出现padding消失的问题。） 
+	border不支持单边，不支持padding的使用，在安卓端会出现padding消失的问题。） 
 
 7. 在小程序中当有两个元素同时发生变化时，会出现冲突，导致其中一个变化，而另一个不做变化，
 	所以要使用setTimeout方法避免元素同时出现变化。 
@@ -176,6 +175,7 @@ https://blog.csdn.net/cx091/article/details/78952648
 13. bindtap和catchtap的区别: bind 不会阻止冒泡，catch 可以阻止冒泡
 
 http://www.henkuai.com/forum.php?mod=viewthread&tid=36854
+
 1、height:auto; 失效，必须指定 image 的高度为具体数值,不然高度为0。
 
 2、真机和模拟器的问题总结
