@@ -50,7 +50,7 @@
               <icon class="weui-agree__checkbox-icon-check" type="success_no_circle" size="9" v-if="form.isAgree"></icon>
             </div>
             阅读并同意
-            <navigator url="" class="weui-agree__link">《用户协议》</navigator>
+            <div class="weui-agree__link">《用户协议》</div>
           </div>
         </label>
       </checkbox-group>
@@ -113,6 +113,12 @@ export default {
     showTopTipsFun() {
       // console.log(this.checkForm(), 123456)
 
+      // 测试
+      // wx.navigateTo({
+      //   url: '/pages/list/list'
+      // })
+      // return false
+
       if (this.checkForm()) {
         wx.showLoading({
           title: '加载中',
@@ -134,6 +140,9 @@ export default {
           params: this.form
         }).then(res => {
           wx.hideLoading()
+          wx.navigateTo({
+            url: '/pages/list/list'
+          })
           console.log(res, 'this.$api.mock')
         })
 
@@ -159,6 +168,26 @@ export default {
         // }, 2000)
       }
     }
+  },
+  created() {
+    // 执行一次
+    console.log(this, 'page index created')
+  },
+  mounted() {
+    console.log(this, 'mounted')
+  },
+  onLoad() {
+    // 页面切换 会重新执行
+    console.log(this, 'page index onLoad')
+  },
+  onShow() {
+    console.log(this, 'onShow')
+  },
+  onUnload() {
+    console.log(this, 'onUnload')
+  },
+  onHide() {
+    console.log(this, 'onHide')
   }
 }
 </script>

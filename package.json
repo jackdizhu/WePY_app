@@ -13,7 +13,8 @@
   "dependencies": {
     "flyio": "^0.5.4",
     "mpvue": "^1.0.12",
-    "vuex": "^2.3.1"
+    "vuex": "^2.3.1",
+    "vuex-persistedstate": "^2.5.4"
   },
   "devDependencies": {
     "autoprefixer": "^7.1.2",

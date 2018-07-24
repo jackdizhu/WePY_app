@@ -29,7 +29,8 @@ export default {
   config: {
     pages: [
       '^pages/index/index',
-      'pages/list/list'
+      'pages/list/list',
+      'pages/details/details'
     ], // Will be filled in webpack
     window: {
       backgroundTextStyle: 'light',
