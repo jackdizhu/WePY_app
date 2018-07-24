@@ -137,6 +137,7 @@ console.log = (msg) => {
 npm i less-loader less --save-dev
 css
   不支持 rgba
+行内样式 px 无法转换 rpx (不要使用行内样式 使用 class 代替)
 ```
 
 ## 小程序开发 问题整理收集
