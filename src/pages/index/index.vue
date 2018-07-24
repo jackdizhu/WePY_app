@@ -16,7 +16,7 @@
             <input class="weui-input" placeholder="请输入手机号" v-model="form.phone"/>
           </div>
           <div class="weui-cell__ft">
-            <div class="weui-vcode-btn">获取验证码</div>
+            <div class="weui-vcode-btn" @click="get_phoneCode">{{timeTip}}</div>
           </div>
         </div>
         <div class="weui-cell weui-cell_input">
@@ -71,6 +71,9 @@ export default {
   },
   data() {
     return {
+      time: 120,
+      timeSetInterval: null,
+      timeTip: '获取验证码',
       form: {
         phone: '',
         phoneCode: '',
@@ -80,6 +83,47 @@ export default {
     }
   },
   methods: {
+    get_phoneCode () {
+      // 倒计时 阶段 不触发
+      if (this.timeSetInterval) {
+        return false
+      }
+
+      // 验证手机号码
+      let checkPhone = /^1[3-9][0-9]{9}$/.test(this.form.phone)
+      let msg = ''
+      if (!checkPhone) {
+        msg = '请输入正确的手机号码'
+        this.$mptoast(msg)
+        return false
+      }
+
+      wx.showLoading({
+        title: '加载中',
+        mask: true
+      })
+
+      this.$request({
+        url: this.$api.test_get,
+        type: 'GET',
+        params: {
+          phone: this.form.phone
+        }
+      }).then(res => {
+        wx.hideLoading()
+        this.time = 120
+        this.timeSetInterval = setInterval(() => {
+          this.time--
+          if (this.time <= 0) {
+            this.timeTip = '获取验证码'
+            clearInterval(this.timeSetInterval)
+            this.timeSetInterval = null
+          } else {
+            this.timeTip = this.time + 's'
+          }
+        }, 1000)
+      })
+    },
     checkForm () {
       let checkPhone = /^1[3-9][0-9]{9}$/.test(this.form.phone)
       let checkPhoneCode = /^[0-9]{6}$/.test(this.form.phoneCode)
