@@ -1,8 +1,8 @@
 <template>
   <div class="page">
     <div class="page__hd">
-      <div class="page__title">商品列表</div>
-      <div class="page__desc">商品分类列表</div>
+      <div class="page__title">商品详情</div>
+      <div class="page__desc">商品详细信息展示</div>
     </div>
     <div class="page__bd">
       <!-- <div class="weui-cells__title">带图标、说明、跳转的列表项</div> -->
