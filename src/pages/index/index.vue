@@ -6,7 +6,7 @@
     </div>
 
     <div class="page__bd">
-      <div class="weui-cells__title">表单</div>
+      <div class="weui-cells__title">登录</div>
       <div class="weui-cells weui-cells_after-title">
         <div class="weui-cell weui-cell_input weui-cell_vcode">
           <div class="weui-cell__hd">
@@ -95,6 +95,7 @@ export default {
       } else if (!checkIsAgree) {
         msg = '请勾选用户协议'
       }
+      // console.log(!!msg, 123456)
       if (msg) {
         this.$mptoast(msg)
         return false
@@ -110,11 +111,52 @@ export default {
       this.form.isAgree = !this.form.isAgree;
     },
     showTopTipsFun() {
+      // console.log(this.checkForm(), 123456)
+
       if (this.checkForm()) {
-        this.showTopTips = true;
-        setTimeout(() => {
-          this.showTopTips = false;
-        }, 2000)
+        wx.showLoading({
+          title: '加载中',
+          mask: true
+        })
+        // get 请求
+        this.$request({
+          url: this.$api.test_get,
+          type: 'GET',
+          params: this.form
+        }).then(res => {
+          console.log(res, 'this.$api.mock')
+        })
+
+        // post 请求
+        this.$request({
+          url: this.$api.test_post,
+          type: 'POST',
+          params: this.form
+        }).then(res => {
+          wx.hideLoading()
+          console.log(res, 'this.$api.mock')
+        })
+
+        // 并发请求
+        // this.$requestAll([
+        //   this.$request({
+        //     url: this.$api.test_get,
+        //     type: 'GET',
+        //     params: this.form
+        //   }),
+        //   this.$request({
+        //     url: this.$api.test_post,
+        //     type: 'POST',
+        //     params: this.form
+        //   })
+        // ]).then((arg) => {
+        //   console.log(arg, '--requestAll--')
+        // })
+
+        // this.showTopTips = true;
+        // setTimeout(() => {
+        //   this.showTopTips = false;
+        // }, 2000)
       }
     }
   }
