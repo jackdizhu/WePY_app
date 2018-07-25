@@ -1,17 +1,23 @@
 <template>
-  <div class="page">
+  <div class="page page-details">
     <div class="page__hd">
       <div class="page__title">菜谱 商品详情</div>
       <div class="page__desc">商品详细信息展示</div>
     </div>
-    <div class="page__bd">
+    <div class="page__bd page-details__bd">
       <!-- <div class="weui-cells__title">带图标、说明、跳转的列表项</div> -->
-      <div class="weui-cells weui-cells_after-title">
-        <div class="weui-cell weui-cell_access justify-start" v-if="detailsData.id">
-          <div class="weui-cell__hd">
-            <image :src="icon" class="list-image"></image>
+      <div class="weui-article">
+        <div class="weui-article__section" v-if="detailsData.id">
+          <div class="weui-article__h3 weui-flex items-center content-center justify-center">
+            <swiper class="swiper-box" :indicator-dots="indicatorDots"
+              :autoplay="autoplay" :interval="interval" :duration="duration">
+              <swiper-item v-for="(item, key) in 3" :key="key" class="swiper-item-box">
+                <image :src="icon" class="list-image"></image>
+              </swiper-item>
+            </swiper>
+            <!-- <image :src="icon" class="list-image"></image> -->
           </div>
-          <div class="weui-cell__bd list-text">
+          <div class="weui-article__p list-text">
             <div class="list-text-h1">{{detailsData.name}}</div>
             <div class="list-text-h2">好评{{detailsData.praise}} 评价{{detailsData.evaluate}}</div>
             <div class="list-text-h3 flex">
@@ -38,7 +44,12 @@ export default {
   data() {
     return {
       detailsData: {},
-      icon: ''
+      icon: '',
+      // swiper
+      indicatorDots: false,
+      autoplay: false,
+      interval: 5000,
+      duration: 1000
     }
   },
   computed: {
@@ -82,11 +93,24 @@ export default {
 
 </script>
 <style lang='less'>
+  .weui-article__h3,
   .list-image {
-    margin-right: 10px;
+    width: 350px;
+    height: 350px;
+  }
+  .list-image {
+    margin-right: 0;
     vertical-align: middle;
-    width: 80px;
-    height: 80px;
+  }
+
+  .swiper-box,
+  .swiper-item-box {
+    width: 100%;
+    height: 100%;
+  }
+
+  .page-details__bd {
+    background-color: #fff;
   }
   .list-text {
     min-height: 80px;
