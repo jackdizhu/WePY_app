@@ -9,8 +9,13 @@
       <div class="weui-article">
         <div class="weui-article__section" v-if="detailsData.id">
           <div class="weui-article__h3 weui-flex items-center content-center justify-center">
-            <swiper class="swiper-box" :indicator-dots="indicatorDots"
-              :autoplay="autoplay" :interval="interval" :duration="duration">
+            <swiper class="swiper-box"
+              :indicator-dots="indicatorDots"
+              :indicator-color="indicatorColor"
+              :indicator-active-color="indicatorActiveColor"
+              :autoplay="autoplay"
+              :interval="interval"
+              :duration="duration">
               <swiper-item v-for="(item, key) in 3" :key="key" class="swiper-item-box">
                 <image :src="icon" class="list-image"></image>
               </swiper-item>
@@ -46,10 +51,14 @@ export default {
       detailsData: {},
       icon: '',
       // swiper
-      indicatorDots: false,
+      // 是否显示面板指示点
+      indicatorDots: true,
+      indicatorColor: '#fff',
+      indicatorActiveColor: '#1178c4',
       autoplay: false,
       interval: 5000,
-      duration: 1000
+      // 滑动动画时长
+      duration: 500
     }
   },
   computed: {
