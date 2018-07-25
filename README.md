@@ -135,9 +135,13 @@ console.log = (msg) => {
 问题记录
 增加 less 支持
 npm i less-loader less --save-dev
-css
+css 问题
   不支持 rgba
-行内样式 px 无法转换 rpx (不要使用行内样式 使用 class 代替)
+  行内样式 px 无法转换 rpx (不要使用行内样式 使用 class 代替)
+
+html 问题
+  scroll-view 数据超过40条时 新增数据后滚动条会置到顶部
+    配置 enablePullDownRefresh: true 绑定 onReachBottom 代替
 ```
 
 ## 小程序开发 问题整理收集
