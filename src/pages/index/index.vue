@@ -158,10 +158,10 @@ export default {
       // console.log(this.checkForm(), 123456)
 
       // 测试
-      // wx.navigateTo({
-      //   url: '/pages/list/list'
-      // })
-      // return false
+      wx.navigateTo({
+        url: '/pages/list/list'
+      })
+      return false
 
       if (this.checkForm()) {
         wx.showLoading({

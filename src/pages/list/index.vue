@@ -1,12 +1,12 @@
 <template>
-  <div class="page">
-    <div class="page__hd">
+  <div class="page list-page flex">
+    <div class="page__hd list-page_hd">
       <div class="page__title">菜谱 商品列表</div>
       <div class="page__desc">商品分类列表</div>
     </div>
-    <div class="page__bd">
+    <div class="page__bd list-page_bd">
       <!-- <div class="weui-cells__title">带图标、说明、跳转的列表项</div> -->
-      <div class="weui-cells weui-cells_after-title" v-if="listData.length">
+      <scroll-view v-if="listData.length" class="scroll-view-box weui-cells weui-cells_after-title" scroll-y bindscrolltoupper="upper" bindscrolltolower="lower" bindscroll="scroll" :scroll-into-view="toView" :scroll-top="scrollTop">
         <div @click="navigatorToDetails(item)" class="weui-cell weui-cell_access justify-start" hover-class="weui-cell_active" v-for="(item, key) in listData" :key="key">
           <div class="weui-cell__hd">
             <image :src="icon" class="list-image"></image>
@@ -25,7 +25,8 @@
           </div>
           <!-- <div class="weui-cell__ft weui-cell__ft_in-access">说明文字</div> -->
         </div>
-      </div>
+      </scroll-view>
+
     </div>
   </div>
 </template>
@@ -37,6 +38,8 @@ import base64 from '../../../static/images/base64';
 export default {
   data() {
     return {
+      toView: 'red',
+      scrollTop: 100,
       listData: [
         // {
         //   id: '0010',
@@ -92,6 +95,47 @@ export default {
 
 </script>
 <style lang='less'>
+  page{
+    height: 100%;
+  }
+  .list-page {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    height: 100%;
+    align-content: stretch;
+  }
+  .scroll-view-box {
+    height: 100%;
+    overflow: auto;
+
+    // position: absolute;
+    // left: 0;
+    // right: 0;
+    // top: 0;
+    // bottom: 0;
+    // height: auto;
+    // overflow: auto;
+  }
+  .list-page_hd {
+    height: 80px;
+  }
+  .list-page_hd,
+  .list-page_bd {
+    width: 100%;
+  }
+  .list-page_bd {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 160px;
+    bottom: 0;
+    height: auto;
+    overflow: hidden;
+    padding-bottom: 0;
+  }
   .list-image {
     margin-right: 10px;
     vertical-align: middle;
