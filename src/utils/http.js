@@ -20,9 +20,7 @@ var qs = require('qs')
  */
 function get (url, params = {}) {
   return new Promise((resolve, reject) => {
-    fly.get(url, {
-      params: params
-    }).then(res => {
+    fly.get(url, params).then(res => {
       resolve(res)
     }, err => {
       reject(err)

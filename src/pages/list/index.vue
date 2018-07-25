@@ -39,6 +39,7 @@ import base64 from '../../../static/images/base64';
 export default {
   data() {
     return {
+      page: 1,
       thisTime_upper: null,
       thisTime_lower: null,
       // scroll-view 属性
@@ -89,11 +90,14 @@ export default {
       console.log(e, 'upper')
     },
     lower: function (e) {
+      this.page++
       // 滚动到底部 加载更多数据
       this.$request({
         url: this.$api.test_get_list,
         type: 'GET',
-        params: {}
+        params: {
+          page: this.page
+        }
       }).then(res => {
         if (res.data) {
           this.listData.push(...res.data)
@@ -132,7 +136,9 @@ export default {
     this.$request({
       url: this.$api.test_get_list,
       type: 'GET',
-      params: {}
+      params: {
+        page: this.page
+      }
     }).then(res => {
       wx.hideLoading()
       if (res.data) {
