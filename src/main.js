@@ -37,6 +37,8 @@ export default {
       navigationBarBackgroundColor: '#fff',
       navigationBarTitleText: '菜谱 商品展示 DEMO',
       navigationBarTextStyle: 'black'
+      // ,enablePullDownRefresh: true,
+      // onReachBottomDistance: true
     }
   }
 }
