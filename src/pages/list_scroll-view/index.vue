@@ -1,5 +1,5 @@
 <template>
-  <div class="page list-page">
+  <div class="page list-page flex">
     <div class="page__hd list-page_hd">
       <div class="page__title">菜谱 商品列表</div>
       <div class="page__desc">商品分类列表</div>
@@ -117,6 +117,9 @@ export default {
       //   }, 2200)
       // }, 100)
       console.log(e, 'lower')
+    },
+    scroll: function (e) {
+      // console.log(e, 'scroll')
     }
   },
   mounted() {
@@ -142,31 +145,61 @@ export default {
         this.listData = res.data
       }
     })
-  },
-  onReachBottom: function (e) {
-    this.page++
-    // 滚动到底部 加载更多数据
-    this.$request({
-      url: this.$api.test_get_list,
-      type: 'GET',
-      params: {
-        page: this.page
-      }
-    }).then(res => {
-      if (res.data) {
-        this.listData.push(...res.data)
-      }
-    })
-
-    console.log(e, 'onReachBottom')
-  },
-  scroll: function (e) {
-    // console.log(e, 'scroll')
   }
 }
 
 </script>
 <style lang='less'>
+  page{
+    height: 100%;
+  }
+  .list-page {
+    // position: absolute;
+    // left: 0;
+    // right: 0;
+    // top: 0;
+    // bottom: 0;
+    height: 100%;
+    align-content: stretch;
+  }
+  .list-page_bd_box,
+  .scroll-view-box {
+    height: 100%;
+    overflow: auto;
+
+    // position: absolute;
+    // left: 0;
+    // right: 0;
+    // top: 0;
+    // bottom: 0;
+    // height: auto;
+    // overflow: auto;
+  }
+
+  .swiper-box {
+    height: 100%;
+    .swiper-item-box {
+      height: 100%;
+    }
+  }
+
+  .list-page_hd {
+    height: 80px;
+  }
+  .list-page_hd,
+  .list-page_bd {
+    width: 100%;
+  }
+  .list-page_bd {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 160px;
+    bottom: 0;
+    height: auto;
+    overflow: hidden;
+    padding-bottom: 0;
+  }
   .list-image {
     margin-right: 10px;
     vertical-align: middle;
