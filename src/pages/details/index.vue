@@ -1,7 +1,7 @@
 <template>
   <div class="page">
     <div class="page__hd">
-      <div class="page__title">商品详情</div>
+      <div class="page__title">菜谱 商品详情</div>
       <div class="page__desc">商品详细信息展示</div>
     </div>
     <div class="page__bd">

@@ -35,7 +35,7 @@ export default {
     window: {
       backgroundTextStyle: 'light',
       navigationBarBackgroundColor: '#fff',
-      navigationBarTitleText: 'weui for mpvue',
+      navigationBarTitleText: '菜谱 商品展示 DEMO',
       navigationBarTextStyle: 'black'
     }
   }

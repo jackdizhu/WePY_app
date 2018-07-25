@@ -1,7 +1,7 @@
 <template>
   <div class="page">
     <div class="page__hd">
-      <div class="page__title">mpvue weui demo</div>
+      <div class="page__title">菜谱 商品展示 DEMO 登录</div>
       <div class="page__desc">手机号码登录</div>
     </div>
 
