@@ -2,7 +2,7 @@
   <div class="page list-page">
     <div class="goods-sorts">
       <div class="ul-box">
-        <div class="li-box" v-for="(item, key) in 16" :key="key" hover-class="li-box_active" @click="getGoodsList">粤菜</div>
+        <div class="li-box" v-for="(item, key) in goodsSorts" :key="key" hover-class="li-box_active" @click="getGoodsList">{{item}}</div>
       </div>
     </div>
     <!-- <div class="list-connent">
@@ -75,6 +75,29 @@ import base64 from '../../../static/images/base64';
 export default {
   data() {
     return {
+      goodsSorts: [
+        '川菜',
+        '湘菜',
+        '粤菜',
+        '东北菜',
+        '鲁菜',
+        '浙菜',
+        '苏菜',
+        '清真菜',
+        '闽菜',
+        '沪菜',
+        '京菜',
+        '湖北菜',
+        '徽菜',
+        '豫菜',
+        '西北菜',
+        '云贵菜',
+        '江西菜',
+        '山西菜',
+        '广西菜',
+        '港台菜',
+        '其它菜'
+      ],
       page: 1,
       thisTime_upper: null,
       thisTime_lower: null,
