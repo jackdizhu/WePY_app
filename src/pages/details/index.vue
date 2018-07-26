@@ -17,7 +17,8 @@
               :interval="interval"
               :duration="duration">
               <swiper-item v-for="(item, key) in 3" :key="key" class="swiper-item-box">
-                <image :src="icon" class="list-image"></image>
+                <!-- <image :src="icon" class="list-image"></image> -->
+                <image :src="detailsData.img" class="list-image"></image>
               </swiper-item>
             </swiper>
             <!-- <image :src="icon" class="list-image"></image> -->
@@ -53,7 +54,7 @@ export default {
       // swiper
       // 是否显示面板指示点
       indicatorDots: true,
-      indicatorColor: '#fff',
+      indicatorColor: '#eee',
       indicatorActiveColor: '#1178c4',
       autoplay: false,
       interval: 5000,
@@ -84,19 +85,22 @@ export default {
       title: '加载中',
       mask: true
     })
+
+    wx.hideLoading()
+    this.detailsData = this.checkItem
     // get 请求
-    this.$request({
-      url: this.$api.test_get_details,
-      type: 'GET',
-      params: {
-        id: id
-      }
-    }).then(res => {
-      wx.hideLoading()
-      if (res.data) {
-        this.detailsData = res.data
-      }
-    })
+    // this.$request({
+    //   url: this.$api.test_get_details,
+    //   type: 'GET',
+    //   params: {
+    //     id: id
+    //   }
+    // }).then(res => {
+    //   wx.hideLoading()
+    //   if (res.data) {
+    //     this.detailsData = res.data
+    //   }
+    // })
   }
 }
 

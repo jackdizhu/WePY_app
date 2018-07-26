@@ -28,8 +28,8 @@ export default {
   // 这个字段走 app.json
   config: {
     pages: [
-      '^pages/index/index',
-      'pages/list/list',
+      // '^pages/index/index',
+      '^pages/list/list',
       'pages/details/details'
     ], // Will be filled in webpack
     window: {
