@@ -1,6 +1,11 @@
 <template>
   <div class="page list-page">
     <div class="goods-sorts">
+      <!-- <scroll-view class="goods-sorts_scroll" :scroll-y="true" @scroll="scrollViewScroll">
+        <div class="ul-box">
+          <div class="li-box" v-for="(item, key) in goodsSorts" :key="key" hover-class="li-box_active" @click="getGoodsList">{{item}}</div>
+        </div>
+      </scroll-view> -->
       <div class="ul-box">
         <div class="li-box" v-for="(item, key) in goodsSorts" :key="key" hover-class="li-box_active" @click="getGoodsList">{{item}}</div>
       </div>
@@ -124,7 +129,7 @@ export default {
     ...mapMutations({
       setCheckItem: 'SET_CHECKITEM'
     }),
-    catchtouchmove () {
+    scrollViewScroll () {
       return false
     },
     getGoodsList () {
@@ -265,13 +270,16 @@ export default {
       left: 0;
       top: 0;
       bottom: 0;
+      // overflow: hidden;
       height: auto;
       overflow: auto;
       width: 80px;
       z-index: 3;
-
       border-right: 1px solid #eee;
       background-color: #fff;
+      .goods-sorts_scroll {
+        height: 100%;
+      }
       .li-box {
         width: 100%;
         height: 60px;
