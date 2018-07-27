@@ -87,7 +87,7 @@ export default {
           id: 'api',
           name: 'api 测试',
           open: false,
-          pages: ['scanCode']
+          pages: ['scanCode', 'video', 'audio']
         }
       ]
     };
