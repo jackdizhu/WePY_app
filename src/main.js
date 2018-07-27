@@ -57,6 +57,7 @@ export default {
       'pages/scanCode/scanCode',
       'pages/video/video',
       'pages/audio/audio',
+      'pages/audioRecord/audioRecord',
 
       'pages/test/test',
       'pages/componentsTest/componentsTest'

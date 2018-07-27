@@ -42,7 +42,10 @@
                   </div>
                 </div>
                 <div class="weui-uploader__input-box">
-                  <div class="weui-uploader__input" @click="chooseImage"></div>
+                  <div class="weui-uploader__input" @click="chooseImage">Image</div>
+                </div>
+                <div class="weui-uploader__input-box">
+                  <div class="weui-uploader__input" @click="chooseVideo">Video</div>
                 </div>
               </div>
             </div>
@@ -61,7 +64,7 @@ export default {
     };
   },
   methods: {
-    chooseImage(e) {
+    chooseImage (e) {
       let _this = this;
       wx.chooseImage({
         count: 1, // 默认9
@@ -79,6 +82,25 @@ export default {
           console.log('commplete');
         }
       });
+    },
+    chooseVideo: function () {
+      let _this = this
+      wx.chooseVideo({
+        sourceType: ['album', 'camera'],
+        maxDuration: 60,
+        camera: 'back',
+        success: function (res) {
+          console.log('成功上传：' + res.tempFilePath);
+          // 返回选定照片的本地文件路径列表，tempFilePath可以作为img标签的src属性显示图片
+          _this.files = _this.files.concat(res.tempFilePath);
+        },
+        fail: function() {
+          console.log('fail');
+        },
+        complete: function() {
+          console.log('commplete');
+        }
+      })
     },
     predivImage(e) {
       console.log(e);
