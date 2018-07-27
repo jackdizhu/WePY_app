@@ -74,7 +74,8 @@ export default {
   },
   onUnload() {
     // 处理第二次 进入页面 短暂显示上一个数据问题
-    this.detailsData = {}
+    // 使用 vue 插件处理
+    // this.detailsData = {}
   },
   onLoad() {
     // url 传参数
@@ -86,21 +87,21 @@ export default {
       mask: true
     })
 
-    wx.hideLoading()
-    this.detailsData = this.checkItem
+    // wx.hideLoading()
+    // this.detailsData = this.checkItem
     // get 请求
-    // this.$request({
-    //   url: this.$api.test_get_details,
-    //   type: 'GET',
-    //   params: {
-    //     id: id
-    //   }
-    // }).then(res => {
-    //   wx.hideLoading()
-    //   if (res.data) {
-    //     this.detailsData = res.data
-    //   }
-    // })
+    this.$request({
+      url: this.$api.test_get_details,
+      type: 'GET',
+      params: {
+        id: id
+      }
+    }).then(res => {
+      wx.hideLoading()
+      if (res.data) {
+        this.detailsData = res.data
+      }
+    })
   }
 }
 

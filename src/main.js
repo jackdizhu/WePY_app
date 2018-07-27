@@ -19,6 +19,21 @@ import '../static/weui/weui_theme.less'
 import mpvueToastRegistry from 'mptoast/registry'
 mpvueToastRegistry(Vue)
 
+// 同一路由切换时，上一次的页面数据会保留
+const somePlugin = {
+  install: function () {
+    Vue.mixin({
+      onUnload () {
+        if (this.$options.data) {
+          Object.assign(this.$data, this.$options.data())
+        }
+      }
+    })
+  }
+}
+// 使用插件
+Vue.use(somePlugin)
+
 const app = new Vue({
   App
 })
