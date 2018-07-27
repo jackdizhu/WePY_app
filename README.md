@@ -69,7 +69,11 @@ html 问题
   scroll-view 数据超过40条时 新增数据后滚动条会置到顶部
     配置 enablePullDownRefresh: true 绑定 onReachBottom 代替
 
-图片音视频 录制上传
+调用微信扫码 ( mpvue_weui 分支 )
+  scanCode/index.vue
+    wx.scanCode 调用摄像头 扫描条形码 二维码
+
+图片音视频 录制上传 ( mpvue_weui 分支 )
   uploader/index.vue
     wx.chooseImage (拍摄)图片上传
     wx.chooseVideo (拍摄)视频上传
