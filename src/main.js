@@ -51,7 +51,7 @@ export default {
     window: {
       backgroundTextStyle: 'light',
       navigationBarBackgroundColor: '#fff',
-      navigationBarTitleText: '菜谱 商品展示 DEMO',
+      navigationBarTitleText: '菜系菜谱',
       navigationBarTextStyle: 'black',
       onReachBottomDistance: true,
       enablePullDownRefresh: false
