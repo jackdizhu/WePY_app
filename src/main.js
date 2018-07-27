@@ -45,6 +45,7 @@ export default {
     pages: [
       // '^pages/index/index',
       '^pages/list/list',
+      // '^pages/test/test',
       'pages/details/details'
     ], // Will be filled in webpack
     window: {
