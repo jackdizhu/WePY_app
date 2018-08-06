@@ -9,6 +9,7 @@ npm  i && wepy build --watch
 # 小程序项目
 
 ![扫一扫 使用微信小程序](./statics/gh_f498d6f2e269_344.jpg)
+![扫一扫 使用微信小程序](./statics/gh_5b44397ecf47_344.jpg)
 
 * nearby 基于高德地图api WePY 框架 周边生活导航 小程序
 * dev 基于weui 框架 debug_app 的小程序版本
@@ -165,34 +166,34 @@ html 问题
 ```
 https://blog.csdn.net/cx091/article/details/78952648
 
-1. 强制要求请求全部为https！ 
+1. 强制要求请求全部为https！
 
-2. 小程序生命周期的函数内部对象要就改成var that=this;防止被替换。 
+2. 小程序生命周期的函数内部对象要就改成var that=this;防止被替换。
 
-3. view不识别\n但是text可以。 
+3. view不识别\n但是text可以。
 
 4. 没有dom!没有dom!没有dom!,绑定数据,控制显示和隐藏全部用data来修改，就是this.setData({})
 
-5. 跳转现在（2018）小程序支持十层 
+5. 跳转现在（2018）小程序支持十层
 
 6. 微信小程序中原生组件层级最高，比如map,canvas,swiper,只能使用cover-view,cover-image,
 	其中cover-view很多样式都不支持，而且支持点击事件bindtap,还有各种bug。
 	（问题引用：当使用display:none;做隐藏的时候，其内容文字会出现在屏幕右上角，
 	建议使用 wx:if=”false”或position:absolute;left:-1000rpx;这种方式做隐藏。
-	border不支持单边，不支持padding的使用，在安卓端会出现padding消失的问题。） 
+	border不支持单边，不支持padding的使用，在安卓端会出现padding消失的问题。）
 
 7. 在小程序中当有两个元素同时发生变化时，会出现冲突，导致其中一个变化，而另一个不做变化，
-	所以要使用setTimeout方法避免元素同时出现变化。 
+	所以要使用setTimeout方法避免元素同时出现变化。
 
-8. 在开发者工具中执行先执行aap.js然后执行其他js文件，但在手机上app.js和其他js是同时执行的； 
+8. 在开发者工具中执行先执行aap.js然后执行其他js文件，但在手机上app.js和其他js是同时执行的；
 
-9. 很多原生组件都有定高，只能使用微信提供的rpx来修改！ 
+9. 很多原生组件都有定高，只能使用微信提供的rpx来修改！
 
-10. 小程序是单向绑定和vue不同，修改数据只能从setData来修改 
+10. 小程序是单向绑定和vue不同，修改数据只能从setData来修改
 
-11. 本地资源无法通过 css 获取，只能通过网络或者使用image标签 
+11. 本地资源无法通过 css 获取，只能通过网络或者使用image标签
 
-12. cover-view放弃padding, 用min-width + text-align + height + line-height 
+12. cover-view放弃padding, 用min-width + text-align + height + line-height
 
 13. bindtap和catchtap的区别: bind 不会阻止冒泡，catch 可以阻止冒泡
 
@@ -243,7 +244,7 @@ http://www.henkuai.com/forum.php?mod=viewthread&tid=36854
 
 16、在页面中引入模板的wxss文件，采用@import引入，且需要以;结尾，否则会出错
 
-17、bindTap是不会阻止冒泡到父级，而catchTap可以阻止进行事件冒泡  
+17、bindTap是不会阻止冒泡到父级，而catchTap可以阻止进行事件冒泡
 
 18、data-aaa 这样设置的值可以用event.target.dataset.aaa进行获取
 
@@ -310,7 +311,7 @@ new Vue({
 })
 
 注意点：
-•不要在选项属性或回调上使用箭头函数，比如 created: () => console.log(this.a) 
+•不要在选项属性或回调上使用箭头函数，比如 created: () => console.log(this.a)
 	或vm.$watch('a', newValue => this.myMethod())。因为箭头函数是和父级上下文绑定在一起的，
 	this不会是如你做预期的 Vue 实例，且 this.a 或 this.myMethod 也会是未定义的。
 •微信小程序的页面的 query 参数是通过 onLoad 获取的，mpvue 对此进行了优化，
@@ -346,7 +347,7 @@ new Vue({
 	    </li>
 	  </ul>
 	</template>
- 
+
 事件处理器
 	在 input 和 textarea 中 change 事件会被转为 blur 事件。
 
@@ -413,7 +414,7 @@ new Vue({
 	  onLaunch () {
 	    // ...
 	  },
-	 
+
 	  // 捕获 app error
 	  onError (err) {
 	    console.log(err)
