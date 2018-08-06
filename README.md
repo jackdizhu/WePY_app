@@ -13,6 +13,7 @@ npm  i && wepy build --watch
 
 * nearby 基于高德地图api WePY 框架 周边生活导航 小程序
 * dev 基于weui 框架 debug_app 的小程序版本
+* dev_mpvue_weui 基于 mpvue weui 框架 菜谱点餐小程序
 
 # 小程序开发问题
 
