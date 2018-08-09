@@ -20,6 +20,12 @@
     "types": [
       "tencent-wx-app"
     ],
+    "lib": [
+      "es2015",
+      "dom",
+      "dom.iterable",
+      "scripthost"
+    ],
     "allowJs": true,
     "allowSyntheticDefaultImports": true,
     "noImplicitAny": false,

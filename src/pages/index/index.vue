@@ -1,11 +1,12 @@
 <template>
   <div class="counter-warp">
-    <p>Mpvue</p>
+    <p @click="methods_test2">Mpvue</p>
     <p>ts value {{ ver }}</p>
     <card text="card component"></card>
     <comp-b text="hello2"></comp-b>
     <comp-alias text="hello3"></comp-alias>
     <a :href="AppUrls.COUNTER" class="home">去往vuex</a>
+    <mptoast />
   </div>
 </template>
 <!--必须指定为ts-->

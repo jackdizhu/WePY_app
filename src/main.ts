@@ -28,7 +28,8 @@ Vue.config.productionTip = false
 // 在这个地方引入是为了registerHooks先执行
 const MyApp = require('./App.vue').default as IMpVue
 
-
+import mpvueToastRegistry from 'mptoast/registry'
+mpvueToastRegistry(Vue)
 
 const app = new Vue(MyApp)
 app.$mount()

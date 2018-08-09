@@ -1,13 +1,14 @@
 import { Component, Prop, Emit, Watch, Vue } from 'vue-property-decorator'
 
 import Api from './utils/api.json'
+import httpRequest from './utils/http'
 export default class VueClass extends Vue {
   public api: any = Api
+  public httpRequest = new httpRequest()
 
-  // @Emit()
-  // methods_test (): void {
-  //   console.log('VueClass methods_test', 1)
-  // }
+  methods_test (): void {
+    console.log('VueClass methods_test', 1)
+  }
 
   // private wxHasUpdate: any = function () {
   //   // 获取小程序更新机制兼容

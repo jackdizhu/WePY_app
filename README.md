@@ -67,6 +67,21 @@ loaders: Object.assign(utils.cssLoaders({
 Child process failed to process the request:  TypeError: Cannot read property 'externalModuleIndicator' of undefined
 因mpvue-loader 问题 .vue 中ts代码需提取至单独文件
 
+// vue-shim.d 文件定义无效 需要在vue组件 .ts文件中定义
+declare module 'vue/types/vue' {
+  interface Vue {
+    $mptoast: any
+  }
+}
+// 'Promise' only refers to a type, but is being used as a value here
+// tsconfig.json compilerOptions
+"lib": [
+  "es2015",
+  "dom",
+  "dom.iterable",
+  "scripthost"
+]
+
 npm upgrade mpvue@latest mpvue-loader@latest mpvue-template-compiler@latest mpvue-webpack-target@latest
 ```
 
