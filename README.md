@@ -1,6 +1,74 @@
 # mpvue_weui
 
 * 使用[mpvue-weui](https://github.com/KuangPF/mpvue-weui)框架开发的项目 初步熟悉 mpvue 框架 及 weui 框架
+* ts 版本部署问题 (Vue.mixin onUnload 等报错)
+
+```
+npm i vue-property-decorator@7.0.0 awesome-typescript-loader@4.0.1 typescript@2.7.2 --save
+webpack.base.conf.js
+{
+  test: /\.tsx?$/,
+  exclude: /node_modules/,
+  use: [
+    'babel-loader',
+    {
+      loader: 'mpvue-loader',
+      options: {
+        checkMPEntry: true
+      }
+    },
+    {
+      loader: 'awesome-typescript-loader',
+      options: {
+        useCache: true,
+      }
+    }
+  ]
+}
+tsconfig.json
+"types": [
+  "tencent-wx-app"
+]
+
+.d.ts 定义
+declare namespace wx {
+	interface SystemInfo {
+		model: string;
+		version: string
+	}
+	function getSystemInfo(options: any): void;
+}
+
+// import App from './App.vue'
+const App = require('./App.vue').default
+
+onUnload?(): void;
+onShareAppMessage?(options: any): any;
+
+vue-loader.conf.js
+loaders: Object.assign(utils.cssLoaders({
+  sourceMap: isProduction
+    ? config.build.productionSourceMap
+    : config.dev.cssSourceMap,
+  extract: isProduction
+}), {
+  ts: [
+    'babel-loader',
+    {
+      // loader: 'ts-loader',
+      loader: 'awesome-typescript-loader',
+      options: {
+        useCache: true,
+      }
+    }
+  ]
+})
+
+Child process failed to process the request:  TypeError: Cannot read property 'externalModuleIndicator' of undefined
+因mpvue-loader 问题 .vue 中ts代码需提取至单独文件
+
+npm upgrade mpvue@latest mpvue-loader@latest mpvue-template-compiler@latest mpvue-webpack-target@latest
+```
 
 ```
 表单

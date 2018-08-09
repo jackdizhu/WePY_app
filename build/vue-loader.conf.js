@@ -5,11 +5,23 @@ var config = require('../config')
 var isProduction = true
 
 module.exports = {
-  loaders: utils.cssLoaders({
+  loaders: Object.assign(utils.cssLoaders({
     sourceMap: isProduction
       ? config.build.productionSourceMap
       : config.dev.cssSourceMap,
     extract: isProduction
+  }), {
+    ts: [
+      'babel-loader',
+      {
+        // loader: 'ts-loader',
+        loader: 'awesome-typescript-loader',
+        options: {
+          // errorsAsWarnings: true,
+          useCache: true,
+        }
+      }
+    ]
   }),
   transformToRequire: {
     video: 'src',

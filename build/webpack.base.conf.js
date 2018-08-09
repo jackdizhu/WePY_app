@@ -3,30 +3,31 @@ var fs = require('fs')
 var utils = require('./utils')
 var config = require('../config')
 var vueLoaderConfig = require('./vue-loader.conf')
+var ExtractTextPlugin = require('extract-text-webpack-plugin')
+var glob = require('glob')
 
-function resolve (dir) {
+function resolve(dir) {
   return path.join(__dirname, '..', dir)
 }
 
-function getEntry (dir, entryFile) {
-  const files = fs.readdirSync(dir)
-  return files.reduce((res, k) => {
-    const page = path.resolve(dir, k, entryFile)
-    if (fs.existsSync(page)) {
-      res[k] = page
-    }
+function getEntry (rootSrc, pattern) {
+  var files = glob.sync(path.resolve(rootSrc, pattern))
+  return files.reduce((res, file) => {
+    var info = path.parse(file)
+    var key = info.dir.slice(rootSrc.length + 1) + '/' + info.name
+    res[key] = path.resolve(file)
     return res
   }, {})
 }
 
-const appEntry = { app: resolve('./src/main.js') }
-const pagesEntry = getEntry(resolve('./src/pages'), 'main.js')
+const appEntry = { app: resolve('./src/main.ts') }
+const pagesEntry = getEntry(resolve('./src'), 'pages/**/main.ts')
 const entry = Object.assign({}, appEntry, pagesEntry)
 
-process.noDeprecation = true
-
 module.exports = {
-  entry: entry,
+  entry: entry, // 如果要自定义生成的 dist 目录里面的文件路径，
+                // 可以将 entry 写成 {'toPath': 'fromPath'} 的形式，
+                // toPath 为相对于 dist 的路径, 例：index/demo，则生成的文件地址为 dist/index/demo.js
   target: require('mpvue-webpack-target'),
   output: {
     path: config.build.assetsRoot,
@@ -36,10 +37,11 @@ module.exports = {
       : config.dev.assetsPublicPath
   },
   resolve: {
-    extensions: ['.js', '.vue', '.json'],
+    extensions: ['.js', '.vue', '.json', '.ts',],
     alias: {
       'vue': 'mpvue',
-      '@': resolve('src')
+      '@': resolve('src'),
+      'debug': resolve('src/utils/debug'),
     },
     symlinks: false
   },
@@ -58,6 +60,45 @@ module.exports = {
         test: /\.vue$/,
         loader: 'mpvue-loader',
         options: vueLoaderConfig
+      },
+      {
+        test: /\.tsx?$/,
+        // include: [resolve('src'), resolve('test')],
+        exclude: /node_modules/,
+        use: [
+          'babel-loader',
+          {
+            loader: 'mpvue-loader',
+            options: {
+              checkMPEntry: true
+            }
+          },
+          {
+            // loader: 'ts-loader',
+            loader: 'awesome-typescript-loader',
+            options: {
+              // errorsAsWarnings: true,
+              useCache: true,
+            }
+          }
+        ]
+      },
+      {
+        test: /\.less$/,
+        exclude: /node_modules/,
+        use: ExtractTextPlugin.extract({
+          fallback: "style-loader",
+          use: [
+            {
+              loader: 'css-loader',
+              options: {
+                importLoaders: 1,
+                url: false,
+              },
+            },
+            'less-loader',
+          ],
+        }),
       },
       {
         test: /\.js$/,
