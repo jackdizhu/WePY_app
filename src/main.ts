@@ -1,6 +1,9 @@
 import { Component, Emit, Inject, Model, Prop, Provide, Vue, Watch } from 'vue-property-decorator';
 import { VueConstructor } from "vue";
 
+import '@/weui/weui.css'
+// import '@/weui/weui_theme.less'
+
 interface IMpVue extends VueConstructor {
   mpType: string
 }
