@@ -12,6 +12,7 @@ declare global {
   }
   namespace wx {
     function getUpdateManager(): any;
+    // function navigateTo(obj: any): any;
   }
   namespace Object {
     function assign(obj1: any, obj2: any, obj3?: any): any;

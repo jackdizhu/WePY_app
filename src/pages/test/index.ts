@@ -22,7 +22,7 @@ declare module 'vue/types/vue' {
     CompB, //注意，vue的组件在template中的用法，`CompB` 会被转成 `comp-b`
   }
 })
-class Index extends VueClass {
+export default class Test extends VueClass {
   AppUrls = AppUrls
   ver: number = 123
   page: number = 1
@@ -66,5 +66,3 @@ class Index extends VueClass {
     debug('mounted')
   }
 }
-
-export default Index
