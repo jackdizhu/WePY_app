@@ -3,7 +3,7 @@ import { Vue, Component } from 'vue-property-decorator'
 import Mptoast from 'mptoast/index.vue'
 
 
-const debug = require('debug')('log:Index')
+const debug = require('debug')('log:List')
 
 declare module 'vue/types/vue' {
   interface Vue {
@@ -84,9 +84,9 @@ export default class List extends VueClass {
 
   navigatorToDetails (item: any) {
     // this.setCheckItem(item)
-    // wx.navigateTo({
-    //   url: '/pages/details/details?id=' + item.id
-    // })
+    wx.navigateTo({
+      url: '/pages/details/main?id=' + item.id
+    })
   }
 
   // scroll-view 事件

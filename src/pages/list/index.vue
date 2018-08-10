@@ -76,18 +76,68 @@
 </script>
 
 
-<style>
-  .counter-warp {
-    text-align: center;
-    margin-top: 100px;
+<style lang='less'>
+  // page {
+  //   height: 100%;
+  // }
+  .list-page {
+    position: relative;
+    padding-left: 80px;
+    height: 100%;
+    .list-connent {
+      height: 100%;
+      overflow: auto;
+    }
+    .goods-sorts {
+      // position: absolute;
+      position: fixed;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      // overflow: hidden;
+      height: auto;
+      overflow: auto;
+      width: 80px;
+      z-index: 3;
+      border-right: 1px solid #eee;
+      background-color: #fff;
+      .goods-sorts_scroll {
+        height: 100%;
+      }
+      .li-box {
+        width: 100%;
+        height: 60px;
+        line-height: 60px;
+        text-align: center;
+        border-bottom: 1px solid #eee;
+      }
+      .li-box_active {
+        background-color: #eee;
+      }
+    }
   }
-
-  .home {
-    display: inline-block;
-    margin: 100px auto;
-    padding: 5px 10px;
-    color: blue;
-    border: 1px solid blue;
+  .list-image {
+    margin-right: 10px;
+    vertical-align: middle;
+    width: 80px;
+    height: 80px;
   }
-
+  .list-text {
+    min-height: 80px;
+  }
+  .list-text-h1 {
+    font-size: 16px;
+  }
+  .list-text-h2 {
+    font-size: 14px;
+  }
+  .list-text-h3 {
+    font-size: 14px;
+    .text-left ,
+    .text-right {
+      div {
+        display: inline;
+      }
+    }
+  }
 </style>

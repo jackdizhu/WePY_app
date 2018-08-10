@@ -6,7 +6,7 @@ import CompB from '@/components/compb.vue' // mpvue目前只支持的单文件�
 import Mptoast from 'mptoast/index.vue'
 
 
-const debug = require('debug')('log:Index')
+const debug = require('debug')('log:Test')
 
 declare module 'vue/types/vue' {
   interface Vue {
