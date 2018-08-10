@@ -5,6 +5,14 @@ import httpRequest from './utils/http'
 // import Store from '@/store/index'
 
 export default class VueClass extends Vue {
+  constructor() {
+    super()
+    // onShareAppMessage (options?: any) {
+    //   this.shareAppMessage(options)
+    // }
+    // console.log(this.shareAppMessage, 1)
+  }
+
   public api: any = Api
   // public store: any = Store
   public httpRequest = new httpRequest()
