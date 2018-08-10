@@ -68,7 +68,6 @@ export default class Details extends VueClass {
   }
 
   onUnload () {
-    this.unload()
     if (this.$options.data) {
       Object.assign(this.$data, this.$options.data)
     }

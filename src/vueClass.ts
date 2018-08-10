@@ -21,13 +21,6 @@ export default class VueClass extends Vue {
     console.log('VueClass methods_test', 1)
   }
 
-  public unload: any = function () {
-    console.log('unload', 1)
-
-    // if (this.$options.data) {
-    //   Object.assign(this.$data, this.$options.data)
-    // }
-  }
   public shareAppMessage: any = function (options?: any): any {
     let shareObj = {
       title: '',
