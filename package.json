@@ -1,7 +1,7 @@
 {
-  "name": "mpvue-weui",
-  "version": "1.0.0",
-  "description": "用 vue 写小程序，使用 mpvue 框架重写 WeUI。",
+  "name": "mpvue-ts",
+  "version": "1.1.2",
+  "description": "用 vue + ts 写小程序，使用 mpvue 框架重写 WeUI。",
   "author": "jackdizhu",
   "private": false,
   "scripts": {
