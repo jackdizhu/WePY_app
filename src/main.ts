@@ -4,6 +4,7 @@ import { VueConstructor } from "vue";
 
 import '@/weui/weui.css'
 import '@/weui/weui_theme.css'
+import '@/css/app.css'
 // import '@/weui/weui_theme.less'
 
 interface IMpVue extends VueConstructor {
