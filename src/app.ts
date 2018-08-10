@@ -15,19 +15,15 @@ class App extends Vue {
   // app hook
   onLaunch() {
     let opt = this.$root.$mp.appOptions
-    debug('onLaunch', opt)
   }
 
   onShow() {
-    debug('onShow')
   }
 
   onHide() {
-    debug('onHide')
   }
 
   mounted() { // vue hook
-    debug('mounted')
   }
 }
 
