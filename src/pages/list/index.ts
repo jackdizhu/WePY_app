@@ -173,4 +173,15 @@ export default class List extends VueClass {
     })
     console.log(e, 'onReachBottom')
   }
+
+  onShareAppMessage (options?: any) {
+    this.shareAppMessage(options)
+  }
+
+  onUnload () {
+    this.unload()
+    if (this.$options.data) {
+      Object.assign(this.$data, this.$options.data)
+    }
+  }
 }
