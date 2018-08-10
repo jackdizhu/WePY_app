@@ -1,12 +1,14 @@
 import { Component, Emit, Inject, Model, Prop, Provide, Vue, Watch } from 'vue-property-decorator';
 import { VueConstructor } from "vue";
+// import store from '@/store/index'
 
 import '@/weui/weui.css'
 import '@/weui/weui_theme.css'
 // import '@/weui/weui_theme.less'
 
 interface IMpVue extends VueConstructor {
-  mpType: string
+  mpType: string,
+  $store: any
 }
 
 // 添加小程序hooks http://mpvue.com/mpvue/#_4
@@ -29,6 +31,7 @@ Component.registerHooks([
 ])
 
 Vue.config.productionTip = false
+// Vue.config.$store = store
 // 在这个地方引入是为了registerHooks先执行
 const MyApp = require('./App.vue').default as IMpVue
 

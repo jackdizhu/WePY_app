@@ -17,11 +17,9 @@
               :interval="interval"
               :duration="duration">
               <swiper-item v-for="(item, key) in 3" :key="key" class="swiper-item-box">
-                <!-- <image :src="icon" class="list-image"></image> -->
                 <image :src="detailsData.img" class="list-image"></image>
               </swiper-item>
             </swiper>
-            <!-- <image :src="icon" class="list-image"></image> -->
           </div>
           <div class="weui-article__p list-text">
             <div class="list-text-h1">{{detailsData.name}}</div>

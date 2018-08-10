@@ -49,7 +49,6 @@
         <scroll-view v-if="listData.length" class="scroll-view-box weui-cells weui-cells_after-title" scroll-y @scrolltoupper="upper" @scrolltolower="lower" @scroll="scroll" :scroll-into-view="toView" :scroll-top="scrollTop">
           <div @click="navigatorToDetails(item)" class="weui-cell weui-cell_access justify-start" hover-class="weui-cell_active" v-for="(item, key) in listData" :key="key">
             <div class="weui-cell__hd">
-              <!-- <image :src="icon" class="list-image"></image> -->
               <image :src="item.img" class="list-image"></image>
             </div>
             <div class="weui-cell__bd list-text">

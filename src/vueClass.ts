@@ -2,8 +2,10 @@ import { Component, Prop, Emit, Watch, Vue } from 'vue-property-decorator'
 
 import Api from './utils/api.json'
 import httpRequest from './utils/http'
+// import Store from '@/store/index'
 export default class VueClass extends Vue {
   public api: any = Api
+  // public store: any = Store
   public httpRequest = new httpRequest()
 
   methods_test (): void {

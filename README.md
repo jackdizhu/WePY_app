@@ -82,6 +82,17 @@ declare module 'vue/types/vue' {
   "scripthost"
 ]
 
+// vuex 调用方式
+// 在 page 页面重新引入  import store from '@/store/index'
+// getters
+store.getters.get_checkItem_id
+// state
+store.state.checkItem
+// actions
+store.dispatch('set_checkItem', item)
+// mutations
+store.commit('SET_CHECKITEM', item)
+
 npm upgrade mpvue@latest mpvue-loader@latest mpvue-template-compiler@latest mpvue-webpack-target@latest
 ```
 

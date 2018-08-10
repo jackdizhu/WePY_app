@@ -1,7 +1,8 @@
 import VueClass from '@/vueClass.ts'
 import { Vue, Component } from 'vue-property-decorator'
 import Mptoast from 'mptoast/index.vue'
-
+// vuex 需要重新 引入
+import store from '@/store/index'
 
 const debug = require('debug')('log:List')
 
@@ -60,7 +61,6 @@ export default class List extends VueClass {
     //   time: '48分钟'
     // }
   ]
-  icon: string = ''
 
   getGoodsList () {
     wx.showLoading({
@@ -83,6 +83,8 @@ export default class List extends VueClass {
   }
 
   navigatorToDetails (item: any) {
+    // store.commit('SET_CHECKITEM', item)
+    store.dispatch('set_checkItem', item)
     // this.setCheckItem(item)
     wx.navigateTo({
       url: '/pages/details/main?id=' + item.id

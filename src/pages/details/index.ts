@@ -2,6 +2,8 @@ import VueClass from '@/vueClass.ts'
 import { Vue, Component } from 'vue-property-decorator'
 import Mptoast from 'mptoast/index.vue'
 // import base64 from '../../../static/images/base64'
+// vuex 需要重新 引入
+import store from '@/store/index'
 
 
 const debug = require('debug')('log:Details')
@@ -19,8 +21,8 @@ declare module 'vue/types/vue' {
   }
 })
 export default class Details extends VueClass {
+  id: string = ''
   detailsData: any = {}
-  icon: string = ''
   // swiper
   // 是否显示面板指示点
   indicatorDots: boolean = true
@@ -34,26 +36,30 @@ export default class Details extends VueClass {
   onLoad() {
     // url 传参数
     // let id = this.$root.$mp.query.id
-    // vuex 传参数
-    let id: string = 'this.checkItem.id'
+    // vuex getters
+    this.id = store.getters.get_checkItem_id
     wx.showLoading({
       title: '加载中',
       mask: true
     })
-    // wx.hideLoading()
+
+    wx.hideLoading()
     // this.detailsData = this.checkItem
+    this.detailsData = store.state.checkItem
+    console.log(this.detailsData, this.id)
+
     // get 请求
-    this.httpRequest.request({
-      url: this.api.test_get_details,
-      type: 'GET',
-      params: {
-        id: id
-      }
-    }).then((res: any) => {
-      wx.hideLoading()
-      if (res.data) {
-        this.detailsData = res.data
-      }
-    })
+    // this.httpRequest.request({
+    //   url: this.api.test_get_details,
+    //   type: 'GET',
+    //   params: {
+    //     id: id
+    //   }
+    // }).then((res: any) => {
+    //   wx.hideLoading()
+    //   if (res.data) {
+    //     this.detailsData = res.data
+    //   }
+    // })
   }
 }
