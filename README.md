@@ -2,6 +2,7 @@
 
 * 使用[mpvue-weui](https://github.com/KuangPF/mpvue-weui)框架开发的项目 初步熟悉 mpvue 框架 及 weui 框架
 * ts 版本部署问题 (Vue.mixin onUnload 等报错)
+* 小程序内容修改 列表显示各菜系菜式 详情显示做菜需要 材料及做法
 
 ```
 npm i vue-property-decorator@7.0.0 awesome-typescript-loader@4.0.1 typescript@2.7.2 --save

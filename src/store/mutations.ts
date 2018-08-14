@@ -5,6 +5,9 @@ const mutations = {
   },
   [type.SET_CHECKITEM](state: any, checkItem: any) { // eslint-disable-line
     state.checkItem = checkItem;
+  },
+  [type.SET_CHECKCOOKINGTYPE](state: any, checkCookingType: any) { // eslint-disable-line
+    state.checkCookingType = checkCookingType;
   }
 }
 

@@ -11,6 +11,12 @@ const actions = {
     state: any
   }, checkItem: any) {
     con.commit('SET_CHECKITEM', checkItem)
+  },
+  set_checkCookingType(con: {
+    commit: any,
+    state: any
+  }, checkCookingType: any) {
+    con.commit('SET_CHECKCOOKINGTYPE', checkCookingType)
   }
 }
 

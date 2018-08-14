@@ -19,28 +19,95 @@ declare module 'vue/types/vue' {
   }
 })
 export default class List extends VueClass {
-  goodsSorts: string[] = [
-    '川菜',
-    '湘菜',
-    '粤菜',
-    '东北菜',
-    '鲁菜',
-    '浙菜',
-    '苏菜',
-    '清真菜',
-    '闽菜',
-    '沪菜',
-    '京菜',
-    '湖北菜',
-    '徽菜',
-    '豫菜',
-    '西北菜',
-    '云贵菜',
-    '江西菜',
-    '山西菜',
-    '广西菜',
-    '港台菜',
-    '其它菜'
+  checkGoodsSorts: any = {
+    "name": "川菜",
+    "value": "chuancai"
+  }
+  goodsSorts: any[] = [
+    {
+      "name": "川菜",
+      "value": "chuancai"
+    },
+    {
+      "name": "湘菜",
+      "value": "xiangcai"
+    },
+    {
+      "name": "粤菜",
+      "value": "yuecai"
+    },
+    {
+      "name": "东北菜",
+      "value": "dongbeicai"
+    },
+    {
+      "name": "鲁菜",
+      "value": "lucai"
+    },
+    {
+      "name": "浙菜",
+      "value": "zhecai"
+    },
+    {
+      "name": "苏菜",
+      "value": "sucai"
+    },
+    {
+      "name": "清真菜",
+      "value": "qingzhencai"
+    },
+    {
+      "name": "闽菜",
+      "value": "mincai"
+    },
+    {
+      "name": "沪菜",
+      "value": "hucai"
+    },
+    {
+      "name": "京菜",
+      "value": "jingcai"
+    },
+    {
+      "name": "湖北菜",
+      "value": "hubeicai"
+    },
+    {
+      "name": "徽菜",
+      "value": "huicai"
+    },
+    {
+      "name": "豫菜",
+      "value": "yucai"
+    },
+    {
+      "name": "西北菜",
+      "value": "xibeicai"
+    },
+    {
+      "name": "云贵菜",
+      "value": "yunguicai"
+    },
+    {
+      "name": "江西菜",
+      "value": "jiangxicai"
+    },
+    {
+      "name": "山西菜",
+      "value": "shanxicai"
+    },
+    {
+      "name": "广西菜",
+      "value": "guangxicai"
+    },
+    {
+      "name": "港台菜",
+      "value": "gangtaicai"
+    },
+    {
+      "name": "其它菜",
+      "value": "qitacai"
+    }
   ]
   page: number = 1
   thisTime_upper: any = null
@@ -62,7 +129,10 @@ export default class List extends VueClass {
     // }
   ]
 
-  getGoodsList () {
+  getGoodsList(item: any) {
+    this.checkGoodsSorts = item
+    store.dispatch('set_checkCookingType', item)
+
     wx.showLoading({
       title: '加载中',
       mask: true
@@ -72,7 +142,8 @@ export default class List extends VueClass {
       url: this.api.test_get_list,
       type: 'GET',
       params: {
-        page: this.page
+        page: this.page,
+        cookingType: item.value
       }
     }).then((res: any) => {
       wx.hideLoading()
@@ -82,7 +153,7 @@ export default class List extends VueClass {
     })
   }
 
-  navigatorToDetails (item: any) {
+  navigatorToDetails(item: any) {
     // store.commit('SET_CHECKITEM', item)
     store.dispatch('set_checkItem', item)
     // this.setCheckItem(item)
@@ -92,7 +163,7 @@ export default class List extends VueClass {
   }
 
   // scroll-view 事件
-  upper (e: any) {
+  upper(e: any) {
     // if (this.thisTime_lower) {
     //   return false
     // }
@@ -108,7 +179,7 @@ export default class List extends VueClass {
     console.log(e, 'upper')
   }
 
-  lower (e: any) {
+  lower(e: any) {
     this.page++
     // 滚动到底部 加载更多数据
     this.httpRequest.request({
@@ -138,6 +209,8 @@ export default class List extends VueClass {
   }
 
   onLoad() {
+    store.dispatch('set_checkCookingType', this.goodsSorts[0])
+
     wx.showLoading({
       title: '加载中',
       mask: true
@@ -147,7 +220,8 @@ export default class List extends VueClass {
       url: this.api.test_get_list,
       type: 'GET',
       params: {
-        page: this.page
+        page: this.page,
+        cookingType: 'chuancai'
       }
     }).then((res: any) => {
       wx.hideLoading()
@@ -157,7 +231,7 @@ export default class List extends VueClass {
     })
   }
 
-  onReachBottom (e: any) {
+  onReachBottom(e: any) {
     this.page++
     // 滚动到底部 加载更多数据
     this.httpRequest.request({
@@ -174,11 +248,11 @@ export default class List extends VueClass {
     console.log(e, 'onReachBottom')
   }
 
-  onShareAppMessage (options?: any) {
+  onShareAppMessage(options?: any) {
     this.shareAppMessage(options)
   }
 
-  onUnload () {
+  onUnload() {
     if (this.$options.data) {
       Object.assign(this.$data, this.$options.data)
     }
