@@ -150,6 +150,14 @@ css 问题
 html 问题
   scroll-view 数据超过40条时 新增数据后滚动条会置到顶部
     配置 enablePullDownRefresh: true 绑定 onReachBottom 代替
+  不支持 :class (:class="'li-box' + checkGoodsSorts.value === item.value ? 'li-box_active' : ''")
+    使用 v-if v-else 代替
+    <div class="li-box li-box_active" v-if="checkGoodsSorts.value === item.value">
+      {{item.name}}
+    </div>
+    <div class="li-box" hover-class="li-box_active" v-else>
+      {{item.name}}
+    </div>
 
 调用微信扫码 ( mpvue_weui 分支 )
   scanCode/index.vue
