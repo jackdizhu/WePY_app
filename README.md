@@ -5,6 +5,9 @@
 * 小程序内容修改 列表显示各菜系菜式 详情显示做菜需要 材料及做法
 
 ```
+// 缺少模块问题处理
+npm i webpack-sources babel-template babel-generator babel-types --save
+
 npm i vue-property-decorator@7.0.0 awesome-typescript-loader@4.0.1 typescript@2.7.2 --save
 webpack.base.conf.js
 {

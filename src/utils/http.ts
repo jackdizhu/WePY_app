@@ -4,7 +4,11 @@ let Fly = require('flyio/dist/npm/wx')
 let fly = new Fly()
 // import https from 'https'
 fly.config.timeout = 1000 * 60 * 60
-fly.config.baseURL = 'https://www.easy-mock.com/mock/5ab8bf9cca39d01d844c0bf7/test'
+// fly.config.baseURL = 'https://www.easy-mock.com/mock/5ab8bf9cca39d01d844c0bf7/test'
+let baseURL1 = 'https://www.easy-mock.com/mock/5b7bbed645458a5efea87c82/api'
+let baseURL2 = 'https://jackdizhu.duapp.com/api'
+fly.config.baseURL = baseURL2
+
 // fly.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded;charset=UTF-8'
 // fly.defaults.withCredentials = true // 带cookie 请求
 // fly.defaults.httpsAgent = new https.Agent({
@@ -22,6 +26,19 @@ interface RequestParams {
 }
 
 export default class httpRequest {
+  constructor() {
+    //   fly.get('https://jackdizhu.duapp.com/api/init', {}).then((res: any) => {
+    //     isCheckBaseURL1 = true
+    //     if (res.data) {
+    //       fly.config.baseURL = baseURL2
+    //     } else {
+    //       fly.config.baseURL = baseURL1
+    //     }
+    //   }).catch((err: any) => {
+    //     isCheckBaseURL1 = true
+    //     fly.config.baseURL = baseURL1
+    //   })
+  }
   /**
    * get 请求方法
    * @param url

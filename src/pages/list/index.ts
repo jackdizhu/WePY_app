@@ -139,7 +139,7 @@ export default class List extends VueClass {
     })
     // get 请求
     this.httpRequest.request({
-      url: this.api.test_get_list,
+      url: this.api.get_list,
       type: 'GET',
       params: {
         page: this.page,
@@ -149,6 +149,9 @@ export default class List extends VueClass {
       wx.hideLoading()
       if (res.data) {
         this.listData = res.data
+        for (let i = 0; i < this.listData.length; i++) {
+          this.listData[i].data = JSON.parse(this.listData[i].data)
+        }
       }
     })
   }
@@ -183,13 +186,16 @@ export default class List extends VueClass {
     this.page++
     // 滚动到底部 加载更多数据
     this.httpRequest.request({
-      url: this.api.test_get_list,
+      url: this.api.get_list,
       type: 'GET',
       params: {
         page: this.page
       }
     }).then((res: any) => {
       if (res.data) {
+        for (let i = 0; i < res.data.length; i++) {
+          res.data[i].data = JSON.parse(res.data[i].data)
+        }
         this.listData.push(...res.data)
       }
     })
@@ -217,7 +223,7 @@ export default class List extends VueClass {
     })
     // get 请求
     this.httpRequest.request({
-      url: this.api.test_get_list,
+      url: this.api.get_list,
       type: 'GET',
       params: {
         page: this.page,
@@ -227,6 +233,9 @@ export default class List extends VueClass {
       wx.hideLoading()
       if (res.data) {
         this.listData = res.data
+        for (let i = 0; i < this.listData.length; i++) {
+          this.listData[i].data = JSON.parse(this.listData[i].data)
+        }
       }
     })
   }
@@ -235,7 +244,7 @@ export default class List extends VueClass {
     this.page++
     // 滚动到底部 加载更多数据
     this.httpRequest.request({
-      url: this.api.test_get_list,
+      url: this.api.get_list,
       type: 'GET',
       params: {
         page: this.page

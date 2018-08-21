@@ -54,16 +54,18 @@ export default class Details extends VueClass {
 
     // get 请求
     this.httpRequest.request({
-      url: this.api.test_get_details,
+      url: this.api.get_details,
       type: 'GET',
       params: {
         cookingType: this.checkCookingType.value,
-        name: this.checkItem.name
+        name: this.checkItem.name,
+        id: this.checkItem.id
       }
     }).then((res: any) => {
       wx.hideLoading()
       if (res.data) {
         this.detailsData = res.data
+        this.detailsData.data = JSON.parse(this.detailsData.data)
       }
     })
 

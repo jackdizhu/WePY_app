@@ -5,5 +5,10 @@
   "test_get_list": "/test_get_list",
   "test_get_details": "/test_get_details",
   "mock": "/api/mock",
-  "add": "/api/login"
+  "add": "/api/login",
+
+  "init": "/init",
+  "get_list": "/get_list",
+  "get_listRandom": "/get_listRandom",
+  "get_details": "/get_details"
 }
