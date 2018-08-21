@@ -10,7 +10,10 @@
               <image :src="item.img" class="list-image"></image>
             </div>
             <div class="weui-cell__bd list-text">
-              <div class="list-text-h1">{{item.name}}</div>
+              <div class="list-text-h1">
+                <div class="name">{{item.name}}</div>
+                <div class="typeName">{{item.typeName}}</div>
+              </div>
               <div class="list-text-h2">好评{{item.praise}} 评价{{item.evaluate}}</div>
             </div>
           </div>
@@ -99,7 +102,14 @@
     min-height: 80px;
   }
   .list-text-h1 {
+    position: relative;
     font-size: 16px;
+    .typeName {
+      position: absolute;
+      right: 0;
+      top: 0;
+      color: #B8860B;
+    }
   }
   .list-text-h2 {
     font-size: 14px;

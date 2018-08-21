@@ -119,6 +119,7 @@
       z-index: 3;
       border-right: 1px solid #eee;
       background-color: #fff;
+      // color: #D2B48C;
       .goods-sorts_scroll {
         height: 100%;
       }
