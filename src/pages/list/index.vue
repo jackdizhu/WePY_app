@@ -48,7 +48,7 @@
     </div> -->
     <div class="page__hd list-page_hd">
       <div class="page__title">菜谱 菜系菜单列表</div>
-      <div class="page__desc">每个菜系20个菜, 每天更新一次</div>
+      <div class="page__desc">每个菜系10-20个菜, 每天更新一次</div>
       <div class="list-page_bd_box">
         <scroll-view v-if="listData.length" class="scroll-view-box weui-cells weui-cells_after-title" scroll-y @scrolltoupper="upper" @scrolltolower="lower" @scroll="scroll" :scroll-into-view="toView" :scroll-top="scrollTop">
           <div @click="navigatorToDetails(item)" class="weui-cell weui-cell_access justify-start" hover-class="weui-cell_active" v-for="(item, key) in listData" :key="key">
