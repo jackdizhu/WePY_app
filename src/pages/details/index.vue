@@ -7,7 +7,7 @@
     <div class="page__bd page-details__bd">
       <!-- <div class="weui-cells__title">带图标、说明、跳转的列表项</div> -->
       <div class="weui-article">
-        <div class="weui-article__section" v-if="detailsData.id">
+        <div class="weui-article__section" v-if="detailsData.id || detailsData._id">
           <div class="weui-article__h3 weui-flex items-center content-center justify-center">
             <!-- <swiper class="swiper-box"
               :indicator-dots="indicatorDots"
