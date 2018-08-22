@@ -4,6 +4,7 @@ import { Vue, Component } from 'vue-property-decorator'
 import Mptoast from 'mptoast/index.vue'
 // vuex 需要重新 引入
 import store from '@/store/index'
+import {data, cookingType} from '@/data/data.ts'
 
 const debug = require('debug')('log:List')
 
@@ -20,6 +21,9 @@ declare module 'vue/types/vue' {
   }
 })
 export default class List extends VueClass {
+  public data: any = data
+  public cookingType: any = cookingType
+
   dateStr: string = (function () {
     var now = new Date()
     var year = now.getFullYear()      //年
