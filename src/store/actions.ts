@@ -17,6 +17,18 @@ const actions = {
     state: any
   }, checkCookingType: any) {
     con.commit('SET_CHECKCOOKINGTYPE', checkCookingType)
+  },
+  set_listData(con: {
+    commit: any,
+    state: any
+  }, listData: any) {
+    con.commit('SET_LISTDATA', listData)
+  },
+  set_listRandomData(con: {
+    commit: any,
+    state: any
+  }, listRandomData: any) {
+    con.commit('SET_LISTRANDOMDATA', listRandomData)
   }
 }
 

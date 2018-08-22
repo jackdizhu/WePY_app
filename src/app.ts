@@ -1,3 +1,4 @@
+import VueClass from '@/vueClass.ts'
 import { Vue, Component } from 'vue-property-decorator'
 const debug = require('debug')('log:App')
 
@@ -11,7 +12,10 @@ declare module "vue/types/vue" {
 @Component({
   mpType: 'app', // mpvue特定
 }as any)
-class App extends Vue {
+export default class App extends VueClass {
+  onLoad() {
+    console.log('app onLoad', 111)
+  }
   // app hook
   onLaunch() {
     let opt = this.$root.$mp.appOptions
@@ -26,5 +30,3 @@ class App extends Vue {
   mounted() { // vue hook
   }
 }
-
-export default App

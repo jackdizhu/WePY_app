@@ -8,6 +8,12 @@ const mutations = {
   },
   [type.SET_CHECKCOOKINGTYPE](state: any, checkCookingType: any) { // eslint-disable-line
     state.checkCookingType = checkCookingType;
+  },
+  [type.SET_LISTDATA](state: any, listData: any) { // eslint-disable-line
+    state.listData = listData;
+  },
+  [type.SET_LISTRANDOMDATA](state: any, listRandomData: any) { // eslint-disable-line
+    state.listRandomData = listRandomData;
   }
 }
 

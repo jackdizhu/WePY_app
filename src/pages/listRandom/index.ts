@@ -1,10 +1,14 @@
 import VueClass from '@/vueClass.ts'
+import {data, cookingType} from '@/data/data.ts'
+import { random } from '@/utils/consts.ts'
 import { Vue, Component } from 'vue-property-decorator'
 import Mptoast from 'mptoast/index.vue'
 // vuex 需要重新 引入
 import store from '@/store/index'
 
 const debug = require('debug')('log:List')
+
+import moment from 'moment'
 
 declare module 'vue/types/vue' {
   interface Vue {
@@ -19,6 +23,7 @@ declare module 'vue/types/vue' {
   }
 })
 export default class List extends VueClass {
+  dateStr: string = moment().format('YYYY-MM-DD')
   defImg: string = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAASwAAAEsCAYAAAB5fY51AAAD8ElEQVR4nO3UsQ0AIRDAsOf3X/dqWIEORbInSJU1M/sDCPhfBwDcMiwgw7CADMMCMgwLyDAsIMOwgAzDAjIMC8gwLCDDsIAMwwIyDAvIMCwgw7CADMMCMgwLyDAsIMOwgAzDAjIMC8gwLCDDsIAMwwIyDAvIMCwgw7CADMMCMgwLyDAsIMOwgAzDAjIMC8gwLCDDsIAMwwIyDAvIMCwgw7CADMMCMgwLyDAsIMOwgAzDAjIMC8gwLCDDsIAMwwIyDAvIMCwgw7CADMMCMgwLyDAsIMOwgAzDAjIMC8gwLCDDsIAMwwIyDAvIMCwgw7CADMMCMgwLyDAsIMOwgAzDAjIMC8gwLCDDsIAMwwIyDAvIMCwgw7CADMMCMgwLyDAsIMOwgAzDAjIMC8gwLCDDsIAMwwIyDAvIMCwgw7CADMMCMgwLyDAsIMOwgAzDAjIMC8gwLCDDsIAMwwIyDAvIMCwgw7CADMMCMgwLyDAsIMOwgAzDAjIMC8gwLCDDsIAMwwIyDAvIMCwgw7CADMMCMgwLyDAsIMOwgAzDAjIMC8gwLCDDsIAMwwIyDAvIMCwgw7CADMMCMgwLyDAsIMOwgAzDAjIMC8gwLCDDsIAMwwIyDAvIMCwgw7CADMMCMgwLyDAsIMOwgAzDAjIMC8gwLCDDsIAMwwIyDAvIMCwgw7CADMMCMgwLyDAsIMOwgAzDAjIMC8gwLCDDsIAMwwIyDAvIMCwgw7CADMMCMgwLyDAsIMOwgAzDAjIMC8gwLCDDsIAMwwIyDAvIMCwgw7CADMMCMgwLyDAsIMOwgAzDAjIMC8gwLCDDsIAMwwIyDAvIMCwgw7CADMMCMgwLyDAsIMOwgAzDAjIMC8gwLCDDsIAMwwIyDAvIMCwgw7CADMMCMgwLyDAsIMOwgAzDAjIMC8gwLCDDsIAMwwIyDAvIMCwgw7CADMMCMgwLyDAsIMOwgAzDAjIMC8gwLCDDsIAMwwIyDAvIMCwgw7CADMMCMgwLyDAsIMOwgAzDAjIMC8gwLCDDsIAMwwIyDAvIMCwgw7CADMMCMgwLyDAsIMOwgAzDAjIMC8gwLCDDsIAMwwIyDAvIMCwgw7CADMMCMgwLyDAsIMOwgAzDAjIMC8gwLCDDsIAMwwIyDAvIMCwgw7CADMMCMgwLyDAsIMOwgAzDAjIMC8gwLCDDsIAMwwIyDAvIMCwgw7CADMMCMgwLyDAsIMOwgAzDAjIMC8gwLCDDsIAMwwIyDAvIMCwgw7CADMMCMgwLyDAsIMOwgAzDAjIMC8gwLCDDsIAMwwIyDAvIMCwgw7CADMMCMgwLyDAsIMOwgAzDAjIMC8gwLCDDsICMAyvfBjZwy5yCAAAAAElFTkSuQmCC'
   page: number = 1
   thisTime_upper: any = null
@@ -26,6 +31,7 @@ export default class List extends VueClass {
   // scroll-view 属性
   toView: string = 'red'
   scrollTop: number = 100
+  listRandomData: any = {}
   listData: any[] = [
     // {
     //   id: '0010',
@@ -103,8 +109,30 @@ export default class List extends VueClass {
     // }, 100)
     console.log(e, 'lower')
   }
+  // 生成 随机推荐数据
+  async get_listRandom () {
+    let arr: any[] = []
+    for (let i = 0; i < cookingType.length; i++) {
+      let type = cookingType[i].value
+      let _data: any[] = data.filter((item) => {
+        return item.type === type
+      })
+      let count = _data.length
+      let page = random(0, count)
+      let item: any = _data[page]
+      arr.push(item)
+    }
+    return arr
+  }
+  async onLoad() {
+    let _this = this
+    this.listRandomData = store.state.listRandomData
+    if (this.listRandomData[this.dateStr]) {
+      _this.listData = this.listRandomData.data
+      console.log(store.state.listRandomData, 111)
+      return 0
+    }
 
-  onLoad() {
     wx.showLoading({
       title: '加载中',
       mask: true
@@ -115,15 +143,24 @@ export default class List extends VueClass {
       type: 'GET',
       params: {
       }
-    }).then((res: any) => {
+    }).then(async function (res: any) {
+      console.log('listRandom then', 111)
       wx.hideLoading()
-      if (res.data) {
-        this.listData = res.data
-        for (let i = 0; i < this.listData.length; i++) {
-          this.listData[i].data = JSON.parse(this.listData[i].data)
+      if (res.data && res.data.length) {
+        _this.listData = res.data
+        for (let i = 0; i < _this.listData.length; i++) {
+          _this.listData[i].data = JSON.parse(_this.listData[i].data)
         }
+      } else {
+        let data = await _this.get_listRandom()
+        let item: any = {}
+        item[_this.dateStr] = true
+        item.data = data
+        store.dispatch('set_listRandomData', item)
+        _this.listData = data
       }
     })
+    let data = await _this.get_listRandom()
   }
 
   onReachBottom(e: any) {
