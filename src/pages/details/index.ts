@@ -4,7 +4,7 @@ import Mptoast from 'mptoast/index.vue'
 // import base64 from '../../../static/images/base64'
 // vuex 需要重新 引入
 import store from '@/store/index'
-import {data, cookingType} from '@/data/data.ts'
+// import {data, cookingType} from '@/data/data.ts'
 
 const debug = require('debug')('log:Details')
 
@@ -21,8 +21,8 @@ declare module 'vue/types/vue' {
   }
 })
 export default class Details extends VueClass {
-  public data: any = data
-  public cookingType: any = cookingType
+  public data: any = store.state.data
+  public cookingType: any = store.state.cookingType
 
   id: string = ''
   detailsData: any = {}
