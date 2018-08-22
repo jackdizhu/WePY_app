@@ -31,7 +31,7 @@ export default class List extends VueClass {
   // scroll-view 属性
   toView: string = 'red'
   scrollTop: number = 100
-  listRandomData: any = {}
+  store_listRandomData: any = {}
   listData: any[] = [
     // {
     //   id: '0010',
@@ -126,10 +126,9 @@ export default class List extends VueClass {
   }
   async onLoad() {
     let _this = this
-    this.listRandomData = store.state.listRandomData
-    if (this.listRandomData[this.dateStr]) {
-      _this.listData = this.listRandomData.data
-      console.log(store.state.listRandomData, 111)
+    this.store_listRandomData = store.state.listRandomData
+    if (this.store_listRandomData[this.dateStr]) {
+      _this.listData = this.store_listRandomData.data
       return 0
     }
 

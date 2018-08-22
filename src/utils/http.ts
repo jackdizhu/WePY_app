@@ -99,7 +99,7 @@ export default class httpRequest {
         resolve(data)
       }).catch(err => {
         let status = (err.response && err.response.status) || 0
-        console.log(status, 'request catch err')
+        // console.log(status, 'request catch err')
         resolve({ code: status, err: 'requestErr' })
         // reject(err) // 返回错误
       })
@@ -128,7 +128,7 @@ export default class httpRequest {
       .then(fly.spread(function (...params: any[]) {
         resolve(params)
       })).catch((err: any) => {
-        console.log(err, 'requestAll catch err')
+        // console.log(err, 'requestAll catch err')
         resolve({ err: 'requestErr' })
         // reject(err) // 返回错误
       })

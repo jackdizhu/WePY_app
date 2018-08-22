@@ -1,10 +1,14 @@
 import VueClass from '@/vueClass.ts'
+import {data, cookingType} from '@/data/data.ts'
+import { random } from '@/utils/consts.ts'
 import { Vue, Component } from 'vue-property-decorator'
 import Mptoast from 'mptoast/index.vue'
 // vuex 需要重新 引入
 import store from '@/store/index'
 
 const debug = require('debug')('log:List')
+
+import moment from 'moment'
 
 declare module 'vue/types/vue' {
   interface Vue {
@@ -19,6 +23,7 @@ declare module 'vue/types/vue' {
   }
 })
 export default class List extends VueClass {
+  dateStr: string = moment().format('YYYY-MM-DD')
   checkGoodsSorts: any = {
     "name": "川菜",
     "value": "chuancai"
@@ -115,6 +120,7 @@ export default class List extends VueClass {
   // scroll-view 属性
   toView: string = 'red'
   scrollTop: number = 100
+  store_listData: any = {}
   listData: any[] = [
     // {
     //   id: '0010',
@@ -130,8 +136,14 @@ export default class List extends VueClass {
   ]
 
   getGoodsList(item: any) {
+    let _this = this
     this.checkGoodsSorts = item
     store.dispatch('set_checkCookingType', item)
+    // this.store_listData = store.state.listData
+    // if (this.store_listData[this.dateStr]) {
+    //   _this.listData = this.store_listData.data[item.value].data
+    //   return 0
+    // }
 
     wx.showLoading({
       title: '加载中',
@@ -145,14 +157,22 @@ export default class List extends VueClass {
         page: this.page,
         cookingType: item.value
       }
-    }).then((res: any) => {
+    }).then(async function (res: any) {
       wx.hideLoading()
-      if (res.data) {
-        this.listData = res.data
-        for (let i = 0; i < this.listData.length; i++) {
-          this.listData[i].data = JSON.parse(this.listData[i].data)
+      if (res.data && res.data.length) {
+        _this.listData = res.data
+        for (let i = 0; i < _this.listData.length; i++) {
+          _this.listData[i].data = JSON.parse(_this.listData[i].data)
         }
+      } else {
+        let data = await _this.get_list(store.state.listData)
+        let _item: any = {}
+        _item[_this.dateStr] = true
+        _item.data = data
+        store.dispatch('set_listData', _item)
+        _this.listData = data[item.value].data
       }
+      console.log(_this.listData, 'getGoodsList list 222')
     })
   }
 
@@ -214,8 +234,36 @@ export default class List extends VueClass {
     console.log(e, 'lower')
   }
 
-  onLoad() {
+  // 生成 随机推荐数据
+  async get_list (store_listData) {
+    let obj: any = {}
+    for (let i = 0; i < cookingType.length; i++) {
+      let type = cookingType[i].value
+      let page = (store_listData[type] && store_listData[type].page) ? store_listData[type].page + 1 : 1
+      let pagesize = 20
+      let _data: any[] = data.filter((item) => {
+        return item.type === type
+      })
+      let count = _data.length
+      let maxPage = Math.ceil(count / pagesize)
+      if (page > maxPage) {
+        page = 1
+      }
+      let arr = _data.slice((page * 20 - pagesize), page * 20)
+      obj[type] = {}
+      obj[type].page = page
+      obj[type].data = arr
+    }
+    return obj
+  }
+  async onLoad() {
+    let _this = this
     store.dispatch('set_checkCookingType', this.goodsSorts[0])
+    // this.store_listData = store.state.listData
+    // if (this.store_listData[this.dateStr]) {
+    //   _this.listData = this.store_listData.data['chuancai'].data
+    //   return 0
+    // }
 
     wx.showLoading({
       title: '加载中',
@@ -229,14 +277,22 @@ export default class List extends VueClass {
         page: this.page,
         cookingType: 'chuancai'
       }
-    }).then((res: any) => {
+    }).then(async function (res: any) {
       wx.hideLoading()
-      if (res.data) {
-        this.listData = res.data
-        for (let i = 0; i < this.listData.length; i++) {
-          this.listData[i].data = JSON.parse(this.listData[i].data)
+      if (res.data && res.data.length) {
+        _this.listData = res.data
+        for (let i = 0; i < _this.listData.length; i++) {
+          _this.listData[i].data = JSON.parse(_this.listData[i].data)
         }
+      } else {
+        let data = await _this.get_list(store.state.listData)
+        let item: any = {}
+        item[_this.dateStr] = true
+        item.data = data
+        store.dispatch('set_listData', item)
+        _this.listData = data['chuancai'].data
       }
+      console.log(_this.listData, 'getGoodsList list 111')
     })
   }
 
