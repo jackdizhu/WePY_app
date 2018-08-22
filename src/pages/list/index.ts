@@ -1,5 +1,4 @@
 import VueClass from '@/vueClass.ts'
-import {data, cookingType} from '@/data/data.ts'
 import { random } from '@/utils/consts.ts'
 import { Vue, Component } from 'vue-property-decorator'
 import Mptoast from 'mptoast/index.vue'
@@ -7,8 +6,6 @@ import Mptoast from 'mptoast/index.vue'
 import store from '@/store/index'
 
 const debug = require('debug')('log:List')
-
-import moment from 'moment'
 
 declare module 'vue/types/vue' {
   interface Vue {
@@ -23,7 +20,28 @@ declare module 'vue/types/vue' {
   }
 })
 export default class List extends VueClass {
-  dateStr: string = moment().format('YYYY-MM-DD')
+  dateStr: string = (function () {
+    var now = new Date()
+    var year = now.getFullYear()      //年
+    var month = now.getMonth() + 1    //月
+    var day = now.getDate()           //日
+
+    var hh = now.getHours()           //时
+    var mm = now.getMinutes();        //分
+
+    var dateStr = year + '-'
+
+    if(month < 10)
+        dateStr += '0'
+
+    dateStr += month + '-'
+
+    if(day < 10)
+        dateStr += '0'
+
+    dateStr += day
+    return dateStr
+  })()
   checkGoodsSorts: any = {
     "name": "川菜",
     "value": "chuancai"
@@ -237,11 +255,11 @@ export default class List extends VueClass {
   // 生成 随机推荐数据
   async get_list (store_listData) {
     let obj: any = {}
-    for (let i = 0; i < cookingType.length; i++) {
-      let type = cookingType[i].value
+    for (let i = 0; i < this.cookingType.length; i++) {
+      let type = this.cookingType[i].value
       let page = (store_listData[type] && store_listData[type].page) ? store_listData[type].page + 1 : 1
       let pagesize = 20
-      let _data: any[] = data.filter((item) => {
+      let _data: any[] = this.data.filter((item) => {
         return item.type === type
       })
       let count = _data.length

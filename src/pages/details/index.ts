@@ -1,11 +1,9 @@
 import VueClass from '@/vueClass.ts'
-import {data, cookingType} from '@/data/data.ts'
 import { Vue, Component } from 'vue-property-decorator'
 import Mptoast from 'mptoast/index.vue'
 // import base64 from '../../../static/images/base64'
 // vuex 需要重新 引入
 import store from '@/store/index'
-
 
 const debug = require('debug')('log:Details')
 
@@ -39,7 +37,7 @@ export default class Details extends VueClass {
   // 生成 随机推荐数据
   async get_details (id) {
     let obj: any = {}
-    let _data: any[] = data.filter((item) => {
+    let _data: any[] = this.data.filter((item) => {
       return (item.id === id || item._id === id)
     })
     obj = _data[0] || {
