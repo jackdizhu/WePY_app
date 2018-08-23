@@ -180,7 +180,7 @@ export default class List extends VueClass {
         cookingType: item.value
       }
     }).then(async function (res: any) {
-      wx.hideLoading()
+      console.log(_this.listData, 'getGoodsList list 222')
       if (res.data && res.data.length) {
         _this.listData = res.data
         for (let i = 0; i < _this.listData.length; i++) {
@@ -194,7 +194,10 @@ export default class List extends VueClass {
         store.dispatch('set_listData', _item)
         _this.listData = data[item.value].data
       }
-      console.log(_this.listData, 'getGoodsList list 222')
+      // 延时 等待 dom 更新
+      setTimeout(() => {
+        wx.hideLoading()
+      }, 100)
     })
   }
 
@@ -300,7 +303,7 @@ export default class List extends VueClass {
         cookingType: 'chuancai'
       }
     }).then(async function (res: any) {
-      wx.hideLoading()
+      console.log(_this.listData, 'getGoodsList list 111')
       if (res.data && res.data.length) {
         _this.listData = res.data
         for (let i = 0; i < _this.listData.length; i++) {
@@ -314,7 +317,7 @@ export default class List extends VueClass {
         store.dispatch('set_listData', item)
         _this.listData = data['chuancai'].data
       }
-      console.log(_this.listData, 'getGoodsList list 111')
+      wx.hideLoading()
     })
   }
 

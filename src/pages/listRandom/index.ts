@@ -147,6 +147,14 @@ export default class List extends VueClass {
     return arr
   }
   async onLoad() {
+    // 调用 初始化数据
+    this.httpRequest.request({
+      url: this.api.init,
+      type: 'GET',
+      params: {
+      }
+    })
+
     let _this = this
     this.store_listRandomData = store.state.listRandomData
     if (this.store_listRandomData[this.dateStr]) {
@@ -166,7 +174,6 @@ export default class List extends VueClass {
       }
     }).then(async function (res: any) {
       console.log('listRandom then', 111)
-      wx.hideLoading()
       if (res.data && res.data.length) {
         _this.listData = res.data
         for (let i = 0; i < _this.listData.length; i++) {
@@ -180,8 +187,8 @@ export default class List extends VueClass {
         store.dispatch('set_listRandomData', item)
         _this.listData = data
       }
+      wx.hideLoading()
     })
-    let data = await _this.get_listRandom()
   }
 
   onReachBottom(e: any) {

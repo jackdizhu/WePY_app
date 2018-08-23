@@ -88,14 +88,17 @@ export default class Details extends VueClass {
         id: this.checkItem.id || this.checkItem._id
       }
     }).then(async function (res: any) {
-      wx.hideLoading()
+      console.log(_this.detailsData, 'details onLoad 333')
       if (res.data) {
         _this.detailsData = res.data
         _this.detailsData.data = JSON.parse(_this.detailsData.data)
       } else {
         _this.detailsData = await _this.get_details(_this.checkItem.id || _this.checkItem._id)
       }
-      console.log(_this.detailsData, 'details onLoad 333')
+      // 延时 等待 dom 更新
+      setTimeout(() => {
+        wx.hideLoading()
+      }, 100)
     })
 
     // wx.hideLoading()
