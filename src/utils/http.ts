@@ -6,7 +6,7 @@ let fly = new Fly()
 fly.config.timeout = 1000 * 60 * 60
 // fly.config.baseURL = 'https://www.easy-mock.com/mock/5ab8bf9cca39d01d844c0bf7/test'
 let baseURL1 = 'https://www.easy-mock.com/mock/5b7bbed645458a5efea87c82/api'
-let baseURL2 = 'https://jackdizhu.duapp.com/api'
+let baseURL2 = 'https://hb.jionly.com/api'
 fly.config.baseURL = baseURL2
 
 // fly.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded;charset=UTF-8'
