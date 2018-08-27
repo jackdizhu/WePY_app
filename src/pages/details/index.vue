@@ -95,6 +95,8 @@
     padding-left: 60px;
     font-size: 16px;
     margin-bottom: 10px;
+    line-height: 20px;
+    min-height: 20px;
     .text-left {
       position: absolute;
       left: 0;

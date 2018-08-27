@@ -92,11 +92,15 @@ export default class Details extends VueClass {
       console.log(_this.detailsData, 'details onLoad 333')
       if (res.data) {
         _this.detailsData = res.data
-        if (_this.detailsData.data && typeof _this.detailsData.data === 'string') {
+        if (_this.detailsData.data && (typeof _this.detailsData.data === 'string')) {
           try {
             _this.detailsData.data = JSON.parse(_this.detailsData.data)
           } catch (error) {
-            _this.detailsData.data = {}
+            _this.detailsData.data = {
+              auxiliaryMaterials: [],
+              cookingMethod: [],
+              mainMaterial: [],
+            }
           }
         }
       } else {
