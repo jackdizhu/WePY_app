@@ -1,4 +1,5 @@
 import VueClass from '@/vueClass.ts'
+import { ImgUrlChange } from '@/utils/consts.ts'
 import { Vue, Component } from 'vue-property-decorator'
 import Mptoast from 'mptoast/index.vue'
 // import base64 from '../../../static/images/base64'
@@ -101,6 +102,8 @@ export default class Details extends VueClass {
       } else {
         _this.detailsData = await _this.get_details(_this.checkItem.id || _this.checkItem._id)
       }
+      // 更换 img 域名地址
+      _this.detailsData.img = ImgUrlChange(_this.detailsData.img)
       // 延时 等待 dom 更新
       setTimeout(() => {
         wx.hideLoading()

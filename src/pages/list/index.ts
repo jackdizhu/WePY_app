@@ -1,5 +1,5 @@
 import VueClass from '@/vueClass.ts'
-import { random } from '@/utils/consts.ts'
+import { random, ImgUrlChange } from '@/utils/consts.ts'
 import { Vue, Component } from 'vue-property-decorator'
 import Mptoast from 'mptoast/index.vue'
 // vuex 需要重新 引入
@@ -183,10 +183,6 @@ export default class List extends VueClass {
       console.log(_this.listData, 'getGoodsList list 222')
       if (res.data && res.data.length) {
         _this.listData = res.data
-        // _this.listData[i].data 字段删除
-        // for (let i = 0; i < _this.listData.length; i++) {
-        //   _this.listData[i].data = JSON.parse(_this.listData[i].data)
-        // }
       } else {
         let data = await _this.get_list(store.state.listData)
         let _item: any = {}
@@ -194,6 +190,10 @@ export default class List extends VueClass {
         _item.data = data
         store.dispatch('set_listData', _item)
         _this.listData = data[item.value].data
+      }
+      // 更换 img 域名地址
+      for (let i = 0; i < _this.listData.length; i++) {
+        _this.listData[i].img = ImgUrlChange(_this.listData[i].img)
       }
       // 延时 等待 dom 更新
       setTimeout(() => {
@@ -307,10 +307,6 @@ export default class List extends VueClass {
       console.log(_this.listData, 'getGoodsList list 111')
       if (res.data && res.data.length) {
         _this.listData = res.data
-        // _this.listData[i].data 字段删除
-        // for (let i = 0; i < _this.listData.length; i++) {
-        //   _this.listData[i].data = JSON.parse(_this.listData[i].data)
-        // }
       } else {
         let data = await _this.get_list(store.state.listData)
         let item: any = {}
@@ -318,6 +314,10 @@ export default class List extends VueClass {
         item.data = data
         store.dispatch('set_listData', item)
         _this.listData = data['chuancai'].data
+      }
+      // 更换 img 域名地址
+      for (let i = 0; i < _this.listData.length; i++) {
+        _this.listData[i].img = ImgUrlChange(_this.listData[i].img)
       }
       wx.hideLoading()
     })
