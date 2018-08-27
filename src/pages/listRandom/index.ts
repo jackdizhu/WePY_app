@@ -176,9 +176,10 @@ export default class List extends VueClass {
       console.log('listRandom then', 111)
       if (res.data && res.data.length) {
         _this.listData = res.data
-        for (let i = 0; i < _this.listData.length; i++) {
-          _this.listData[i].data = JSON.parse(_this.listData[i].data)
-        }
+        // _this.listData[i].data 字段删除
+        // for (let i = 0; i < _this.listData.length; i++) {
+        //   _this.listData[i].data = JSON.parse(_this.listData[i].data)
+        // }
       } else {
         let data = await _this.get_listRandom()
         let item: any = {}
