@@ -4,7 +4,7 @@ export const AppUrls = {
   COUNTER: pre + '/counter/main',
 }
 
-export const ImgUrl = 'http://7xrqzz.com1.z0.glb.clouddn.com/'
+export const ImgUrl = ''
 
 export function ImgUrlChange (str) {
   // let arr2 = str.split('/')
