@@ -6,6 +6,10 @@ import Mptoast from 'mptoast/index.vue'
 import store from '@/store/index'
 // import {data, cookingType} from '@/data/data.ts'
 
+// import img_praise from '@/img/praise.png'
+const img_praise = require('@/img/praise.png')
+const img_evaluate = require('@/img/evaluate.png')
+
 const debug = require('debug')('log:List')
 
 declare module 'vue/types/vue' {
@@ -21,6 +25,8 @@ declare module 'vue/types/vue' {
   }
 })
 export default class List extends VueClass {
+  public imgPraise: string = img_praise
+  public imgEvaluate: string = img_evaluate
   public data: any = store.state.data
   public cookingType: any = store.state.cookingType
 

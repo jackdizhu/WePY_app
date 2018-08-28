@@ -59,16 +59,14 @@
               <div class="list-text-h1">
                 <div class="name">{{item.name}}</div>
               </div>
-              <div class="list-text-h2">好评{{item.praise}}</div>
-              <div class="list-text-h2">评价{{item.evaluate}}</div>
-              <!-- <div class="list-text-h3 flex">
-                <div class="text-left flex-1">
-                  <div>￥{{item.price}}起送</div><div>|</div><div>配送费￥{{item.distribution}}</div>
-                </div>
-                <div class="text-right">
-                  <div>{{item.distance}}</div><div>|</div><div>{{item.time}}</div>
-                </div>
-              </div> -->
+              <div class="list-text-h2">
+                <image :src="imgPraise" class="imgPraise img-icon"></image>
+                {{item.praise}}&nbsp;&nbsp;&nbsp;&nbsp;
+              </div>
+              <div class="list-text-h2">
+                <image :src="imgEvaluate" class="imgEvaluate img-icon"></image>
+                {{item.evaluate}}
+              </div>
             </div>
           </div>
         </scroll-view>
@@ -155,7 +153,10 @@
     }
   }
   .list-text-h2 {
-    font-size: 14px;
+    vertical-align: middle;
+    line-height: 18px;
+    font-size: 16px;
+    margin-bottom: 12px;
   }
   .list-text-h3 {
     font-size: 14px;

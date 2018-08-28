@@ -16,7 +16,12 @@
               <div class="list-text-h1">
                 <div class="typeName">{{item.typeName}}</div>
               </div>
-              <div class="list-text-h2">好评{{item.praise}} 评价{{item.evaluate}}</div>
+              <div class="list-text-h2">
+                <image :src="imgPraise" class="imgPraise img-icon"></image>
+                {{item.praise}}&nbsp;&nbsp;&nbsp;&nbsp;
+                <image :src="imgEvaluate" class="imgEvaluate img-icon"></image>
+                {{item.evaluate}}
+              </div>
             </div>
           </div>
 
@@ -28,7 +33,12 @@
               <div class="list-text-h1">
                 <div class="name">查看更多 . . .</div>
               </div>
-              <div class="list-text-h2">好评100% 评价999</div>
+              <div class="list-text-h2">
+                <image :src="imgPraise" class="imgPraise img-icon"></image>
+                99.9%&nbsp;&nbsp;&nbsp;&nbsp;
+                <image :src="imgEvaluate" class="imgEvaluate img-icon"></image>
+                999
+              </div>
             </div>
           </div>
         </scroll-view>
@@ -125,7 +135,9 @@
     }
   }
   .list-text-h2 {
-    font-size: 14px;
+    vertical-align: middle;
+    line-height: 18px;
+    font-size: 16px;
   }
   .list-text-h3 {
     font-size: 14px;

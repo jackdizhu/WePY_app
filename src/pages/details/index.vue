@@ -23,13 +23,18 @@
             <image :src="detailsData.img" class="list-image"></image>
           </div>
           <div class="weui-article__p list-text">
-            <div class="list-text-h1">{{detailsData.name}}</div>
+            <div class="list-text-h1">
+              <div>{{detailsData.name}}</div>
+              <div class="tag">
+                ({{detailsData.typeName}})
+              </div>
+            </div>
             <div class="list-text-h3 color333">
               <div class="text-left">
                 主&nbsp;料&nbsp;:
               </div>
               <div class="text-right">
-                <div v-for="(item, key) in detailsData.data.mainMaterial" :key="key">{{item}}&nbsp;&nbsp;&nbsp;&nbsp;</div>
+                <div class="right-box-span" v-for="(item, key) in detailsData.data.mainMaterial" :key="key">{{item}}&nbsp;&nbsp;&nbsp;&nbsp;</div>
               </div>
             </div>
             <div class="list-text-h3 color666">
@@ -37,7 +42,7 @@
                 辅&nbsp;料&nbsp;:
               </div>
               <div class="text-right">
-                <div v-for="(item, key) in detailsData.data.auxiliaryMaterials" :key="key">{{item}}&nbsp;&nbsp;&nbsp;&nbsp;</div>
+                <div class="right-box-span" v-for="(item, key) in detailsData.data.auxiliaryMaterials" :key="key">{{item}}&nbsp;&nbsp;&nbsp;&nbsp;</div>
               </div>
             </div>
             <div class="list-text-h3 color999">
@@ -86,10 +91,19 @@
     background-color: #fff;
   }
   .list-text-h1 {
-    text-align: center;
+    // text-align: center;
+    font-weight: 700;
     font-size: 20px;
     margin-top: 15px;
     margin-bottom: 20px;
+    div {
+      display: inline-block;
+    }
+    .tag {
+      font-size: 16px;
+      font-weight: 400;
+      color: #666;
+    }
   }
   .list-text-h2 {
     font-size: 14px;
@@ -98,10 +112,11 @@
     position: relative;
     padding-left: 60px;
     font-size: 16px;
-    margin-bottom: 10px;
+    margin-bottom: 20px;
     line-height: 20px;
     min-height: 20px;
     .text-left {
+      font-weight: 700;
       position: absolute;
       left: 0;
       top: 0;
@@ -109,27 +124,31 @@
     .text-left ,
     .text-right {
       div {
-        display: inline;
+        display: inline-block;
       }
     }
     .text-right {
+      .right-box-span {
+        width: 50%;
+        margin-bottom: 12px;
+      }
       .displayBlock {
         display: block;
-        margin-bottom: 8px;
+        margin-bottom: 20px;
       }
     }
   }
-  .list-text-h3.color333 {
-    color: #555;
-    font-weight: 700;
-  }
-  .list-text-h3.color666 {
-    color: #666;
-    font-weight: 700;
-  }
-  .list-text-h3.color999 {
-    color: #666;
-  }
+  // .list-text-h3.color333 {
+  //   color: #555;
+  //   font-weight: 700;
+  // }
+  // .list-text-h3.color666 {
+  //   color: #666;
+  //   font-weight: 700;
+  // }
+  // .list-text-h3.color999 {
+  //   color: #666;
+  // }
   .whiteSpaceNowrap {
     white-space:nowrap;
   }
