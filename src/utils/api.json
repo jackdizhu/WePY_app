@@ -8,6 +8,7 @@
   "add": "/api/login",
 
   "init": "/init",
+  "get_openId": "/get_openId",
   "get_cookingType": "/get_cookingType",
   "get_list": "/get_list",
   "get_listRandom": "/get_listRandom",
