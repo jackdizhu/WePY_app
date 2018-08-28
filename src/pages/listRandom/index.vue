@@ -5,25 +5,29 @@
       <div class="page__desc">每个菜系推荐一个, 每天更新一次</div>
       <div class="list-page_bd_box">
         <scroll-view v-if="listData.length" class="scroll-view-box weui-cells weui-cells_after-title" scroll-y @scrolltoupper="upper" @scrolltolower="lower" @scroll="scroll" :scroll-into-view="toView" :scroll-top="scrollTop">
-          <div @click="navigatorToDetails(item)" class="weui-cell weui-cell_access justify-start" hover-class="weui-cell_active" v-for="(item, key) in listData" :key="key">
+          <div @click="navigatorToDetails(item)" class="weui-cell weui-cell_access justify-start items-start" hover-class="weui-cell_active" v-for="(item, key) in listData" :key="key">
             <div class="weui-cell__hd">
               <image :src="item.img" class="list-image"></image>
             </div>
             <div class="weui-cell__bd list-text">
               <div class="list-text-h1">
                 <div class="name">{{item.name}}</div>
+              </div>
+              <div class="list-text-h1">
                 <div class="typeName">{{item.typeName}}</div>
               </div>
               <div class="list-text-h2">好评{{item.praise}} 评价{{item.evaluate}}</div>
             </div>
           </div>
 
-          <div @click="navigatorToList()" class="weui-cell weui-cell_access justify-start" hover-class="weui-cell_active">
+          <div @click="navigatorToList()" class="weui-cell weui-cell_access justify-start items-start" hover-class="weui-cell_active">
             <div class="weui-cell__hd">
               <image :src="defImg" class="list-image"></image>
             </div>
             <div class="weui-cell__bd list-text">
-              <div class="list-text-h1">查看更多 . . .</div>
+              <div class="list-text-h1">
+                <div class="name">查看更多 . . .</div>
+              </div>
               <div class="list-text-h2">好评100% 评价999</div>
             </div>
           </div>
@@ -54,6 +58,9 @@
   .list-page {
     position: relative;
     height: 100%;
+    .weui-cell__bd {
+      padding-top: 6px;
+    }
     .list-page_hd {
       height: 100%;
       padding: 0;
@@ -95,20 +102,26 @@
   .list-image {
     margin-right: 10px;
     vertical-align: middle;
-    width: 80px;
-    height: 80px;
+    width: 140px;
+    height: 140px;
   }
   .list-text {
     min-height: 80px;
   }
   .list-text-h1 {
     position: relative;
-    font-size: 16px;
+    margin-bottom: 10px;
+    .name {
+      font-size: 18px;
+      font-weight: 700;
+    }
     .typeName {
-      position: absolute;
-      right: 0;
-      top: 0;
-      color: #B8860B;
+      font-size: 12px;
+      padding: 3px 4px;
+      border-radius: 3px;
+      display: inline-block;
+      background: #B8860B;
+      color: #fff;
     }
   }
   .list-text-h2 {

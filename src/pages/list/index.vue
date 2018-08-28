@@ -51,13 +51,16 @@
       <div class="page__desc">每个菜系10-20个菜, 每天更新一次</div>
       <div class="list-page_bd_box">
         <scroll-view v-if="listData.length" class="scroll-view-box weui-cells weui-cells_after-title" scroll-y @scrolltoupper="upper" @scrolltolower="lower" @scroll="scroll" :scroll-into-view="toView" :scroll-top="scrollTop">
-          <div @click="navigatorToDetails(item)" class="weui-cell weui-cell_access justify-start" hover-class="weui-cell_active" v-for="(item, key) in listData" :key="key">
+          <div @click="navigatorToDetails(item)" class="weui-cell weui-cell_access justify-start items-start" hover-class="weui-cell_active" v-for="(item, key) in listData" :key="key">
             <div class="weui-cell__hd">
               <image :src="item.img" class="list-image"></image>
             </div>
             <div class="weui-cell__bd list-text">
-              <div class="list-text-h1">{{item.name}}</div>
-              <div class="list-text-h2">好评{{item.praise}} 评价{{item.evaluate}}</div>
+              <div class="list-text-h1">
+                <div class="name">{{item.name}}</div>
+              </div>
+              <div class="list-text-h2">好评{{item.praise}}</div>
+              <div class="list-text-h2">评价{{item.evaluate}}</div>
               <!-- <div class="list-text-h3 flex">
                 <div class="text-left flex-1">
                   <div>￥{{item.price}}起送</div><div>|</div><div>配送费￥{{item.distribution}}</div>
@@ -138,14 +141,18 @@
   .list-image {
     margin-right: 10px;
     vertical-align: middle;
-    width: 80px;
-    height: 80px;
+    width: 140px;
+    height: 140px;
   }
   .list-text {
     min-height: 80px;
   }
   .list-text-h1 {
-    font-size: 16px;
+    margin-bottom: 10px;
+    .name {
+      font-size: 18px;
+      font-weight: 700;
+    }
   }
   .list-text-h2 {
     font-size: 14px;

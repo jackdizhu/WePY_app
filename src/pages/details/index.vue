@@ -61,10 +61,17 @@
 
 
 <style lang='less'>
+  .weui-article {
+    padding: 20px 0;
+  }
+  .list-text {
+    padding: 0 15px;
+    min-height: 80px;
+  }
   .weui-article__h3,
   .list-image {
-    width: 350px;
-    height: 350px;
+    width: 375px;
+    height: 375px;
   }
   .list-image {
     margin-right: 0;
@@ -77,9 +84,6 @@
   }
   .page-details__bd {
     background-color: #fff;
-  }
-  .list-text {
-    min-height: 80px;
   }
   .list-text-h1 {
     text-align: center;
