@@ -95,7 +95,7 @@
     font-weight: 700;
     font-size: 20px;
     margin-top: 15px;
-    margin-bottom: 20px;
+    margin-bottom: 26px;
     div {
       display: inline-block;
     }
@@ -129,8 +129,10 @@
     }
     .text-right {
       .right-box-span {
+        border-bottom: 1px solid #ddd;
         width: 50%;
-        margin-bottom: 12px;
+        padding-bottom: 6px;
+        margin-bottom: 6px;
       }
       .displayBlock {
         display: block;
