@@ -130,10 +130,6 @@ export default class List extends VueClass {
     {
       "name": "港台菜",
       "value": "gangtaicai"
-    },
-    {
-      "name": "其它菜",
-      "value": "qitacai"
     }
   ]
   page: number = 1
