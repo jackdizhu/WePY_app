@@ -133,6 +133,7 @@ export default {
       // '^pages/details/main',
     ], // 页面前带有 ^ 符号的，会被编译成首页，其他页面可以选填，我们会自动把 webpack entry 里面的入口页面加进去
     window: {
+      // navigationStyle: "custom", // window下的 navigationStyle 属性，设置为 custom 即可关闭原生头部导航，但会保留椭圆形菜单
       backgroundTextStyle: 'light',
       navigationBarBackgroundColor: '#fff',
       navigationBarTitleText: '菜系菜谱',
