@@ -62,7 +62,7 @@
 
 <style lang='less'>
   .weui-article {
-    padding: 20px 0;
+    padding: 0;
   }
   .list-text {
     padding: 0 15px;
