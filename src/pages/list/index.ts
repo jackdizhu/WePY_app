@@ -50,88 +50,7 @@ export default class List extends VueClass {
     "name": "川菜",
     "value": "chuancai"
   }
-  goodsSorts: any[] = [
-    {
-      "name": "川菜",
-      "value": "chuancai"
-    },
-    {
-      "name": "湘菜",
-      "value": "xiangcai"
-    },
-    {
-      "name": "粤菜",
-      "value": "yuecai"
-    },
-    {
-      "name": "东北菜",
-      "value": "dongbeicai"
-    },
-    {
-      "name": "鲁菜",
-      "value": "lucai"
-    },
-    {
-      "name": "浙菜",
-      "value": "zhecai"
-    },
-    {
-      "name": "苏菜",
-      "value": "sucai"
-    },
-    {
-      "name": "清真菜",
-      "value": "qingzhencai"
-    },
-    {
-      "name": "闽菜",
-      "value": "mincai"
-    },
-    {
-      "name": "沪菜",
-      "value": "hucai"
-    },
-    {
-      "name": "京菜",
-      "value": "jingcai"
-    },
-    {
-      "name": "湖北菜",
-      "value": "hubeicai"
-    },
-    {
-      "name": "徽菜",
-      "value": "huicai"
-    },
-    {
-      "name": "豫菜",
-      "value": "yucai"
-    },
-    {
-      "name": "西北菜",
-      "value": "xibeicai"
-    },
-    {
-      "name": "云贵菜",
-      "value": "yunguicai"
-    },
-    {
-      "name": "江西菜",
-      "value": "jiangxicai"
-    },
-    {
-      "name": "山西菜",
-      "value": "shanxicai"
-    },
-    {
-      "name": "广西菜",
-      "value": "guangxicai"
-    },
-    {
-      "name": "港台菜",
-      "value": "gangtaicai"
-    }
-  ]
+
   page: number = 1
   thisTime_upper: any = null
   thisTime_lower: any = null
@@ -279,44 +198,51 @@ export default class List extends VueClass {
     return obj
   }
   async onLoad() {
-    let _this = this
-    store.dispatch('set_checkCookingType', this.goodsSorts[0])
-    // this.store_listData = store.state.listData
-    // if (this.store_listData[this.dateStr]) {
-    //   _this.listData = this.store_listData.data['chuancai'].data
-    //   return 0
-    // }
-
     wx.showLoading({
       title: '加载中',
       mask: true
     })
-    // get 请求
+    let _this = this
+    // get_cookingType
     this.httpRequest.request({
-      url: this.api.get_list,
+      url: this.api.get_cookingType,
       type: 'GET',
       params: {
-        page: this.page,
-        cookingType: 'chuancai'
       }
     }).then(async function (res: any) {
-      console.log(_this.listData, 'getGoodsList list 111')
       if (res.data && res.data.length) {
-        _this.listData = res.data
-      } else {
-        let data = await _this.get_list(store.state.listData)
-        let item: any = {}
-        item[_this.dateStr] = true
-        item.data = data
-        store.dispatch('set_listData', item)
-        _this.listData = data['chuancai'].data
+        _this.cookingType = res.data
+        store.dispatch('set_cookingType', res.data)
+        store.dispatch('set_checkCookingType', _this.cookingType[0])
+        // get 请求
+        _this.httpRequest.request({
+          url: _this.api.get_list,
+          type: 'GET',
+          params: {
+            page: _this.page,
+            cookingType: 'chuancai'
+          }
+        }).then(async function (res: any) {
+          console.log(_this.listData, 'getGoodsList list 111')
+          if (res.data && res.data.length) {
+            _this.listData = res.data
+          } else {
+            let data = await _this.get_list(store.state.listData)
+            let item: any = {}
+            item[_this.dateStr] = true
+            item.data = data
+            store.dispatch('set_listData', item)
+            _this.listData = data['chuancai'].data
+          }
+          // 更换 img 域名地址
+          for (let i = 0; i < _this.listData.length; i++) {
+            _this.listData[i].img = ImgUrlChange(_this.listData[i].img)
+          }
+          wx.hideLoading()
+        })
       }
-      // 更换 img 域名地址
-      for (let i = 0; i < _this.listData.length; i++) {
-        _this.listData[i].img = ImgUrlChange(_this.listData[i].img)
-      }
-      wx.hideLoading()
     })
+
   }
 
   onReachBottom(e: any) {

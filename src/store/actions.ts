@@ -18,6 +18,12 @@ const actions = {
   }, checkCookingType: any) {
     con.commit('SET_CHECKCOOKINGTYPE', checkCookingType)
   },
+  set_cookingType(con: {
+    commit: any,
+    state: any
+  }, cookingType: any) {
+    con.commit('SET_COOKINGTYPE', cookingType)
+  },
   set_listData(con: {
     commit: any,
     state: any

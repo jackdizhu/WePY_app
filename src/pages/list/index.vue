@@ -7,7 +7,7 @@
         </div>
       </scroll-view> -->
       <div class="ul-box">
-        <div v-for="(item, key) in goodsSorts" :key="key"  @click="getGoodsList(item)">
+        <div v-for="(item, key) in cookingType" :key="key"  @click="getGoodsList(item)">
           <div class="li-box li-box_active" v-if="checkGoodsSorts.value === item.value">
             {{item.name}}
           </div>
