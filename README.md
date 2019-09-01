@@ -1,6 +1,143 @@
+# caixi
+
+> A Mpvue project
+
+## Build Setup
+
+``` bash
+# 初始化项目
+vue init mpvue/mpvue-quickstart myproject
+cd myproject
+
+# 安装依赖
+yarn
+
+# 开发时构建
+npm dev
+
+# 打包构建
+npm build
+
+# 指定平台的开发时构建(微信、百度、头条、支付宝)
+npm dev:wx
+npm dev:swan
+npm dev:tt
+npm dev:my
+
+# 指定平台的打包构建
+npm build:wx
+npm build:swan
+npm build:tt
+npm build:my
+
+# 生成 bundle 分析报告
+npm run build --report
+```
+
+For detailed explanation on how things work, checkout the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
+
+
 # mpvue_weui
 
 * 使用[mpvue-weui](https://github.com/KuangPF/mpvue-weui)框架开发的项目 初步熟悉 mpvue 框架 及 weui 框架
+* ts 版本部署问题 (Vue.mixin onUnload 等报错)
+* 小程序内容修改 列表显示各菜系菜式 详情显示做菜需要 材料及做法
+
+```
+// 缺少模块问题处理
+npm i webpack-sources babel-template babel-generator babel-types --save
+
+npm i vue-property-decorator@7.0.0 awesome-typescript-loader@4.0.1 typescript@2.7.2 --save
+webpack.base.conf.js
+{
+  test: /\.tsx?$/,
+  exclude: /node_modules/,
+  use: [
+    'babel-loader',
+    {
+      loader: 'mpvue-loader',
+      options: {
+        checkMPEntry: true
+      }
+    },
+    {
+      loader: 'awesome-typescript-loader',
+      options: {
+        useCache: true,
+      }
+    }
+  ]
+}
+tsconfig.json
+"types": [
+  "tencent-wx-app"
+]
+
+.d.ts 定义
+declare namespace wx {
+	interface SystemInfo {
+		model: string;
+		version: string
+	}
+	function getSystemInfo(options: any): void;
+}
+
+// import App from './App.vue'
+const App = require('./App.vue').default
+
+onUnload?(): void;
+onShareAppMessage?(options: any): any;
+
+vue-loader.conf.js
+loaders: Object.assign(utils.cssLoaders({
+  sourceMap: isProduction
+    ? config.build.productionSourceMap
+    : config.dev.cssSourceMap,
+  extract: isProduction
+}), {
+  ts: [
+    'babel-loader',
+    {
+      // loader: 'ts-loader',
+      loader: 'awesome-typescript-loader',
+      options: {
+        useCache: true,
+      }
+    }
+  ]
+})
+
+Child process failed to process the request:  TypeError: Cannot read property 'externalModuleIndicator' of undefined
+因mpvue-loader 问题 .vue 中ts代码需提取至单独文件
+
+// vue-shim.d 文件定义无效 需要在vue组件 .ts文件中定义
+declare module 'vue/types/vue' {
+  interface Vue {
+    $mptoast: any
+  }
+}
+// 'Promise' only refers to a type, but is being used as a value here
+// tsconfig.json compilerOptions
+"lib": [
+  "es2015",
+  "dom",
+  "dom.iterable",
+  "scripthost"
+]
+
+// vuex 调用方式
+// 在 page 页面重新引入  import store from '@/store/index'
+// getters
+store.getters.get_checkItem_id
+// state
+store.state.checkItem
+// actions
+store.dispatch('set_checkItem', item)
+// mutations
+store.commit('SET_CHECKITEM', item)
+
+npm upgrade mpvue@latest mpvue-loader@latest mpvue-template-compiler@latest mpvue-webpack-target@latest
+```
 
 ```
 表单

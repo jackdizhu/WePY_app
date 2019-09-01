@@ -17,7 +17,7 @@
           <div class='list-item'>
             <div class='list-item-content'>
               <div class='list-item-left'>
-                <image :src="item.thumbnail_pic_s"></image>
+                <image :src="item.thumbnail_pic_s"/>
               </div>
               <div class='list-item-right'>
                 <div class='article-title'>{{item.title}}</div>
@@ -34,9 +34,9 @@
 </template>
 
 <script>
-import Fly from "flyio/dist/npm/wx";
+import Fly from 'flyio/dist/npm/wx'
 export default {
-  data() {
+  data () {
     return {
       contentNewsList: []
     }
@@ -48,13 +48,13 @@ export default {
         mask: true
       })
 
-      let fly = new Fly; //创建fly实例
+      let fly = new Fly() // 创建fly实例
       fly.get('https://v.juhe.cn/toutiao/index', {
         type: type,
         key: 'fc35d7872c25744ab4669c7d9dbcf15e'
       }).then(res => {
         wx.hideLoading()
-        this.contentNewsList = res.data.result.data;
+        this.contentNewsList = res.data.result.data
       })
     }
   }

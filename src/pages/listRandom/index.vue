@@ -1,54 +1,8 @@
 <template>
   <div class="page list-page">
-    <div class="goods-sorts">
-      <!-- <scroll-view class="goods-sorts_scroll" :scroll-y="true" @scroll="scrollViewScroll">
-        <div class="ul-box">
-          <div class="li-box" v-for="(item, key) in goodsSorts" :key="key" hover-class="li-box_active" @click="getGoodsList">{{item}}</div>
-        </div>
-      </scroll-view> -->
-      <div class="ul-box">
-        <div v-for="(item, key) in cookingType" :key="key"  @click="getGoodsList(item)">
-          <div class="li-box li-box_active" v-if="checkGoodsSorts.value === item.value">
-            {{item.name}}
-          </div>
-          <div class="li-box" hover-class="li-box_active" v-else>
-            {{item.name}}
-          </div>
-        </div>
-      </div>
-    </div>
-    <!-- <div class="list-connent">
-      <div class="page__hd list-page_hd">
-        <div class="page__title">菜谱 商品列表</div>
-        <div class="page__desc">商品分类列表</div>
-      </div>
-      <div class="page__bd list-page_bd">
-        <div class="list-page_bd_box">
-          <scroll-view v-if="listData.length" class="scroll-view-box weui-cells weui-cells_after-title" scroll-y @scrolltoupper="upper" @scrolltolower="lower" @scroll="scroll" :scroll-into-view="toView" :scroll-top="scrollTop">
-            <div @click="navigatorToDetails(item)" class="weui-cell weui-cell_access justify-start" hover-class="weui-cell_active" v-for="(item, key) in listData" :key="key">
-              <div class="weui-cell__hd">
-                <image :src="item.img" class="list-image"></image>
-              </div>
-              <div class="weui-cell__bd list-text">
-                <div class="list-text-h1">{{item.name}}</div>
-                <div class="list-text-h2">好评{{item.praise}} 评价{{item.evaluate}}</div>
-                <div class="list-text-h3 flex">
-                  <div class="text-left flex-1">
-                    <div>￥{{item.price}}起送</div><div>|</div><div>配送费￥{{item.distribution}}</div>
-                  </div>
-                  <div class="text-right">
-                    <div>{{item.distance}}</div><div>|</div><div>{{item.time}}</div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </scroll-view>
-        </div>
-      </div>
-    </div> -->
     <div class="page__hd list-page_hd">
-      <div class="page__title">菜谱 菜系菜单列表</div>
-      <div class="page__desc">每个菜系10-20个菜, 每天更新一次</div>
+      <div class="page__title">菜谱 随机推荐列表</div>
+      <div class="page__desc">每个菜系推荐一个, 每天更新一次</div>
       <div class="list-page_bd_box">
         <scroll-view v-if="listData.length" class="scroll-view-box weui-cells weui-cells_after-title" scroll-y @scrolltoupper="upper" @scrolltolower="lower" @scroll="scroll" :scroll-into-view="toView" :scroll-top="scrollTop">
           <div @click="navigatorToDetails(item)" class="weui-cell weui-cell_access justify-start items-start" hover-class="weui-cell_active" v-for="(item, key) in listData" :key="key">
@@ -59,13 +13,31 @@
               <div class="list-text-h1">
                 <div class="name">{{item.name}}</div>
               </div>
+              <div class="list-text-h1">
+                <div class="typeName">{{item.typeName}}</div>
+              </div>
               <div class="list-text-h2">
                 <image :src="imgPraise" class="imgPraise img-icon"/>
                 {{item.praise}}&nbsp;&nbsp;&nbsp;&nbsp;
-              </div>
-              <div class="list-text-h2">
                 <image :src="imgEvaluate" class="imgEvaluate img-icon"/>
                 {{item.evaluate}}
+              </div>
+            </div>
+          </div>
+
+          <div @click="navigatorToList()" class="weui-cell weui-cell_access justify-start items-start" hover-class="weui-cell_active">
+            <div class="weui-cell__hd">
+              <image :src="defImg" class="list-image"/>
+            </div>
+            <div class="weui-cell__bd list-text">
+              <div class="list-text-h1">
+                <div class="name">查看更多 . . .</div>
+              </div>
+              <div class="list-text-h2">
+                <image :src="imgPraise" class="imgPraise img-icon"/>
+                99.9%&nbsp;&nbsp;&nbsp;&nbsp;
+                <image :src="imgEvaluate" class="imgEvaluate img-icon"/>
+                999
               </div>
             </div>
           </div>
@@ -74,27 +46,53 @@
     </div>
   </div>
 </template>
-
 <script>
-// import { mapGetters, mapMutations } from 'vuex'
-import { mapMutations, mapState } from 'vuex'
-import base64 from '../../../static/images/base64'
+/* eslint-disable */
+import { mapGetters, mapMutations } from 'vuex'
+import { random, ImgUrlChange } from '@/utils/consts.js'
+// vuex 需要重新 引入
+import store from '@/store/index'
 import {api} from '@/utils/apiFn'
 const thisApi = api
-// Use Vuex
+
+const img_praise = require('@/images/praise.png')
+const img_evaluate = require('@/images/evaluate.png')
+
+const debug = require('debug')('log:List')
+
 export default {
   data () {
     return {
-      checkGoodsSorts: {
-        'name': '川菜',
-        'value': 'chuancai'
-      },
+      imgPraise: img_praise,
+      imgEvaluate: img_evaluate,
+      data: store.state.data,
+      cookingType: store.state.cookingType,
+      dateStr: (function () {
+        let now = new Date()
+        let year = now.getFullYear()
+        let month = now.getMonth() + 1
+        let day = now.getDate()
+        let hh = now.getHours()
+        let mm = now.getMinutes()
+        let dateStr = year + '-'
+        if (month < 10) {
+          dateStr += '0'
+        }
+        dateStr += month + '-'
+        if (day < 10) {
+          dateStr += '0'
+        }
+        dateStr += day
+        return dateStr
+      })(),
+      defImg: 'http://7xrqzz.com1.z0.glb.clouddn.com/nopic_2.jpg',
       page: 1,
       thisTime_upper: null,
       thisTime_lower: null,
       // scroll-view 属性
       toView: 'red',
       scrollTop: 100,
+      store_listRandomData: {},
       listData: [
         // {
         //   id: '0010',
@@ -107,55 +105,25 @@ export default {
         //   distance: '795m',
         //   time: '48分钟'
         // }
-      ],
-      icon: ''
+      ]
     }
-  },
-  computed: {
-    ...mapState([
-      'cookingType'
-    ])
   },
   methods: {
     ...mapMutations({
       setCheckItem: 'SET_CHECKITEM'
     }),
-    scrollViewScroll () {
-      return false
-    },
-    getGoodsList (item) {
-      this.checkGoodsSorts = item
-      this.page = 1
-      wx.showLoading({
-        title: '加载中',
-        mask: true
-      })
-      // get 请求
-      // this.$request({
-      //   url: this.$api.test_get_list,
-      //   type: 'GET',
-      //   params: {
-      //     page: this.page
-      //   }
-      // })
-      thisApi.get_list({
-        page: this.page,
-        cookingType: this.checkGoodsSorts.value
-      })
-        .then(res => {
-          wx.hideLoading()
-          if (res.data) {
-            this.listData = res.data
-          }
-        })
-    },
     navigatorToDetails (item) {
+      // store.commit('SET_CHECKITEM', item)
+      // store.dispatch('set_checkItem', item)
       this.setCheckItem(item)
       wx.navigateTo({
-        url: '/pages/details/main?id=' + item.id
+        url: '/pages/details/main?id=' + item._id
       })
-      // setTimeout(() => {
-      // }, 0)
+    },
+    navigatorToList () {
+      wx.navigateTo({
+        url: '/pages/list/main'
+      })
     },
     // scroll-view 事件
     upper (e) {
@@ -176,24 +144,24 @@ export default {
     lower (e) {
       this.page++
       // 滚动到底部 加载更多数据
-      // this.$request({
-      //   url: this.$api.test_get_list,
+      // this.httpRequest.request({
+      //   url: this.api.get_list,
       //   type: 'GET',
       //   params: {
       //     page: this.page
       //   }
       // })
       thisApi.get_list({
-        page: this.page,
-        cookingType: this.checkGoodsSorts.value
+        page: this.page
       })
-        .then(res => {
+        .then((res) => {
           if (res.data) {
-            // _this.listData = res.data
+            for (let i = 0; i < res.data.length; i++) {
+              res.data[i].data = JSON.parse(res.data[i].data)
+            }
             this.listData.push(...res.data)
           }
         })
-
       // if (this.thisTime_upper) {
       //   return false
       // }
@@ -207,74 +175,98 @@ export default {
       //   }, 2200)
       // }, 100)
       console.log(e, 'lower')
+    },
+    // 生成 随机推荐数据
+    async get_listRandom () {
+      let arr = []
+      for (let i = 0; i < this.cookingType.length; i++) {
+        let type = this.cookingType[i].value
+        let _data = this.data.filter((item) => {
+          return item.type === type
+        })
+        let count = _data.length
+        let page = random(0, count)
+        let item = _data[page]
+        arr.push(item)
+      }
+      return arr
     }
   },
-  mounted () {
-    this.icon = base64.icon20
-  },
-  created () {
-  },
-  onLoad () {
+  async onLoad () {
+    // 调用 初始化数据
+    // this.httpRequest.request({
+    //   url: this.api.init,
+    //   type: 'GET',
+    //   params: {
+    //   }
+    // })
+    thisApi.init({})
+
     let _this = this
+    // this.store_listRandomData = store.state.listRandomData
+    // if (this.store_listRandomData[this.dateStr]) {
+    //   _this.listData = this.store_listRandomData.data
+    //   return 0
+    // }
+
     wx.showLoading({
       title: '加载中',
       mask: true
     })
     // get 请求
-    // this.$request({
-    //   url: this.$api.test_get_list,
+    // this.httpRequest.request({
+    //   url: this.api.get_listRandom,
+    //   type: 'GET',
+    //   params: {
+    //   }
+    // })
+    thisApi.get_listRandom({})
+      .then(async function (res) {
+        console.log(res.data, 'listRandom then')
+        if (res.data && res.data.length) {
+          _this.listData = res.data
+        } else {
+          let data = await _this.get_listRandom()
+          let item = {}
+          item[_this.dateStr] = true
+          item.data = data
+          store.dispatch('set_listRandomData', item)
+          _this.listData = data
+        }
+        // 更换 img 域名地址
+        for (let i = 0; i < _this.listData.length; i++) {
+          _this.listData[i].img = ImgUrlChange(_this.listData[i].img)
+        }
+        wx.hideLoading()
+      })
+  },
+  onReachBottom (e) {
+    this.page++
+    // 滚动到底部 加载更多数据
+    // this.httpRequest.request({
+    //   url: this.api.get_list,
     //   type: 'GET',
     //   params: {
     //     page: this.page
     //   }
     // })
     thisApi.get_list({
-      page: _this.page,
-      cookingType: this.checkGoodsSorts.value
+      page: this.page
     })
-      .then(res => {
+      .then((res) => {
         if (res.data) {
-          wx.hideLoading()
-          _this.listData = res.data
-          console.log(_this.listData, 'listData')
+          this.listData.push(...res.data)
         }
       })
-    // thisApi.get_cookingType({})
-    //   .then(async function (res) {
-    //     if (res.data && res.data.length) {
-    //       _this.cookingType = res.data
-    //       thisApi.get_list({
-    //         page: _this.page,
-    //         cookingType: 'chuancai'
-    //       })
-    //         .then(res => {
-    //           if (res.data) {
-    //             wx.hideLoading()
-    //             _this.listData = res.data
-    //           }
-    //         })
-    //     }
-    //   })
-  },
-  onReachBottom (e) {
-    this.page++
-    // 滚动到底部 加载更多数据
-    this.$request({
-      url: this.$api.test_get_list,
-      type: 'GET',
-      params: {
-        page: this.page
-      }
-    }).then(res => {
-      if (res.data) {
-        this.listData.push(...res.data)
-      }
-    })
-
     console.log(e, 'onReachBottom')
   },
-  scroll (e) {
-    // console.log(e, 'scroll')
+  onShareAppMessage (options) {
+    this.shareAppMessage(options)
+  },
+  onUnload () {
+    if (this.$options.data) {
+      Object.assign(this.$data, this.$options.data)
+    }
   }
 }
 </script>
@@ -294,8 +286,10 @@ export default {
   }
   .list-page {
     position: relative;
-    padding-left: 80px;
     height: 100%;
+    .weui-cell__bd {
+      padding-top: 6px;
+    }
     .list-page_hd {
       height: 100%;
       padding: 0;
@@ -319,7 +313,6 @@ export default {
       z-index: 3;
       border-right: 1px solid #eee;
       background-color: #fff;
-      // color: #D2B48C;
       .goods-sorts_scroll {
         height: 100%;
       }
@@ -345,17 +338,25 @@ export default {
     min-height: 80px;
   }
   .list-text-h1 {
+    position: relative;
     margin-bottom: 10px;
     .name {
       font-size: 18px;
       font-weight: 700;
+    }
+    .typeName {
+      font-size: 12px;
+      padding: 3px 4px;
+      border-radius: 3px;
+      display: inline-block;
+      background: #B8860B;
+      color: #fff;
     }
   }
   .list-text-h2 {
     vertical-align: middle;
     line-height: 18px;
     font-size: 16px;
-    margin-bottom: 12px;
   }
   .list-text-h3 {
     font-size: 14px;

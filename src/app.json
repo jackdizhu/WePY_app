@@ -1,0 +1,13 @@
+{
+  "pages": [
+    "pages/list/main",
+    "pages/listRandom/main",
+    "pages/details/main"
+  ],
+  "window": {
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#fff",
+    "navigationBarTitleText": "菜系菜谱",
+    "navigationBarTextStyle": "black"
+  }
+}

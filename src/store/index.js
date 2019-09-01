@@ -1,13 +1,13 @@
-import Vue from 'vue';
-import Vuex from 'vuex';
-import createPersistedState from 'vuex-persistedstate';
-import state from './state';
-import mutations from './mutations';
-import * as getters from './getters';
-import * as actions from './actions';
+import Vue from 'vue'
+import Vuex from 'vuex'
+import createPersistedState from 'vuex-persistedstate'
+import state from './state'
+import mutations from './mutations'
+import actions from './actions'
+import * as getters from './getters'
 
-Vue.use(Vuex);
-export default new Vuex.Store({ // eslint-disable-line
+Vue.use(Vuex)
+export default new Vuex.Store({
   state,
   mutations,
   actions,
@@ -15,10 +15,10 @@ export default new Vuex.Store({ // eslint-disable-line
   plugins: [
     createPersistedState({
       storage: {
-        getItem: key => wx.getStorageSync(key),
+        getItem: (key) => wx.getStorageSync(key),
         setItem: (key, value) => wx.setStorageSync(key, value),
-        removeItem: key => {}
+        removeItem: (key) => {}
       }
     })
   ]
-});
+})

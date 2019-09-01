@@ -18,7 +18,7 @@ export default {
   components: {
     mptoast
   },
-  data() {
+  data () {
     return {
     }
   },
@@ -27,24 +27,24 @@ export default {
       this.$mptoast('msg')
     }
   },
-  created() {
+  created () {
     // 执行一次
     console.log(this, 'page index created')
   },
-  mounted() {
+  mounted () {
     console.log(this, 'mounted')
   },
-  onLoad() {
+  onLoad () {
     // 页面切换 会重新执行
     console.log(this, 'page index onLoad')
   },
-  onShow() {
+  onShow () {
     console.log(this, 'onShow')
   },
-  onUnload() {
+  onUnload () {
     console.log(this, 'onUnload')
   },
-  onHide() {
+  onHide () {
     console.log(this, 'onHide')
   }
 }

@@ -2,8 +2,9 @@ import Fly from 'flyio/dist/npm/wx'
 
 let fly = new Fly()
 // import https from 'https'
-fly.config.timeout = 1000 * 60 * 60
-fly.config.baseURL = 'https://www.easy-mock.com/mock/5ab8bf9cca39d01d844c0bf7/test'
+fly.config.timeout = 1000 * 3
+// fly.config.baseURL = 'https://www.easy-mock.com/mock/5ab8bf9cca39d01d844c0bf7/test'
+fly.config.baseURL = 'https://hb.jionly.com/api'
 // fly.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded;charset=UTF-8'
 // fly.defaults.withCredentials = true // 带cookie 请求
 // fly.defaults.httpsAgent = new https.Agent({
@@ -98,14 +99,15 @@ function request (obj) {
 function requestAll (_requestArr) {
   return new Promise((resolve, reject) => {
     fly.all(_requestArr)
-    .then(fly.spread(function (...params) {
-      resolve(params)
-    })).catch(err => {
-      console.log(err, 'requestAll catch err')
-      resolve({ err: 'requestErr' })
-      // reject(err) // 返回错误
-    })
+      .then(fly.spread(function (...params) {
+        resolve(params)
+      }))
+      .catch(err => {
+        console.log(err, 'requestAll catch err')
+        resolve({ err: 'requestErr' })
+        // reject(err) // 返回错误
+      })
   })
 }
 
-export { request, requestAll }
+export { get, post, request, requestAll }

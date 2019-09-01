@@ -35,3 +35,13 @@ page {
     text-align: left;
     font-size: 14px;
 }
+
+.img-icon {
+    width: 18px;
+    height: 18px;
+    vertical-align: bottom;
+}
+.imgPraise {
+    /* margin-top: -2px; */
+}
+.imgEvaluate {}

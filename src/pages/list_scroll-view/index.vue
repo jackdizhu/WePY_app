@@ -10,7 +10,7 @@
         <scroll-view v-if="listData.length" class="scroll-view-box weui-cells weui-cells_after-title" scroll-y @scrolltoupper="upper" @scrolltolower="lower" @scroll="scroll" :scroll-into-view="toView" :scroll-top="scrollTop">
           <div @click="navigatorToDetails(item)" class="weui-cell weui-cell_access justify-start" hover-class="weui-cell_active" v-for="(item, key) in listData" :key="key">
             <div class="weui-cell__hd">
-              <image :src="icon" class="list-image"></image>
+              <image :src="icon" class="list-image"/>
             </div>
             <div class="weui-cell__bd list-text">
               <div class="list-text-h1">{{item.name}}</div>
@@ -33,11 +33,12 @@
 </template>
 
 <script>
-import { mapGetters, mapMutations } from 'vuex';
+// import { mapGetters, mapMutations } from 'vuex'
+import { mapMutations } from 'vuex'
 // Use Vuex
-import base64 from '../../../static/images/base64';
+import base64 from '../../../static/images/base64'
 export default {
-  data() {
+  data () {
     return {
       page: 1,
       thisTime_upper: null,
@@ -122,12 +123,12 @@ export default {
       // console.log(e, 'scroll')
     }
   },
-  mounted() {
-    this.icon = base64.icon20;
+  mounted () {
+    this.icon = base64.icon20
   },
-  created() {
+  created () {
   },
-  onLoad() {
+  onLoad () {
     wx.showLoading({
       title: '加载中',
       mask: true
@@ -147,7 +148,6 @@ export default {
     })
   }
 }
-
 </script>
 <style lang='less'>
   page{

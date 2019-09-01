@@ -1,3 +1,4 @@
+/* eslint-disable */
 import Vue from 'vue'
 import App from './App'
 import './css/app.css'
@@ -16,7 +17,7 @@ Vue.prototype.$api = api
 import '../static/weui/weui.css'
 import '../static/weui/weui_theme.less'
 
-import mpvueToastRegistry from 'mptoast/registry'
+import mpvueToastRegistry from 'mptoast/src/registry'
 mpvueToastRegistry(Vue)
 
 let wxHasUpdate = function () {
@@ -105,23 +106,3 @@ const app = new Vue({
   App
 })
 app.$mount()
-
-export default {
-  // 这个字段走 app.json
-  config: {
-    pages: [
-      // '^pages/index/index',
-      '^pages/list/list',
-      // '^pages/test/test',
-      'pages/details/details'
-    ], // Will be filled in webpack
-    window: {
-      backgroundTextStyle: 'light',
-      navigationBarBackgroundColor: '#fff',
-      navigationBarTitleText: '菜系菜谱',
-      navigationBarTextStyle: 'black',
-      onReachBottomDistance: true,
-      enablePullDownRefresh: false
-    }
-  }
-}

@@ -8,10 +8,10 @@
 </template>
 
 <script>
-import { mapGetters, mapMutations } from 'vuex';
+import { mapGetters, mapMutations } from 'vuex'
 export default {
-  mounted() {
-    console.log(this.mpvueInfo);
+  mounted () {
+    console.log(this.mpvueInfo)
   },
   computed: {
     ...mapGetters([
@@ -22,9 +22,9 @@ export default {
     ...mapMutations({
       setMpvueInfoVuex: 'SET_MPVUEINFO'
     }),
-    commitMpvueInfo() {
+    commitMpvueInfo () {
       let mpvueInfoUpate = '基于 Vue.js 的小程序开发框架，从底层支持 Vue.js 语法和构建工具体系。---created by美团点评,github 地址：https://github.com/Meituan-Dianping/mpvue'
-      this.setMpvueInfoVuex(mpvueInfoUpate);
+      this.setMpvueInfoVuex(mpvueInfoUpate)
     }
   }
 }

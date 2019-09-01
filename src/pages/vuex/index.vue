@@ -14,33 +14,33 @@
 </template>
 
 <script>
-import { mapGetters, mapMutations } from 'vuex';
+import { mapGetters, mapMutations } from 'vuex'
 export default {
-  data() {
+  data () {
     return {
       stateMpvueInfo: '',
       showMpvueInfo: false
     }
   },
-  mounted() {
-    console.log(this.mpvueInfo);
+  mounted () {
+    console.log(this.mpvueInfo)
   },
   methods: {
     ...mapMutations({
       setMpvueInfoVuex: 'SET_MPVUEINFO'
     }),
-    turnToVuexPage() {
+    turnToVuexPage () {
       wx.navigateTo({
         url: '/pages/vuexPage/vuexPage'
       })
     },
-    getMpvueInfo() {
-      this.showMpvueInfo = true;
+    getMpvueInfo () {
+      this.showMpvueInfo = true
     },
-    commitMpvueInfo() {
+    commitMpvueInfo () {
       let mpvueInfoUpate = '基于 Vue.js 的小程序开发框架，从底层支持 Vue.js 语法和构建工具体系。---created by 美团点评'
-      this.setMpvueInfoVuex(mpvueInfoUpate);
-    },
+      this.setMpvueInfoVuex(mpvueInfoUpate)
+    }
   },
   computed: {
     ...mapGetters([
