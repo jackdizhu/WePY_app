@@ -25,20 +25,7 @@ interface RequestParams {
   baseURL?: string
 }
 
-export default class httpRequest {
-  constructor() {
-    //   fly.get('https://jackdizhu.duapp.com/api/init', {}).then((res: any) => {
-    //     isCheckBaseURL1 = true
-    //     if (res.data) {
-    //       fly.config.baseURL = baseURL2
-    //     } else {
-    //       fly.config.baseURL = baseURL1
-    //     }
-    //   }).catch((err: any) => {
-    //     isCheckBaseURL1 = true
-    //     fly.config.baseURL = baseURL1
-    //   })
-  }
+export const httpRequest = {
   /**
    * get 请求方法
    * @param url
@@ -55,7 +42,7 @@ export default class httpRequest {
         reject(err)
       })
     })
-  }
+  },
 
   /**
    * post 请求方法
@@ -77,7 +64,7 @@ export default class httpRequest {
         reject(err)
       })
     })
-  }
+  },
 
   /**
    * request 请求方法
@@ -104,7 +91,7 @@ export default class httpRequest {
         // reject(err) // 返回错误
       })
     })
-  }
+  },
 
   /*
     this.$requestAll([

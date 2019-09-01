@@ -45,13 +45,17 @@ export default class Index extends VueClass {
       title: '加载中',
       mask: true
     })
-    this.httpRequest.request({
-      url: this.api.test_get,
-      type: 'GET',
-      params: {
-        phone: this.form.phone
-      }
-    }).then(res => {
+    // this.httpRequest.request({
+    //   url: this.api.test_get,
+    //   type: 'GET',
+    //   params: {
+    //     phone: this.form.phone
+    //   }
+    // })
+    this.Api.test_get({
+      phone: this.form.phone
+    })
+    .then(res => {
       wx.hideLoading()
       this.time = 120
       this.timeSetInterval = setInterval(() => {

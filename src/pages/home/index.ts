@@ -24,13 +24,17 @@ export default class Home extends VueClass {
       //获取code
       success: function (res) {
         var code = res.code; // 返回code
-        _this.httpRequest.request({
-          url: _this.api.get_openId,
-          type: 'GET',
-          params: {
-            code: res.code
-          }
-        }).then((res: any) => {
+        // _this.httpRequest.request({
+        //   url: _this.api.get_openId,
+        //   type: 'GET',
+        //   params: {
+        //     code: res.code
+        //   }
+        // })
+        _this.Api.get_openId({
+          code: res.code
+        })
+        .then((res: any) => {
           if (res.data) {
             console.log(res.data, 111)
           }

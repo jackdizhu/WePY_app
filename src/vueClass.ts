@@ -1,8 +1,9 @@
 import { Component, Prop, Emit, Watch, Vue } from 'vue-property-decorator'
 // import {data, cookingType} from '@/data/data.ts'
 
-import Api from './utils/api.json'
-import httpRequest from './utils/http'
+// import Api from './utils/api.ts'
+import {api} from './utils/api'
+// import httpRequest from './utils/http'
 // import Store from '@/store/index'
 
 export default class VueClass extends Vue {
@@ -14,13 +15,14 @@ export default class VueClass extends Vue {
     // console.log(this.shareAppMessage, 1)
   }
 
-  public api: any = Api
+  public Api: any = api
 
   // public data: any = data
   // public cookingType: any = cookingType
 
   // public store: any = Store
-  public httpRequest = new httpRequest()
+  // public httpRequest = new httpRequest()
+  // public httpRequest = new httpRequest()
 
   methods_test (): void {
     console.log('VueClass methods_test', 1)

@@ -80,15 +80,21 @@ export default class Details extends VueClass {
     // console.log(this.checkCookingType, this.id)
 
     // get 请求
-    this.httpRequest.request({
-      url: this.api.get_details,
-      type: 'GET',
-      params: {
-        cookingType: this.checkCookingType.value,
-        name: this.checkItem.name,
-        id: this.checkItem.id || this.checkItem._id
-      }
-    }).then(async function (res: any) {
+    // this.httpRequest.request({
+    //   url: this.api.get_details,
+    //   type: 'GET',
+    //   params: {
+    //     cookingType: this.checkCookingType.value,
+    //     name: this.checkItem.name,
+    //     id: this.checkItem.id || this.checkItem._id
+    //   }
+    // })
+    this.Api.get_details({
+      cookingType: this.checkCookingType.value,
+      name: this.checkItem.name,
+      id: this.checkItem.id || this.checkItem._id
+    })
+    .then(async function (res: any) {
       console.log(_this.detailsData, 'details onLoad 333')
       if (res.data) {
         _this.detailsData = res.data

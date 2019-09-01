@@ -128,10 +128,10 @@ export default {
   config: {
     pages: [
       // '^pages/index/main',
-      '^pages/home/main',
+      // '^pages/home/main',
+      '^pages/listRandom/main',
       'pages/list/main',
-      'pages/listRandom/main',
-      // '^pages/details/main',
+      'pages/details/main',
     ], // 页面前带有 ^ 符号的，会被编译成首页，其他页面可以选填，我们会自动把 webpack entry 里面的入口页面加进去
     window: {
       // navigationStyle: "custom", // window下的 navigationStyle 属性，设置为 custom 即可关闭原生头部导航，但会保留椭圆形菜单
@@ -142,29 +142,29 @@ export default {
       onReachBottomDistance: true,
       enablePullDownRefresh: false
     },
-    tabBar: {
-      "color": "#202020",
-      "selectedColor": "#ec5045",
-      "list": [
-        {
-          pagePath: "pages/listRandom/main",
-          text: "推荐",
-          iconPath: "/static/img/recommend_1.png",
-          selectedIconPath: "/static/img/recommend_2.png",
-        },
-        {
-          pagePath: "pages/list/main",
-          text: "分类",
-          iconPath: "/static/img/classify_1.png",
-          selectedIconPath: "/static/img/classify_2.png",
-        },
-        {
-          pagePath: "pages/home/main",
-          text: "收藏",
-          iconPath: "/static/img/collection_1.png",
-          selectedIconPath: "/static/img/collection_2.png",
-        }
-      ]
-    }
+    // tabBar: {
+    //   "color": "#202020",
+    //   "selectedColor": "#ec5045",
+    //   "list": [
+    //     {
+    //       pagePath: "pages/listRandom/main",
+    //       text: "推荐",
+    //       iconPath: "/static/img/recommend_1.png",
+    //       selectedIconPath: "/static/img/recommend_2.png",
+    //     },
+    //     {
+    //       pagePath: "pages/list/main",
+    //       text: "分类",
+    //       iconPath: "/static/img/classify_1.png",
+    //       selectedIconPath: "/static/img/classify_2.png",
+    //     },
+    //     {
+    //       pagePath: "pages/home/main",
+    //       text: "收藏",
+    //       iconPath: "/static/img/collection_1.png",
+    //       selectedIconPath: "/static/img/collection_2.png",
+    //     }
+    //   ]
+    // }
   }
 }

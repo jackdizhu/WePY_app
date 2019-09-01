@@ -109,13 +109,17 @@ export default class List extends VueClass {
   lower(e: any) {
     this.page++
     // 滚动到底部 加载更多数据
-    this.httpRequest.request({
-      url: this.api.get_list,
-      type: 'GET',
-      params: {
-        page: this.page
-      }
-    }).then((res: any) => {
+    // this.httpRequest.request({
+    //   url: this.api.get_list,
+    //   type: 'GET',
+    //   params: {
+    //     page: this.page
+    //   }
+    // })
+    this.Api.get_list({
+      page: this.page
+    })
+    .then((res: any) => {
       if (res.data) {
         for (let i = 0; i < res.data.length; i++) {
           res.data[i].data = JSON.parse(res.data[i].data)
@@ -154,31 +158,34 @@ export default class List extends VueClass {
   }
   async onLoad() {
     // 调用 初始化数据
-    this.httpRequest.request({
-      url: this.api.init,
-      type: 'GET',
-      params: {
-      }
-    })
+    // this.httpRequest.request({
+    //   url: this.api.init,
+    //   type: 'GET',
+    //   params: {
+    //   }
+    // })
+    this.Api.init({})
 
     let _this = this
-    this.store_listRandomData = store.state.listRandomData
-    if (this.store_listRandomData[this.dateStr]) {
-      _this.listData = this.store_listRandomData.data
-      return 0
-    }
+    // this.store_listRandomData = store.state.listRandomData
+    // if (this.store_listRandomData[this.dateStr]) {
+    //   _this.listData = this.store_listRandomData.data
+    //   return 0
+    // }
 
     wx.showLoading({
       title: '加载中',
       mask: true
     })
     // get 请求
-    this.httpRequest.request({
-      url: this.api.get_listRandom,
-      type: 'GET',
-      params: {
-      }
-    }).then(async function (res: any) {
+    // this.httpRequest.request({
+    //   url: this.api.get_listRandom,
+    //   type: 'GET',
+    //   params: {
+    //   }
+    // })
+    this.Api.get_listRandom({})
+    .then(async function (res: any) {
       console.log('listRandom then', 111)
       if (res.data && res.data.length) {
         _this.listData = res.data
@@ -201,13 +208,17 @@ export default class List extends VueClass {
   onReachBottom(e: any) {
     this.page++
     // 滚动到底部 加载更多数据
-    this.httpRequest.request({
-      url: this.api.get_list,
-      type: 'GET',
-      params: {
-        page: this.page
-      }
-    }).then((res: any) => {
+    // this.httpRequest.request({
+    //   url: this.api.get_list,
+    //   type: 'GET',
+    //   params: {
+    //     page: this.page
+    //   }
+    // })
+    this.Api.get_list({
+      page: this.page
+    })
+    .then((res: any) => {
       if (res.data) {
         this.listData.push(...res.data)
       }

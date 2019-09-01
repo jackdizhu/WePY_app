@@ -91,14 +91,19 @@ export default class List extends VueClass {
       mask: true
     })
     // get 请求
-    this.httpRequest.request({
-      url: this.api.get_list,
-      type: 'GET',
-      params: {
-        page: this.page,
-        cookingType: item.value
-      }
-    }).then(async function (res: any) {
+    // this.httpRequest.request({
+    //   url: this.api.get_list,
+    //   type: 'GET',
+    //   params: {
+    //     page: this.page,
+    //     cookingType: item.value
+    //   }
+    // })
+    this.Api.get_list({
+      page: this.page,
+      cookingType: item.value
+    })
+    .then(async function (res: any) {
       console.log(_this.listData, 'getGoodsList list 222')
       if (res.data && res.data.length) {
         _this.listData = res.data
@@ -150,13 +155,17 @@ export default class List extends VueClass {
   lower(e: any) {
     this.page++
     // 滚动到底部 加载更多数据
-    this.httpRequest.request({
-      url: this.api.get_list,
-      type: 'GET',
-      params: {
-        page: this.page
-      }
-    }).then((res: any) => {
+    // this.httpRequest.request({
+    //   url: this.api.get_list,
+    //   type: 'GET',
+    //   params: {
+    //     page: this.page
+    //   }
+    // })
+    this.Api.get_list({
+      page: this.page
+    })
+    .then((res: any) => {
       if (res.data) {
         for (let i = 0; i < res.data.length; i++) {
           res.data[i].data = JSON.parse(res.data[i].data)
@@ -208,25 +217,32 @@ export default class List extends VueClass {
     })
     let _this = this
     // get_cookingType
-    this.httpRequest.request({
-      url: this.api.get_cookingType,
-      type: 'GET',
-      params: {
-      }
-    }).then(async function (res: any) {
+    // this.httpRequest.request({
+    //   url: this.api.get_cookingType,
+    //   type: 'GET',
+    //   params: {
+    //   }
+    // })
+    this.Api.get_cookingType({})
+    .then(async function (res: any) {
       if (res.data && res.data.length) {
         _this.cookingType = res.data
         store.dispatch('set_cookingType', res.data)
         store.dispatch('set_checkCookingType', _this.cookingType[0])
         // get 请求
-        _this.httpRequest.request({
-          url: _this.api.get_list,
-          type: 'GET',
-          params: {
-            page: _this.page,
-            cookingType: 'chuancai'
-          }
-        }).then(async function (res: any) {
+        // _this.httpRequest.request({
+        //   url: _this.api.get_list,
+        //   type: 'GET',
+        //   params: {
+        //     page: _this.page,
+        //     cookingType: 'chuancai'
+        //   }
+        // })
+        _this.Api.get_list({
+          page: _this.page,
+          cookingType: 'chuancai'
+        })
+        .then(async function (res: any) {
           console.log(_this.listData, 'getGoodsList list 111')
           if (res.data && res.data.length) {
             _this.listData = res.data
@@ -252,13 +268,17 @@ export default class List extends VueClass {
   onReachBottom(e: any) {
     this.page++
     // 滚动到底部 加载更多数据
-    this.httpRequest.request({
-      url: this.api.get_list,
-      type: 'GET',
-      params: {
-        page: this.page
-      }
-    }).then((res: any) => {
+    // this.httpRequest.request({
+    //   url: this.api.get_list,
+    //   type: 'GET',
+    //   params: {
+    //     page: this.page
+    //   }
+    // })
+    this.Api.get_list({
+      page: this.page
+    })
+    .then((res: any) => {
       if (res.data) {
         this.listData.push(...res.data)
       }
