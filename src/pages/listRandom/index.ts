@@ -5,6 +5,8 @@ import Mptoast from 'mptoast/index.vue'
 // vuex 需要重新 引入
 import store from '@/store/index'
 // import {data, cookingType} from '@/data/data.ts'
+import {api} from '@/utils/api'
+const thisApi = api
 
 // import img_praise from '@/img/praise.png'
 const img_praise = require('@/img/praise.png')
@@ -116,7 +118,7 @@ export default class List extends VueClass {
     //     page: this.page
     //   }
     // })
-    this.Api.get_list({
+    thisApi.get_list({
       page: this.page
     })
     .then((res: any) => {
@@ -164,7 +166,7 @@ export default class List extends VueClass {
     //   params: {
     //   }
     // })
-    this.Api.init({})
+    thisApi.init({})
 
     let _this = this
     // this.store_listRandomData = store.state.listRandomData
@@ -184,7 +186,7 @@ export default class List extends VueClass {
     //   params: {
     //   }
     // })
-    this.Api.get_listRandom({})
+    thisApi.get_listRandom({})
     .then(async function (res: any) {
       console.log('listRandom then', 111)
       if (res.data && res.data.length) {
@@ -215,7 +217,7 @@ export default class List extends VueClass {
     //     page: this.page
     //   }
     // })
-    this.Api.get_list({
+    thisApi.get_list({
       page: this.page
     })
     .then((res: any) => {

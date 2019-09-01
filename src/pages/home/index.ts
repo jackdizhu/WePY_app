@@ -1,7 +1,8 @@
 import VueClass from '@/vueClass.ts'
 import { Vue, Component } from 'vue-property-decorator'
 import Mptoast from 'mptoast/index.vue'
-
+import {api} from '@/utils/api'
+const thisApi = api
 
 const debug = require('debug')('log:Index')
 
@@ -31,7 +32,7 @@ export default class Home extends VueClass {
         //     code: res.code
         //   }
         // })
-        _this.Api.get_openId({
+        thisApi.get_openId({
           code: res.code
         })
         .then((res: any) => {

@@ -139,7 +139,7 @@ export default {
       navigationBarBackgroundColor: '#fff',
       navigationBarTitleText: '菜系菜谱',
       navigationBarTextStyle: 'black',
-      onReachBottomDistance: true,
+      onReachBottomDistance: 1,
       enablePullDownRefresh: false
     },
     // tabBar: {

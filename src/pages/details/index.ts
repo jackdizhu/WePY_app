@@ -6,6 +6,8 @@ import Mptoast from 'mptoast/index.vue'
 // vuex 需要重新 引入
 import store from '@/store/index'
 // import {data, cookingType} from '@/data/data.ts'
+import {api} from '@/utils/api'
+const thisApi = api
 
 const debug = require('debug')('log:Details')
 
@@ -89,7 +91,7 @@ export default class Details extends VueClass {
     //     id: this.checkItem.id || this.checkItem._id
     //   }
     // })
-    this.Api.get_details({
+    thisApi.get_details({
       cookingType: this.checkCookingType.value,
       name: this.checkItem.name,
       id: this.checkItem.id || this.checkItem._id

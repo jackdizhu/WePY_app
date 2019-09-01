@@ -5,6 +5,8 @@ import Mptoast from 'mptoast/index.vue'
 // vuex 需要重新 引入
 import store from '@/store/index'
 // import {data, cookingType} from '@/data/data.ts'
+import {api} from '@/utils/api'
+const thisApi = api
 
 const debug = require('debug')('log:List')
 const img_praise = require('@/img/praise.png')
@@ -99,7 +101,7 @@ export default class List extends VueClass {
     //     cookingType: item.value
     //   }
     // })
-    this.Api.get_list({
+    thisApi.get_list({
       page: this.page,
       cookingType: item.value
     })
@@ -162,7 +164,7 @@ export default class List extends VueClass {
     //     page: this.page
     //   }
     // })
-    this.Api.get_list({
+    thisApi.get_list({
       page: this.page
     })
     .then((res: any) => {
@@ -223,7 +225,7 @@ export default class List extends VueClass {
     //   params: {
     //   }
     // })
-    this.Api.get_cookingType({})
+    thisApi.get_cookingType({})
     .then(async function (res: any) {
       if (res.data && res.data.length) {
         _this.cookingType = res.data
@@ -238,7 +240,7 @@ export default class List extends VueClass {
         //     cookingType: 'chuancai'
         //   }
         // })
-        _this.Api.get_list({
+        thisApi.get_list({
           page: _this.page,
           cookingType: 'chuancai'
         })
@@ -275,7 +277,7 @@ export default class List extends VueClass {
     //     page: this.page
     //   }
     // })
-    this.Api.get_list({
+    thisApi.get_list({
       page: this.page
     })
     .then((res: any) => {

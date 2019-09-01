@@ -1,7 +1,8 @@
 import VueClass from '@/vueClass.ts'
 import { Vue, Component } from 'vue-property-decorator'
 import Mptoast from 'mptoast/index.vue'
-
+import {api} from '@/utils/api'
+const thisApi = api
 
 const debug = require('debug')('log:Index')
 
@@ -52,7 +53,7 @@ export default class Index extends VueClass {
     //     phone: this.form.phone
     //   }
     // })
-    this.Api.test_get({
+    thisApi.test_get({
       phone: this.form.phone
     })
     .then(res => {
