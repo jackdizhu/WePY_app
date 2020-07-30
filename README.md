@@ -1,4 +1,4 @@
-# WePY_app
+# WePY_app (新项目建议使用taro) 
 
 初步完成多页面跳转, 数据共享,
 ``` sh
